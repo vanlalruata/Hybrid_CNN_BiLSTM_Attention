@@ -1,0 +1,10 @@
+src/
+ ├── main.py               # CLI main entry (menu-driven)
+ ├── config.py             # Dataset paths, constants, hyperparameters
+ ├── utils.py              # Helper functions (timing, seeding, plotting)
+ ├── data_loader.py        # Dataset loading, feature cleaning, scaling
+ ├── train.py              # Training + learning curves
+ ├── evaluate.py           # Evaluation metrics, confusion matrix, ROC/PR curves
+ ├── model_io.py           # Save/load model + predict on live traffic
+ ├── xai.py                # SHAP, LIME, ANOVA, Ablation (user-select)
+ └── models.py             # Hybrid CNN–LSTM model

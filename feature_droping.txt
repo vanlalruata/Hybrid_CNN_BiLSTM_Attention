@@ -1,0 +1,9 @@
+| Dataset           | Drop Columns                                                                                                     |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Common            | `['Flow ID','Src IP','Dst IP','Timestamp','id.orig_h','id.resp_h','frame.time','stime','ltime','saddr','daddr']` |
+| EDGE-IIoT         | `['ip.src_host','ip.dst_host','Attack_label']`                                                                   |
+| CICIoT2023        | None (already numeric)                                                                                           |
+| AposeIoT23        | `['uid','id.orig_h','id.resp_h']`                                                                                |
+| CICIoMT2024       | None                                                                                                             |
+| BoT-IoT           | `['saddr','daddr','stime','ltime','proto','srcid']`                                                              |
+| CIC-IoT-IDAD-2024 | `['Flow ID','Src IP','Dst IP','Timestamp']`                                                                      |
