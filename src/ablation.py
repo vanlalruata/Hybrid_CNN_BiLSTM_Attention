@@ -29,12 +29,12 @@ from sklearn.model_selection import train_test_split
 # ---------------------------------------------------------------------
 try:
     # Preferred: your modular trainer core
-    from HLC.models import CNN_LSTM_Fusion, SimpleMLP
-    from HLC.utils import set_all_seeds, ensure_dir
-    from HLC.train import train_once  # expected signature documented below
+    from .models import CNN_LSTM_Fusion, SimpleMLP
+    from .utils import set_all_seeds, ensure_dir
+    from .train import train_once  # expected signature documented below (may not exist; fallback below)
 except Exception:
     # Minimal fallbacks (only shapes used; adapt to your real project layout)
-    from HLC.models import CNN_LSTM_Fusion, SimpleMLP  # must exist from previous files
+    from .models import CNN_LSTM_Fusion, SimpleMLP  # must exist from previous files
 
     def set_all_seeds(seed: int):
         import random
@@ -273,7 +273,7 @@ def run_ablation(
       3) Collect metrics, params, MACs, wall time
       4) Aggregate into CSV + plots
 
-    Returns a dict with manifest and results path.
+    Returns a dict with a manifest and results path.
     """
     ensure_dir(out_root)
     task_folder = f"{dataset_name}_{classification_type}"
@@ -392,7 +392,7 @@ def run_ablation(
     # ---- Plots (EPS) ---------------------------------------------------
     ensure_dir(os.path.join(outdir, "plots"))
 
-    # Performance vs #features
+    # Performance vs. #features
     plt.figure(figsize=(8, 5))
     if task_type == "classification":
         plt.plot(df["n_features"], df["f1_macro"], marker="o")
@@ -461,3 +461,99 @@ def build_subsets_from_lists(named_feature_lists: List[Tuple[str, List[str]]]) -
             raise ValueError(f"Duplicate subset name: {name}")
         d[name] = list(dict.fromkeys(feats))  # dedupe while preserving order
     return d
+
+
+# -----------------------------------------------------------------------------
+# Convenience wrapper used by main.py:
+#   run_ablation_user_selected(X_train, y_train, X_test, y_test,
+#                              feature_names, keep_features, dataset_key, outdir, ...)
+# -----------------------------------------------------------------------------
+def run_ablation_user_selected(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    feature_names: List[str],
+    keep_features: List[str],
+    dataset_key: str,
+    outdir: str,
+    model_name: str = "cnn_lstm_fusion",
+    seed: int = 42,
+    epochs: int = 60,
+    batch_size: int = 256,
+    lr: float = 1e-3,
+    weight_decay: float = 1e-4,
+    early_stop_patience: int = 6,
+    class_names: Optional[List[str]] = None
+) -> Dict:
+    """
+    Slice the provided train/test arrays to a user-selected feature subset and train once.
+    Produces a compact result JSON and preserves the history CSV and checkpoint under 'outdir'.
+    """
+    ensure_dir(outdir)
+    set_all_seeds(seed)
+
+    # Map feature names -> indices and slice
+    idxs = map_features_to_indices(feature_names, keep_features)
+    Xtr = X_train[:, idxs]
+    Xte = X_test[:, idxs]
+
+    subset_name = "user_selected"
+    run_name = f"{subset_name}_{len(idxs)}f"
+
+    # Train using the local lightweight 'train_once' (fallback defined above)
+    result = train_once(
+        Xtr=Xtr, ytr=y_train, Xte=Xte, yte=y_test,
+        feature_names=keep_features,
+        outdir=outdir,
+        run_name=run_name,
+        model_name=model_name,
+        task_type="classification",  # as per project spec (all datasets treated as classification)
+        seed=seed,
+        epochs=epochs,
+        batch_size=batch_size,
+        lr=lr,
+        weight_decay=weight_decay,
+        early_stop_patience=early_stop_patience,
+        class_names=class_names,
+        device=DEVICE
+    )
+
+    # Complexity snapshot for the trained subset model
+    state = torch.load(result["ckpt_path"], map_location=DEVICE)
+    input_dim = Xtr.shape[1]
+    num_classes = int(state.get("num_classes", len(np.unique(y_train))))
+    if (state.get("model_name") or "").lower() in ["simplemlp", "mlp"]:
+        model = SimpleMLP(input_dim, num_classes)
+    else:
+        model = CNN_LSTM_Fusion(input_dim, num_classes, hidden_dim=int(state.get("hidden_dim", 64)))
+    model.load_state_dict(state["state_dict"])
+    model.to(DEVICE).eval()
+
+    params = count_trainable_params(model)
+    macs = estimate_linear_macs(model, input_dim)
+
+    summary = {
+        "dataset_key": dataset_key,
+        "subset": subset_name,
+        "n_features": len(keep_features),
+        "kept_features": keep_features,
+        "ckpt_path": result["ckpt_path"],
+        "history_csv": result["history_csv"],
+        "metrics": result["metrics"],
+        "params": int(params),
+        "estimated_macs_per_forward": int(macs),
+    }
+
+    with open(os.path.join(outdir, "result.json"), "w") as f:
+        json.dump(summary, f, indent=2)
+
+    # Also save a one-row CSV for a quick glance
+    df = pd.DataFrame([{
+        "subset": subset_name,
+        "n_features": len(keep_features),
+        **({k: v for k, v in result["metrics"].items() if isinstance(v, (int, float))})
+    }])
+    df.to_csv(os.path.join(outdir, "ablation_user_selected.csv"), index=False)
+
+    return summary

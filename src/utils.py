@@ -14,7 +14,7 @@ from contextlib import contextmanager
 
 
 def ensure_dir(path: str):
-    """Create directory recursively if it doesn't exist."""
+    """Create a directory recursively if it doesn't exist."""
     os.makedirs(path, exist_ok=True)
 
 
@@ -47,3 +47,28 @@ def timer(msg: str = None):
     yield
     end = time.perf_counter()
     print(f"[TIMER] {msg or ''} took {end - start:.4f} seconds.")
+
+
+def unique_path(base_path: str) -> str:
+    """
+    Generate a unique file path by appending '(n)' before the file extension if the path exists.
+    Examples:
+      - reports/metrics.csv -> reports/metrics.csv (if free)
+      - if taken, returns reports/metrics (1).csv, then (2), etc.
+    """
+    # Ensure the parent directory exists (no-op if base_path is just a filename)
+    parent = os.path.dirname(base_path)
+    if parent:
+        ensure_dir(parent)
+
+    # If the base path is available, use it directly
+    if not os.path.exists(base_path):
+        return base_path
+
+    root, ext = os.path.splitext(base_path)
+    n = 1
+    while True:
+        candidate = f"{root} ({n}){ext}"
+        if not os.path.exists(candidate):
+            return candidate
+        n += 1

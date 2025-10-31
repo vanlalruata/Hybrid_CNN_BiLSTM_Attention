@@ -8,7 +8,7 @@ import os
 import time
 import numpy as np
 import torch
-from HLC.models import CNN_LSTM_Fusion, SimpleMLP
+from HLC.src.models import CNN_LSTM_Fusion, SimpleMLP
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 POWER_WATTS = float(os.environ.get("POWER_WATTS", "120"))

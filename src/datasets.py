@@ -15,7 +15,7 @@ from .utils import ensure_dir, save_scaler, set_all_seeds
 
 
 AVAILABLE_DATASETS = {
-    "EDGE_IIoT": "data/raw/EDGE_IIoT/*.csv",
+    "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
     "CIC-IoT-2023": "data/raw/CICIoT2023/*.csv",
     "Apose-IoT-23": "data/raw/AposeIoT23/*.csv",
     "CIC-IoMT-2024": "data/raw/CICIoMT2024/*.csv",
@@ -82,11 +82,27 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     df = _drop_identifiers(df)
     df = _encode_non_numeric(df)
 
+    # Clean numeric matrix and align lengths
     df = df.replace([np.inf, -np.inf], np.nan).dropna(axis=0)
     features = df.columns.tolist()
     X = df.values
+
+    # Classification handling:
+    # - If class_type == "binary", collapse labels to {Benign, Attack}
+    # - Else (multiclass), retain original labels
+    if (class_type or "").lower() == "binary":
+        def _to_binary(lbl: str) -> str:
+            s = str(lbl).strip().lower()
+            # Treat anything that contains "benign" or "normal" as Benign
+            if "benign" in s or "normal" in s:
+                return "Benign"
+            return "Attack"
+        y_labels = y_raw.iloc[:len(X)].apply(_to_binary).values if hasattr(y_raw, "iloc") else np.array([_to_binary(v) for v in y_raw[:len(X)]])
+    else:
+        y_labels = y_raw.iloc[:len(X)].values if hasattr(y_raw, "iloc") else np.array(y_raw[:len(X)])
+
     y_enc = LabelEncoder()
-    y = y_enc.fit_transform(y_raw[:len(X)])
+    y = y_enc.fit_transform(y_labels)
 
     scaler = StandardScaler()
     X = scaler.fit_transform(X)

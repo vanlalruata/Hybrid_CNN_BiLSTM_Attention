@@ -16,7 +16,7 @@ from .config import (
     DATASETS, EXPLICIT_FILES, COMMON_DROP, EXTRA_DROP,
     LABEL_COLUMNS, DIR_PROCESSED
 )
-from HLC.utils import ensure_dir, unique_path
+from HLC.src.utils import ensure_dir, unique_path
 
 
 # ============================================================
@@ -73,7 +73,7 @@ def safe_read_csv(path: str, chunksize: int = None) -> pd.DataFrame:
 # ============================================================
 
 def pick_label_column(df: pd.DataFrame, dataset: str) -> str:
-    """Detect which column should be used as label."""
+    """Detect which column should be used as a label."""
     for col in LABEL_COLUMNS.get(dataset, []):
         if col in df.columns:
             return col
@@ -109,7 +109,7 @@ def ensure_numeric(df: pd.DataFrame, exclude: List[str]) -> pd.DataFrame:
 def load_raw_dataset(dataset: str) -> Tuple[pd.DataFrame, np.ndarray, List[str], LabelEncoder, StandardScaler, str]:
     """
     Load and preprocess the raw dataset.
-    Returns standardized features, encoded labels, encoders, and task type.
+    Returns standardized features, encoded labels, encoders, and task types.
     """
     files = find_dataset_csvs(dataset)
     if not files:
@@ -147,7 +147,7 @@ def load_raw_dataset(dataset: str) -> Tuple[pd.DataFrame, np.ndarray, List[str],
     X = scaler.fit_transform(df.values)
     feature_cols = df.columns.tolist()
 
-    # Determine classification type
+    # Determine a classification type
     task = "binary" if len(np.unique(y)) == 2 else "multiclass"
 
     return pd.DataFrame(X, columns=feature_cols), y, feature_cols, y_encoder, scaler, task

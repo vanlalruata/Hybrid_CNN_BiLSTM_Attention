@@ -71,17 +71,20 @@ try:
     from HLC.src.evaluate import evaluate_on_test                     # classification/regression entrypoint
     from HLC.src.inference import load_model, predict_live
     from HLC.src.xai import run_xai                                   # shap/lime/anova
-    from HLC.src.ablation import run_ablation_user_selected           # ablation on given feature subset
+    from HLC.src.ablation import run_ablation_user_selected           # ablation on a given feature subset
     from HLC.src.viz import plot_dataset_overview                     # saves EPS figs for distributions/heatmaps
     from HLC.src.utils import set_all_seeds, ensure_dir
+    from HLC.src.config import DIR_OUTPUTS as CFG_OUTPUTS, DIR_PROCESSED as CFG_PROCESSED
 except Exception as e:
     print("[ERROR] Ensure you have all required src modules. Import failed:", e)
     sys.exit(1)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 POWER_WATTS = float(os.environ.get("POWER_WATTS", "120"))
-DEFAULT_OUTROOT = "outputs"
-DEFAULT_DATAROOT = "data"
+# Use configured root paths from config.py
+DEFAULT_OUTROOT = CFG_OUTPUTS
+# DEFAULT_DATAROOT is the parent of the configured processed dir (…/data)
+DEFAULT_DATAROOT = os.path.dirname(CFG_PROCESSED)
 
 # ---------------------------------------------------------------------
 # Helpers
@@ -112,7 +115,7 @@ def estimate_model_complexity(model, input_dim: int, seq_len: int = 1):
     """
     Best-effort lightweight complexity proxy:
     - number of parameters
-    - rough MACs per forward pass (dense + conv + lstm estimates)
+    - rough Macs per forward pass (dense + conv + lstm estimates)
     - does not account for activation/batchnorm/dropout ops
     """
     params = sum(p.numel() for p in model.parameters())
@@ -151,6 +154,15 @@ def opt_load_and_split():
     class_type = _prompt("Classification type? (binary/multiclass)", default="binary", choices=["binary","multiclass"])
 
     print(f"[INFO] Loading {dname} ({class_type})...")
+    # Show all CSV files that will be loaded for transparency (names with extension)
+    pattern = AVAILABLE_DATASETS.get(dname)
+    csv_files = sorted(glob.glob(pattern)) if pattern else []
+    if not csv_files:
+        print(f"[WARN] No CSV files matched pattern: {pattern}")
+    else:
+        print("[INFO] Files to load:")
+        for p in csv_files:
+            print(f"  - {os.path.basename(p)}")
     X, y, feat_cols, y_enc, scaler = load_and_prepare_dataset(dname, class_type=class_type)
 
     # Persist split with dataset prefix
@@ -161,7 +173,8 @@ def opt_load_and_split():
         X=X, y=y, feature_names=feat_cols,
         y_encoder=y_enc, scaler=scaler,
         test_size=test_size, random_state=seed,
-        processed_root=f"{DEFAULT_DATAROOT}/processed"
+        processed_root=f"{DEFAULT_DATAROOT}/processed",
+        class_type=class_type
     )
     print("[DONE] Split saved:", split_info)
     return 0
@@ -199,7 +212,8 @@ def opt_visualize_dataset():
         class_type = _prompt("Classification type? (binary/multiclass)", default="binary", choices=["binary","multiclass"])
         X, y, feat_cols, y_enc, scaler = load_and_prepare_dataset(dname, class_type=class_type)
         outdir = os.path.join(DEFAULT_OUTROOT, f"{dname}_{class_type}", "viz")
-        plot_dataset_overview(X, y, feat_cols, outdir=outdir)  # saves EPS
+        # Pass class_names so class_distribution shows human-readable labels (not 0,1,2,...)
+        plot_dataset_overview(X, y, feat_cols, outdir=outdir, class_names=list(y_enc.classes_))  # saves EPS
         print(f"[DONE] Visualizations saved to {outdir}")
     else:
         splits = list_processed_splits()
@@ -211,7 +225,14 @@ def opt_visualize_dataset():
         bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
         Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
         outdir = os.path.join(DEFAULT_OUTROOT, f"{key}", "viz")
-        plot_dataset_overview(np.vstack([Xtr, Xte]), np.hstack([ytr, yte]), meta["feature_names"], outdir=outdir)
+        # Use meta['class_names'] for readable class labels in plots
+        plot_dataset_overview(
+            np.vstack([Xtr, Xte]),
+            np.hstack([ytr, yte]),
+            meta["feature_names"],
+            outdir=outdir,
+            class_names=meta.get("class_names")
+        )
         print(f"[DONE] Visualizations saved to {outdir}")
     return 0
 
@@ -543,7 +564,8 @@ def main():
         info = split_and_persist(
             dataset_name=args.dataset, X=X, y=y, feature_names=feat_cols,
             y_encoder=y_enc, scaler=scaler, test_size=args.test_size,
-            random_state=args.seed, processed_root=f"{DEFAULT_DATAROOT}/processed"
+            random_state=args.seed, processed_root=f"{DEFAULT_DATAROOT}/processed",
+            class_type=args.class_type
         )
         print(json.dumps(info, indent=2))
 
