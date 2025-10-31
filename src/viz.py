@@ -77,8 +77,14 @@ def plot_dataset_overview(X, y, feature_names, outdir=None, max_features=20, cla
     ax.set_xlabel("Class")
     ax.set_ylabel("Count")
     plt.title("Class Distribution")
+    # Rotate x-axis labels 90 degrees for readability
+    for lbl in ax.get_xticklabels():
+        lbl.set_rotation(90)
+        lbl.set_ha("center")
+    # Extra bottom margin to avoid clipping long labels
+    plt.gcf().subplots_adjust(bottom=0.3)
     plt.tight_layout()
-    plt.savefig(os.path.join(outdir, "class_distribution.eps"), format="eps", dpi=200)
+    plt.savefig(os.path.join(outdir, "class_distribution.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
     # ------------------------------------------------------------------
