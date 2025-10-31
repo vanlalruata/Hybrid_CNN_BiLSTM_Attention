@@ -84,6 +84,8 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
 
     # Clean numeric matrix and align lengths
     df = df.replace([np.inf, -np.inf], np.nan).dropna(axis=0)
+    # Drop exact duplicate rows in features
+    df = df.drop_duplicates()
     features = df.columns.tolist()
     X = df.values
 

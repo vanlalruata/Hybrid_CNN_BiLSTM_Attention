@@ -27,11 +27,11 @@ Note: The existing codebase already implements the majority of the requested fun
 Raw CSVs must be placed under:
 - EDGE_IIoT: data/raw/EDGE_IIoT/*.csv
 - CIC-IoT-2023: data/raw/CICIoT2023/*.csv
-- Aposemat IoT-23: data/raw/AposeIoT23/*.csv
-- CIC IoMT 2024: data/raw/CICIoMT2024/*.csv
-- CIC IIoT 2025: data/raw/CICIoT2025/*.csv
-- Optional: CIC-IoT-IDAD-2024: data/raw/CIC-IoT-IDAD-2024/*.csv
-- Optional: BoT-IoT: data/raw/BoT-IoT/*.csv
+- Aposemat-IoT-23: data/raw/AposeIoT23/*.csv
+- CIC-IoMT-2024: data/raw/CICIoMT2024/*.csv
+- CIC-IIoT-2025: data/raw/CICIoT2025/*.csv
+- CIC-IoT-IDAD-2024: data/raw/CIC-IoT-IDAD-2024/*.csv
+- BoT-IoT: data/raw/BoT-IoT/*.csv
 
 Processed split format (no timestamps, deterministic naming):
 - data/processed/<DATASET>_<binary|multiclass>/

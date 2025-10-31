@@ -165,7 +165,7 @@ def opt_load_and_split():
             print(f"  - {os.path.basename(p)}")
     X, y, feat_cols, y_enc, scaler = load_and_prepare_dataset(dname, class_type=class_type)
 
-    # Persist split with dataset prefix
+    # Persist split with a dataset prefix
     test_size = float(_prompt("Test size (e.g., 0.2)?", default="0.2"))
     seed = int(_prompt("Random seed?", default="42"))
     split_info = split_and_persist(
@@ -251,7 +251,7 @@ def opt_train_model():
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
-    # Confirm classification basis
+    # Confirm a classification basis
     ncls = len(np.unique(ytr))
     class_type = "binary" if ncls == 2 else "multiclass"
     print(f"[INFO] Detected classes={ncls} → {class_type}")
@@ -426,8 +426,8 @@ def opt_inference():
     model, state = load_model(dataset_name, class_type, model_root=DEFAULT_OUTROOT)
     in_dim = int(state["input_dim"])
 
-    # Provide CSV path of *already preprocessed & scaled* features or raw?
-    # For safety, we accept raw numeric CSV with same columns as training features and will scale with stored scaler.
+    # Provide a CSV path of *already preprocessed & scaled* features or raw?
+    # For safety, we accept raw numeric CSV with the same columns as training features and will scale with stored scaler.
     csv_path = _prompt("Path to CSV with NEW flows (columns must match training features):")
     if not os.path.exists(csv_path):
         print("[ERROR] CSV not found.")

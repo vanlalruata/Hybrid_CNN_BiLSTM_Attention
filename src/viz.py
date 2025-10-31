@@ -73,7 +73,7 @@ def plot_dataset_overview(X, y, feature_names, outdir=None, max_features=20, cla
     class_colors = _random_dark_colors(len(labels_order))
 
     plt.figure(figsize=(6, 4))
-    ax = sns.countplot(x="Label", data=df, order=labels_order, palette=class_colors)
+    ax = sns.countplot(x="Label", hue="Label", data=df, order=labels_order, palette=class_colors, legend=True)
     ax.set_xlabel("Class")
     ax.set_ylabel("Count")
     plt.title("Class Distribution")
