@@ -111,7 +111,7 @@ def plot_dataset_overview(X, y, feature_names, outdir=None, max_features=20, cla
         ax.set_title(col)
 
     plt.tight_layout()
-    plt.savefig(os.path.join(outdir, "feature_histograms.eps"), format="eps", dpi=200)
+    plt.savefig(os.path.join(outdir, "feature_histograms.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
     # Build histogram data (same bins=30) for guide log
@@ -132,7 +132,7 @@ def plot_dataset_overview(X, y, feature_names, outdir=None, max_features=20, cla
     sns.heatmap(corr, cmap="coolwarm", annot=False)
     plt.title("Feature Correlation Heatmap")
     plt.tight_layout()
-    plt.savefig(os.path.join(outdir, "correlation_heatmap.eps"), format="eps", dpi=200)
+    plt.savefig(os.path.join(outdir, "correlation_heatmap.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
     # ------------------------------------------------------------------

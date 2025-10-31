@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Main Orchestrator CLI for IoT/IIoT IDS Experiments
 Author: Dr. Vanlalruata Hnamte
@@ -18,21 +16,6 @@ Features
 7) Ablation (user-selected feature subsets)
 8) Inference (load saved model & run on new/live data)
 9) Non-interactive subcommands with argparse (automation-friendly)
-
-Expected Project Layout
------------------------
-.
-├─ main.py
-└─ src/
-   ├─ datasets.py          # dataset discovery & loaders (CSV → (X, y, cols, enc, scaler))
-   ├─ models.py            # CNN_LSTM_Fusion, SimpleMLP
-   ├─ train.py             # training loops, history CSV, learning curves
-   ├─ evaluate.py          # eval plots (EPS), metrics JSON/CSV
-   ├─ inference.py         # load_model(), predict_live()
-   ├─ xai.py               # shap/lime/anova entrypoints
-   ├─ ablation.py          # run_ablation_user_selected(...)
-   ├─ utils.py             # IO utils, seeds, logging, etc.
-   └─ viz.py               # dataset visualizations (heatmap, distributions)
 
 Notes
 -----
@@ -261,11 +244,11 @@ def opt_train_model():
     batch = int(_prompt("Batch size?", default="256"))
     lr = float(_prompt("Learning rate?", default="0.001"))
     patience = int(_prompt("Early stop patience?", default="8"))
-    model_choice = _prompt("Model (fusion/mlp)?", default="fusion", choices=["fusion","mlp"])
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
 
     ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
         Xtr, ytr, Xte, yte,
-        model_name=("cnn_lstm_fusion" if model_choice=="fusion" else "mlp"),
+        model_name=("cnn_lstm_fusion" if model_choice=="fusion" else "dnn"),
         dataset_key=key,
         out_root=DEFAULT_OUTROOT,
         epochs=epochs, batch_size=batch, lr=lr, early_stop_patience=patience,
@@ -522,7 +505,7 @@ def build_argparser():
     # train
     pt = sub.add_parser("train", help="Train a model on a processed split")
     pt.add_argument("--split_key", required=True)
-    pt.add_argument("--model", default="fusion", choices=["fusion","mlp"])
+    pt.add_argument("--model", default="fusion", choices=["fusion","dnn"])
     pt.add_argument("--epochs", type=int, default=50)
     pt.add_argument("--batch", type=int, default=256)
     pt.add_argument("--lr", type=float, default=1e-3)
@@ -593,7 +576,7 @@ def main():
         Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
         ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
             Xtr, ytr, Xte, yte,
-            model_name=("cnn_lstm_fusion" if args.model=="fusion" else "mlp"),
+            model_name=("cnn_lstm_fusion" if args.model=="fusion" else "dnn"),
             dataset_key=args.split_key,
             out_root=DEFAULT_OUTROOT,
             epochs=args.epochs, batch_size=args.batch, lr=args.lr,

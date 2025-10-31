@@ -16,12 +16,12 @@ from .utils import ensure_dir, save_scaler, set_all_seeds
 
 AVAILABLE_DATASETS = {
     "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
-    "CIC-IoT-2023": "data/raw/CICIoT2023/*.csv",
-    "Apose-IoT-23": "data/raw/AposeIoT23/*.csv",
-    "CIC-IoMT-2024": "data/raw/CICIoMT2024/*.csv",
-    "CIC-IoT-IDAD-2024": "data/raw/CIC-IoT-IDAD-2024/*.csv",
-    "CIC-IoT-2025": "data/raw/CICIoT2025/*.csv",
-    "BoT-IoT": "data/raw/BoT-IoT/*.csv"
+    "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
+    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/combined/*.csv",
+    "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
+    "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
+    "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
+    "BoT-IoT": "H:/Datasets/BoT-IoT/*.csv"
 }
 
 COMMON_DROP = [

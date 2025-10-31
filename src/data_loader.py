@@ -1,5 +1,5 @@
 """
-data_loader.py — Data loading and preprocessing utilities
+Data loading and preprocessing utilities
 Author: Dr. Vanlalruata Hnamte
 Version: 1.0
 """

@@ -1,11 +1,11 @@
 """
 models.py — Model architectures for IDS
 Author: Dr. Vanlalruata Hnamte
-Version: 1.0
+Version: 1.1
 
 Implements:
 - CNN_LSTM_Fusion: parallel feature extraction via CNN and LSTM branches
-- SimpleMLP: baseline dense network for ablation and benchmark
+- DNN: 4-layer deep neural network baseline for ablation and benchmark
 """
 
 import torch
@@ -76,22 +76,55 @@ class CNN_LSTM_Fusion(nn.Module):
 
 
 # ============================================================
-# 2️⃣ Simple MLP Baseline
+# 2️⃣ DNN Baseline (4 hidden layers)
 # ============================================================
 
-class SimpleMLP(nn.Module):
-    """A minimal baseline dense network."""
-    def __init__(self, input_dim: int, num_classes: int, hidden_dim: int = 128):
+class DNN(nn.Module):
+    """
+    4-layer Deep Neural Network baseline for tabular IDS:
+      Input -> [BN] -> Dense -> ReLU -> Dropout
+                   -> Dense -> ReLU -> Dropout
+                   -> Dense -> ReLU -> Dropout
+                   -> Dense -> ReLU -> Dropout
+                   -> Output(num_classes)
+    Notes:
+      - Uses progressively decreasing hidden sizes by default.
+      - BatchNorm on input to stabilize training on standardized features.
+    """
+    def __init__(
+        self,
+        input_dim: int,
+        num_classes: int,
+        h1: int = 512,
+        h2: int = 256,
+        h3: int = 128,
+        h4: int = 64,
+        p1: float = 0.30,
+        p2: float = 0.25,
+        p3: float = 0.20,
+        p4: float = 0.15
+    ):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(hidden_dim, hidden_dim // 2),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(hidden_dim // 2, num_classes)
-        )
+        self.bn0 = nn.BatchNorm1d(input_dim)
+        self.fc1 = nn.Linear(input_dim, h1)
+        self.fc2 = nn.Linear(h1, h2)
+        self.fc3 = nn.Linear(h2, h3)
+        self.fc4 = nn.Linear(h3, h4)
+        self.out = nn.Linear(h4, num_classes)
+        self.drop1 = nn.Dropout(p1)
+        self.drop2 = nn.Dropout(p2)
+        self.drop3 = nn.Dropout(p3)
+        self.drop4 = nn.Dropout(p4)
 
     def forward(self, x):
-        return self.net(x)
+        if x.dim() == 1:
+            x = x.unsqueeze(0)
+        x = self.bn0(x)
+        x = F.relu(self.fc1(x)); x = self.drop1(x)
+        x = F.relu(self.fc2(x)); x = self.drop2(x)
+        x = F.relu(self.fc3(x)); x = self.drop3(x)
+        x = F.relu(self.fc4(x)); x = self.drop4(x)
+        return self.out(x)
+
+# Backward compatibility: keep the previous name working until callers migrate
+SimpleMLP = DNN
