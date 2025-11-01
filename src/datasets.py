@@ -7,6 +7,8 @@ Version: 1.0
 import os
 import glob
 import json
+import csv
+import re
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -30,8 +32,21 @@ COMMON_DROP = [
 ]
 
 LABEL_COLS = [
-    "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory"
+    "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory", "label2"
 ]
+
+
+def _read_csv_auto(path: str) -> pd.DataFrame:
+    """Read CSV with auto-detected delimiter (supports ',' and ';')."""
+    with open(path, "r", encoding="utf-8", errors="ignore") as fh:
+        sample = fh.read(8192)
+        try:
+            dialect = csv.Sniffer().sniff(sample, delimiters=[",", ";"])
+            sep = dialect.delimiter
+        except Exception:
+            # Fallback heuristic
+            sep = ";" if sample.count(";") > sample.count(",") else ","
+    return pd.read_csv(path, sep=sep, low_memory=False)
 
 
 def _find_label_column(df: pd.DataFrame):
@@ -69,14 +84,37 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     dfs = []
     for f in files:
         try:
-            df = pd.read_csv(f, low_memory=False)
+            df = _read_csv_auto(f)
+
+            # Normalize/rename label column to 'Label' per file
+            try:
+                label_col = _find_label_column(df)
+                if label_col != "Label":
+                    df = df.rename(columns={label_col: "Label"})
+            except Exception:
+                # If no label found here, combined logic will raise later
+                pass
+
+            # If label needs manual assignment, derive from filename prefix
+            if "Label" in df.columns:
+                mask = df["Label"].astype(str).str.strip() == "NeedManualLabel"
+                if mask.any():
+                    stem = os.path.splitext(os.path.basename(f))[0]
+                    # Split on -, _, space, or dot and take the first token
+                    tokens = re.split(r"[-_\s.]+", stem)
+                    first_token = tokens[0] if tokens and tokens[0] else stem
+                    df.loc[mask, "Label"] = first_token
+
             dfs.append(df)
         except Exception as e:
             print(f"[WARN] Could not load {f}: {e}")
     df = pd.concat(dfs, ignore_index=True)
 
-    # Find label & drop identifiers
+    # Find label & normalize its name to 'Label'
     label_col = _find_label_column(df)
+    if label_col != "Label":
+        df = df.rename(columns={label_col: "Label"})
+        label_col = "Label"
     y_raw = df[label_col].astype(str)
     df = df.drop(columns=[label_col])
     df = _drop_identifiers(df)
@@ -143,6 +181,12 @@ def split_and_persist(
     np.save(os.path.join(save_dir, "y_train.npy"), y_train)
     np.save(os.path.join(save_dir, "X_test.npy"), X_test)
     np.save(os.path.join(save_dir, "y_test.npy"), y_test)
+
+    # Also persist CSV copies with a unified comma delimiter for interoperability
+    pd.DataFrame(X_train, columns=feature_names).to_csv(os.path.join(save_dir, "X_train.csv"), index=False)
+    pd.DataFrame({"Label": y_train}).to_csv(os.path.join(save_dir, "y_train.csv"), index=False)
+    pd.DataFrame(X_test, columns=feature_names).to_csv(os.path.join(save_dir, "X_test.csv"), index=False)
+    pd.DataFrame({"Label": y_test}).to_csv(os.path.join(save_dir, "y_test.csv"), index=False)
 
     save_scaler(scaler, os.path.join(save_dir, "scaler.joblib"))
     meta = {
