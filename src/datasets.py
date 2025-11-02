@@ -14,7 +14,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 from .utils import ensure_dir, save_scaler, set_all_seeds
-from .config import FORCE_DROP
+from .config import FORCE_DROP, EXTRA_DROP
 
 
 AVAILABLE_DATASETS = {
@@ -33,7 +33,7 @@ COMMON_DROP = [
 ]
 
 LABEL_COLS = [
-    "Label", "label", "Attack_type", "Attack_label", "subcategory", "label2"
+    "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory", "label2"
 ]
 
 
@@ -83,6 +83,7 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
         raise FileNotFoundError(f"No CSV files for {dataset_name} at {pattern}")
 
     dfs = []
+    common_features = None
     for f in files:
         try:
             df = _read_csv_auto(f)
@@ -106,12 +107,35 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
                     first_token = tokens[0] if tokens and tokens[0] else stem
                     df.loc[mask, "Label"] = first_token
 
+            # Track the intersection of feature columns across files (excluding Label)
+            cur_features = [c for c in df.columns if c != "Label"]
+            if common_features is None:
+                common_features = set(cur_features)
+            else:
+                common_features &= set(cur_features)
+
             dfs.append(df)
         except Exception as e:
             print(f"[WARN] Could not load {f}: {e}")
-    df = pd.concat(dfs, ignore_index=True)
 
-    # Find label & normalize its name to 'Label'
+    if not dfs:
+        raise FileNotFoundError(f"No valid CSV files could be loaded for {dataset_name} at {pattern}")
+
+    # Align frames to the common feature set to avoid NaNs from column mismatches
+    if not common_features:
+        raise ValueError("No common feature columns found across CSV files. Please ensure files share a core schema.")
+    selected_cols = sorted(list(common_features)) + ["Label"]
+    aligned = []
+    for d in dfs:
+        # Ensure 'Label' is present after earlier normalization
+        if "Label" not in d.columns:
+            lbl_col = _find_label_column(d)
+            if lbl_col != "Label":
+                d = d.rename(columns={lbl_col: "Label"})
+        aligned.append(d.reindex(columns=selected_cols))
+    df = pd.concat(aligned, ignore_index=True)
+
+    # Find a label & normalize its name to 'Label'
     label_col = _find_label_column(df)
     if label_col != "Label":
         df = df.rename(columns={label_col: "Label"})
@@ -119,6 +143,13 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     y_raw = df[label_col].astype(str)
     df = df.drop(columns=[label_col])
     df = _drop_identifiers(df)
+    # Drop dataset-specific extra columns
+    extra_drop = EXTRA_DROP.get(dataset_name, [])
+    if extra_drop:
+        drop_extra = [c for c in extra_drop if c in df.columns]
+        if drop_extra:
+            df = df.drop(columns=drop_extra)
+            print(f"[CLEAN] Extra-dropped columns for {dataset_name}: {drop_extra}")
     # Force-drop per-dataset configured columns (even if numeric)
     extra_forced = FORCE_DROP.get(dataset_name, [])
     if extra_forced:
@@ -128,8 +159,22 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
             print(f"[CLEAN] Force-dropped columns for {dataset_name}: {drop_forced}")
     df = _encode_non_numeric(df)
 
-    # Clean numeric matrix and align lengths
-    df = df.replace([np.inf, -np.inf], np.nan).dropna(axis=0)
+    # Clean numeric matrix and robustly handle missing values
+    df = df.replace([np.inf, -np.inf], np.nan)
+
+    # Impute numeric columns with median; fallback to 0 if median is NaN
+    num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    for c in num_cols:
+        if df[c].isna().any():
+            med = pd.to_numeric(df[c], errors="coerce").median(skipna=True)
+            if pd.isna(med) or not np.isfinite(med):
+                med = 0
+            df[c] = df[c].fillna(med)
+
+    # Final safety: if any NaNs remain (from non-numeric edge cases), fill with 0
+    if df.isna().any().any():
+        df = df.fillna(0)
+
     # Drop exact duplicate rows in features
     df = df.drop_duplicates()
     features = df.columns.tolist()
@@ -138,19 +183,27 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     # Classification handling:
     # - If class_type == "binary", collapse labels to {Benign, Attack}
     # - Else (multiclass), retain original labels
+    # Align labels to the cleaned feature rows using index alignment
+    y_series = y_raw.loc[df.index] if hasattr(y_raw, "loc") else np.array(y_raw)[:len(df)]
     if (class_type or "").lower() == "binary":
         def _to_binary(lbl: str) -> str:
             s = str(lbl).strip().lower()
-            # Treat anything that contains "benign" or "normal" as Benign
-            if "benign" in s or "normal" in s:
+            # Normalize common binary encodings and keywords
+            if s in {"0", "false", "no"} or "benign" in s or "normal" in s:
                 return "Benign"
+            if s in {"1", "true", "yes"} or "attack" in s or "malicious" in s or "ddos" in s or "dos" in s or "scan" in s or "theft" in s or "exfil" in s or "keylog" in s:
+                return "Attack"
+            # Default fallback: conservative choice
             return "Attack"
-        y_labels = y_raw.iloc[:len(X)].apply(_to_binary).values if hasattr(y_raw, "iloc") else np.array([_to_binary(v) for v in y_raw[:len(X)]])
+        y_labels = y_series.apply(_to_binary).values if hasattr(y_series, "apply") else np.array([_to_binary(v) for v in y_series])
     else:
-        y_labels = y_raw.iloc[:len(X)].values if hasattr(y_raw, "iloc") else np.array(y_raw[:len(X)])
+        y_labels = y_series.values if hasattr(y_series, "values") else np.array(y_series)
 
     y_enc = LabelEncoder()
     y = y_enc.fit_transform(y_labels)
+
+    if X.shape[0] == 0:
+        raise ValueError("No samples remain after preprocessing; please review preprocessing rules.")
 
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
@@ -175,9 +228,36 @@ def split_and_persist(
     inferred_class = "binary" if len(np.unique(y)) == 2 else "multiclass"
     class_type = class_type or inferred_class
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, stratify=y, random_state=random_state
-    )
+    # Report class distribution and decide safe stratification
+    unique, counts = np.unique(y, return_counts=True)
+    try:
+        classes = list(y_encoder.classes_)
+        distribution = {str(classes[i]): int(np.sum(y == i)) for i in range(len(classes))}
+        print(f"[INFO] Class distribution: {distribution}")
+    except Exception:
+        print(f"[INFO] Class distribution (encoded): {dict(zip(unique.tolist(), counts.tolist()))}")
+
+    def _can_stratify(cnts: np.ndarray, ts: float) -> bool:
+        if cnts.size == 0:
+            return False
+        # sklearn requires at least 2 samples for the least populated class
+        if np.min(cnts) < 2:
+            return False
+        # Ensure each class will have at least one sample in both splits
+        if np.any(cnts * ts < 1) or np.any(cnts * (1 - ts) < 1):
+            return False
+        return True
+
+    if _can_stratify(counts, test_size):
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, stratify=y, random_state=random_state
+        )
+    else:
+        min_count = int(counts.min()) if counts.size else 0
+        print(f"[WARN] Stratified split not feasible (min class count={min_count}, test_size={test_size}). Falling back to non-stratified split.")
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, stratify=None, random_state=random_state
+        )
 
     # Folder
     suffix = f"{dataset_name}_{class_type}"

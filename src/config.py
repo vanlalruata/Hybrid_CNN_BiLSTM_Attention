@@ -67,7 +67,7 @@ LABEL_COLUMNS = {
     "EDGE_IIoT": ["Attack_type"],
     "CIC-IoT-2023": ["Label"],
     "Apose-IoT-23": ["label"],
-    "BoT-IoT": ["category"],
+    "BoT-IoT": ["subcategory"],
     "CIC-IoMT-2024": ["Label"],
     "CIC-IoT-IDAD-2024": ["Label"],
     "CIC-IoT-2025": ["label2"],
