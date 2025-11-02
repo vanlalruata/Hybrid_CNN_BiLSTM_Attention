@@ -191,10 +191,10 @@ def split_and_persist(
     np.save(os.path.join(save_dir, "y_test.npy"), y_test)
 
     # Also persist CSV copies with a unified comma delimiter for interoperability
-    pd.DataFrame(X_train, columns=feature_names).to_csv(os.path.join(save_dir, "X_train.csv"), index=False)
-    pd.DataFrame({"Label": y_train}).to_csv(os.path.join(save_dir, "y_train.csv"), index=False)
-    pd.DataFrame(X_test, columns=feature_names).to_csv(os.path.join(save_dir, "X_test.csv"), index=False)
-    pd.DataFrame({"Label": y_test}).to_csv(os.path.join(save_dir, "y_test.csv"), index=False)
+    # pd.DataFrame(X_train, columns=feature_names).to_csv(os.path.join(save_dir, "X_train.csv"), index=False)
+    # pd.DataFrame({"Label": y_train}).to_csv(os.path.join(save_dir, "y_train.csv"), index=False)
+    # pd.DataFrame(X_test, columns=feature_names).to_csv(os.path.join(save_dir, "X_test.csv"), index=False)
+    # pd.DataFrame({"Label": y_test}).to_csv(os.path.join(save_dir, "y_test.csv"), index=False)
 
     save_scaler(scaler, os.path.join(save_dir, "scaler.joblib"))
     meta = {
