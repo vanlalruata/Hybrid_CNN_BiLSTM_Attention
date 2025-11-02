@@ -20,7 +20,7 @@ from .config import FORCE_DROP
 AVAILABLE_DATASETS = {
     "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
     "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
-    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/combined/*.csv",
+    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/processed/*.csv",
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
     "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
     "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
@@ -42,7 +42,7 @@ def _read_csv_auto(path: str) -> pd.DataFrame:
     with open(path, "r", encoding="utf-8", errors="ignore") as fh:
         sample = fh.read(8192)
         try:
-            dialect = csv.Sniffer().sniff(sample, delimiters=[",", ";"])
+            dialect = csv.Sniffer().sniff(sample, delimiters=[",", ";", "|"])
             sep = dialect.delimiter
         except Exception:
             # Fallback heuristic

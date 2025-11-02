@@ -15,7 +15,7 @@ from typing import Dict, List
 DATASETS: Dict[str, str] = {
     "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
     "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
-    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/combined/*.csv",
+    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/processed/*.csv",
     "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv",
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
     "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
@@ -64,13 +64,13 @@ FORCE_DROP: Dict[str, List[str]] = {
 
 # Label columns (checked in order)
 LABEL_COLUMNS = {
-    "EDGE_IIoT": ["Attack_type", "Attack_label"],
+    "EDGE_IIoT": ["Attack_type"],
     "CIC-IoT-2023": ["Label"],
     "Apose-IoT-23": ["label"],
-    "BoT-IoT": ["attack", "category", "subcategory"],
+    "BoT-IoT": ["category"],
     "CIC-IoMT-2024": ["Label"],
     "CIC-IoT-IDAD-2024": ["Label"],
-    "CIC-IoT-2025": ["label1", "label_full"],
+    "CIC-IoT-2025": ["label2"],
 }
 
 # ============================================================
