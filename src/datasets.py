@@ -14,6 +14,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 from .utils import ensure_dir, save_scaler, set_all_seeds
+from .config import FORCE_DROP
 
 
 AVAILABLE_DATASETS = {
@@ -23,7 +24,7 @@ AVAILABLE_DATASETS = {
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
     "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
     "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
-    "BoT-IoT": "H:/Datasets/BoT-IoT/*.csv"
+    "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv"
 }
 
 COMMON_DROP = [
@@ -32,7 +33,7 @@ COMMON_DROP = [
 ]
 
 LABEL_COLS = [
-    "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory", "label2"
+    "Label", "label", "Attack_type", "Attack_label", "subcategory", "label2"
 ]
 
 
@@ -118,6 +119,13 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     y_raw = df[label_col].astype(str)
     df = df.drop(columns=[label_col])
     df = _drop_identifiers(df)
+    # Force-drop per-dataset configured columns (even if numeric)
+    extra_forced = FORCE_DROP.get(dataset_name, [])
+    if extra_forced:
+        drop_forced = [c for c in extra_forced if c in df.columns]
+        if drop_forced:
+            df = df.drop(columns=drop_forced)
+            print(f"[CLEAN] Force-dropped columns for {dataset_name}: {drop_forced}")
     df = _encode_non_numeric(df)
 
     # Clean numeric matrix and align lengths

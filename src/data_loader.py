@@ -77,7 +77,7 @@ def pick_label_column(df: pd.DataFrame, dataset: str) -> str:
     for col in LABEL_COLUMNS.get(dataset, []):
         if col in df.columns:
             return col
-    for fallback in ["Label", "label", "Attack_type", "attack", "category"]:
+    for fallback in ["Label", "label", "Attack_type", "subcategory"]:
         if fallback in df.columns:
             return fallback
     raise ValueError(f"No label column found for {dataset}. Sample columns: {list(df.columns)[:30]}")

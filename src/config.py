@@ -16,7 +16,7 @@ DATASETS: Dict[str, str] = {
     "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
     "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
     "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/combined/*.csv",
-    "BoT-IoT": "H:/Datasets/BoT-IoT/*.csv",
+    "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv",
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
     "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
     "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
@@ -42,10 +42,24 @@ EXTRA_DROP = {
     "EDGE_IIoT": ['ip.src_host', 'ip.dst_host', 'Attack_label'],
     "CIC-IoT-2023": [],
     "Apose-IoT-23": [],
-    "BoT-IoT": [],
+    "BoT-IoT": ['record', 'attack', 'category'],
     "CIC-IoMT-2024": [],
     "CIC-IoT-IDAD-2024": ['Flow ID', 'Src IP', 'Dst IP', 'Timestamp'],
     "CIC-IoT-2025": [],
+}
+
+# Manual per-dataset forced removals (drop even if numeric)
+# Example: For BoT-IoT, always drop 'attack' and 'category' feature columns.
+# Add/remove entries per dataset as needed.
+FORCE_DROP: Dict[str, List[str]] = {
+    # Example configuration (enabled by default as requested)
+    # "BoT-IoT": ["attack", "category"],
+    # "EDGE_IIoT": [],
+    # "CIC-IoT-2023": [],
+    # "Apose-IoT-23": [],
+    # "CIC-IoMT-2024": [],
+    # "CIC-IoT-IDAD-2024": [],
+    # "CIC-IoT-2025": [],
 }
 
 # Label columns (checked in order)
