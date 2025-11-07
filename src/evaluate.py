@@ -33,6 +33,10 @@ from sklearn.preprocessing import label_binarize
 import matplotlib
 matplotlib.use("Agg")  # headless
 import matplotlib.pyplot as plt
+import warnings
+
+# Silence EPS transparency warning (artists with alpha will be rendered opaque in PS/EPS)
+warnings.filterwarnings("ignore", message="The PostScript backend does not support transparency", category=UserWarning)
 
 # Local models (must match what you trained with)
 from .models import CNN_LSTM_Fusion, SimpleMLP
@@ -102,6 +106,23 @@ def make_loader(X: np.ndarray, y: Optional[np.ndarray], batch_size: int = 512, s
     return DataLoader(ds, batch_size=batch_size, shuffle=shuffle, pin_memory=torch.cuda.is_available())
 
 
+def _coerce_feature_dim(X: np.ndarray, expected: int) -> np.ndarray:
+    """
+    Ensure X has the feature dimension expected by the checkpoint.
+    If fewer columns: right-pad zeros. If more: truncate extra columns.
+    """
+    X = np.asarray(X)
+    if X.shape[1] == expected:
+        return X
+    if X.shape[1] < expected:
+        pad = np.zeros((X.shape[0], expected - X.shape[1]), dtype=X.dtype)
+        print(f"[WARN] Feature mismatch: X has {X.shape[1]} cols, expected {expected}. Padding {pad.shape[1]} zeros.")
+        return np.hstack([X, pad])
+    else:
+        print(f"[WARN] Feature mismatch: X has {X.shape[1]} cols, expected {expected}. Truncating to {expected}.")
+        return X[:, :expected]
+
+
 # -----------------------------------------------------------------------------
 # Plot helpers
 # -----------------------------------------------------------------------------
@@ -109,7 +130,7 @@ def make_loader(X: np.ndarray, y: Optional[np.ndarray], batch_size: int = 512, s
 def _tight_eps(path: str):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     plt.tight_layout()
-    plt.savefig(path, format="eps", dpi=200)
+    plt.savefig(path, format="eps", dpi=200, transparent=False)
     plt.close()
 
 
@@ -252,6 +273,9 @@ def evaluate_classification(
 
     model, meta = load_checkpoint(ckpt_path)
     class_names = meta.get("class_names") or [str(i) for i in range(int(meta.get("num_classes", 2)))]
+    # Align feature dimension to what the checkpoint expects (guards against stale checkpoints vs new splits)
+    exp_in = int(meta.get("input_dim") or X_test.shape[1])
+    X_test = _coerce_feature_dim(X_test, exp_in)
     loader = make_loader(X_test, y_test, batch_size=batch_size, shuffle=False)
 
     # Inference timing
@@ -336,11 +360,37 @@ def evaluate_classification(
             if k in maybe_train_metrics:
                 metrics[k] = maybe_train_metrics[k]
 
-    with open(os.path.join(outdir, "metrics.json"), "w") as f:
+    # Build a complexity snapshot for evaluation time (detection on validation)
+    try:
+        param_count = sum(p.numel() for p in model.parameters())
+    except Exception:
+        param_count = None
+    complexity_eval = {
+        "checkpoint": ckpt_path,
+        "model_name": meta.get("model_name"),
+        "param_count": int(param_count) if param_count is not None else None,
+        "device": str(DEVICE),
+        "power_watts_assumed": float(POWER_WATTS),
+        "eval_infer_total_sec": float(total_time),
+        "eval_ms_per_batch": float(ms_per_batch),
+        "eval_ms_per_sample": float((total_time / max(1, n_samples)) * 1000.0),
+        "eval_samples_per_sec": float(samples_per_sec),
+        "eval_energy_j_proxy": float(energy_j),
+        "batches": int(batches),
+        "samples": int(n_samples),
+    }
+
+    # Write files
+    metrics_path = os.path.join(outdir, "metrics.json")
+    complexity_eval_path = os.path.join(outdir, "complexity_eval.json")
+    with open(metrics_path, "w") as f:
         json.dump(metrics, f, indent=2)
+    with open(complexity_eval_path, "w") as f:
+        json.dump(complexity_eval, f, indent=2)
 
     return {
-        "metrics_json": os.path.join(outdir, "metrics.json"),
+        "metrics_json": metrics_path,
+        "complexity_eval_json": complexity_eval_path,
         "predictions_csv": pred_csv,
         "report_csv": rep_csv,
         "confusion_matrix": cm.tolist()
@@ -361,6 +411,8 @@ def evaluate_regression(
     os.makedirs(os.path.join(outdir, "plots"), exist_ok=True)
 
     model, meta = load_checkpoint(ckpt_path)
+    exp_in = int(meta.get("input_dim") or X_test.shape[1])
+    X_test = _coerce_feature_dim(X_test, exp_in)
     loader = make_loader(X_test, y_test, batch_size=batch_size, shuffle=False)
 
     if torch.cuda.is_available(): torch.cuda.synchronize()
@@ -460,6 +512,8 @@ def load_model_and_predict(
       y_pred, (optional) y_proba, and model metadata.
     """
     model, meta = load_checkpoint(checkpoint_path)
+    exp_in = int(meta.get("input_dim") or X.shape[1])
+    X = _coerce_feature_dim(X, exp_in)
     loader = make_loader(X, y=None, batch_size=batch_size, shuffle=False)
 
     if torch.cuda.is_available(): torch.cuda.synchronize()

@@ -18,13 +18,13 @@ from .config import FORCE_DROP, EXTRA_DROP
 
 
 AVAILABLE_DATASETS = {
-    "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
-    "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
+    # "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
+    # "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
     "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/processed/*.csv",
+    "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv",
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
-    "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
-    "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
-    "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv"
+    # "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
+    "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv"
 }
 
 COMMON_DROP = [
@@ -34,6 +34,7 @@ COMMON_DROP = [
 
 LABEL_COLS = [
     "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory", "label2"
+    #"Label", "subcategory"
 ]
 
 

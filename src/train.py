@@ -13,7 +13,11 @@ from torch.utils.data import DataLoader, TensorDataset
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import warnings
 import math
+
+# Silence EPS transparency warning (artists with alpha will be rendered opaque in PS/EPS)
+warnings.filterwarnings("ignore", message="The PostScript backend does not support transparency", category=UserWarning)
 
 from .models import CNN_LSTM_Fusion, SimpleMLP
 from .utils import ensure_dir, set_all_seeds
@@ -156,7 +160,7 @@ def train_experiment(
     plt.xlabel("Epochs"); plt.ylabel("Loss")
     plt.title("Learning Curve")
     plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(outdir, "learning_curve.eps"), format="eps", dpi=200)
+    plt.savefig(os.path.join(outdir, "learning_curve.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
     hist_csv = os.path.join(outdir, "history.csv")

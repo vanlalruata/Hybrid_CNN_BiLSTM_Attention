@@ -30,6 +30,7 @@ import sys
 import json
 import glob
 import argparse
+import time
 import numpy as np
 import pandas as pd
 
@@ -125,6 +126,44 @@ def estimate_model_complexity(model, input_dim: int, seq_len: int = 1):
             macs += 4 * (i * h + h * h + h) * T
 
     return {"params": int(params), "est_macs_per_sample": int(macs)}
+
+
+def _measure_infer_time(model, X: np.ndarray, batch_size: int = 512):
+    """
+    Measure end-to-end inference time on a feature matrix X using current DEVICE.
+    Returns timing metrics for complexity reporting.
+    """
+    from torch.utils.data import DataLoader, TensorDataset
+    model.eval()
+    ds = TensorDataset(torch.tensor(X, dtype=torch.float32))
+    loader = DataLoader(ds, batch_size=batch_size, shuffle=False, pin_memory=torch.cuda.is_available())
+
+    if torch.cuda.is_available(): torch.cuda.synchronize()
+    t0 = time.perf_counter()
+    with torch.no_grad():
+        for (xb,) in loader:
+            xb = xb.to(DEVICE)
+            _ = model(xb)
+    if torch.cuda.is_available(): torch.cuda.synchronize()
+    t1 = time.perf_counter()
+
+    total_time = t1 - t0
+    batches = max(1, len(loader))
+    n_samples = int(X.shape[0])
+    ms_per_batch = (total_time / batches) * 1000.0
+    ms_per_sample = (total_time / max(1, n_samples)) * 1000.0
+    samples_per_sec = (n_samples / total_time) if total_time > 0 else float("inf")
+    energy_j = total_time * POWER_WATTS
+
+    return {
+        "total_time_sec": float(total_time),
+        "batches": int(batches),
+        "samples": n_samples,
+        "ms_per_batch": float(ms_per_batch),
+        "ms_per_sample": float(ms_per_sample),
+        "samples_per_sec": float(samples_per_sec),
+        "energy_j": float(energy_j),
+    }
 
 # ---------------------------------------------------------------------
 # Option 1: Load & split dataset
@@ -257,6 +296,25 @@ def opt_train_model():
 
     # Complexity snapshot
     complexity = estimate_model_complexity(model, input_dim=meta["input_dim"], seq_len=meta.get("seq_len", 1))
+
+    # Measure inference/detection time on validation (test) split for complexity report
+    try:
+        infer = _measure_infer_time(model, Xte, batch_size=batch)
+        complexity.update({
+            "measured_infer_total_sec": infer["total_time_sec"],
+            "measured_ms_per_batch": infer["ms_per_batch"],
+            "measured_ms_per_sample": infer["ms_per_sample"],
+            "measured_samples_per_sec": infer["samples_per_sec"],
+            "measured_energy_j_proxy": infer["energy_j"],
+            "measured_batches": infer["batches"],
+            "measured_samples": infer["samples"],
+            # Alias emphasizing detection time on validation (same pass)
+            "val_detect_total_sec": infer["total_time_sec"],
+            "val_detect_ms_per_sample": infer["ms_per_sample"]
+        })
+    except Exception as e:
+        print(f"[WARN] Failed to measure inference time for complexity: {e}")
+
     _safe_json_dump(complexity, os.path.join(artifacts_dir, "complexity.json"))
     print(f"[DONE] Checkpoint: {ckpt_path}")
     print(f"       History CSV: {hist_csv}")

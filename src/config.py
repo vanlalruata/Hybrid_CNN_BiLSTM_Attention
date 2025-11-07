@@ -13,12 +13,12 @@ from typing import Dict, List
 
 # Raw dataset root glob patterns
 DATASETS: Dict[str, str] = {
-    "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
-    "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
+    # "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
+    # "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
     "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/processed/*.csv",
     "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv",
     "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
-    "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
+    # "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
     "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv",
 }
 
@@ -39,12 +39,18 @@ COMMON_DROP = [
 
 # Extra per-dataset columns to drop
 EXTRA_DROP = {
-    "EDGE_IIoT": ['ip.src_host', 'ip.dst_host', 'Attack_label'],
-    "CIC-IoT-2023": [],
-    "Apose-IoT-23": [],
-    "BoT-IoT": ['record', 'attack', 'category'],
+    # "EDGE_IIoT": ['ip.src_host', 'ip.dst_host', 'Attack_label', 'frame.time', 'arp.dst.proto_ipv4'],
+    # "CIC-IoT-2023": ['Number', 'AVG', 'Std', 'Tot sum', 'Tot size', 'IAT', 'Variance', 'Min', 'Max'],
+    "Apose-IoT-23": [''],
+    "BoT-IoT": ['attack', 'record', 'category'],
     "CIC-IoMT-2024": [],
-    "CIC-IoT-IDAD-2024": ['Flow ID', 'Src IP', 'Dst IP', 'Timestamp'],
+    # "CIC-IoT-IDAD-2024": ['Flow ID', 'Src IP', 'Dst IP', 'Timestamp','Active Mean','Active Std','Active Max','Active Min','Idle Mean','Idle Std','Idle Max','Idle Min',
+    #                       'Flow IAT Mean','Flow IAT Std','Flow IAT Max','Flow IAT Min','Fwd IAT Total','Fwd IAT Mean','Fwd IAT Std','Fwd IAT Max','Fwd IAT Min',
+    #                       'Bwd IAT Total','Bwd IAT Mean','Bwd IAT Std','Bwd IAT Max','Bwd IAT Min','Packet Length Min','Packet Length Max','Packet Length Mean',
+    #                       'Packet Length Std', 'Packet Length Variance', 'Fwd Segment Size Avg', 'Bwd Segment Size Avg', 'Fwd Bytes/Bulk Avg', 'Fwd Packet/Bulk Avg',
+    #                       'Fwd Bulk Rate Avg', 'Bwd Bytes/Bulk Avg', 'Bwd Packet/Bulk Avg', 'Bwd Bulk Rate Avg', 'Fwd Seg Size Min', 'Down/Up Ratio', 'Bwd Packet Length Std',
+    #                       'Bwd Packet Length Mean','Bwd Packet Length Min','Bwd Packet Length Max','Fwd Packet Length Std','Fwd Packet Length Mean','Fwd Packet Length Min',
+    #                       'Fwd Packet Length Max'],
     "CIC-IoT-2025": [],
 }
 
@@ -64,12 +70,12 @@ FORCE_DROP: Dict[str, List[str]] = {
 
 # Label columns (checked in order)
 LABEL_COLUMNS = {
-    "EDGE_IIoT": ["Attack_type"],
-    "CIC-IoT-2023": ["Label"],
+    # "EDGE_IIoT": ["Attack_type"],
+    # "CIC-IoT-2023": ["Label"],
     "Apose-IoT-23": ["label"],
     "BoT-IoT": ["subcategory"],
     "CIC-IoMT-2024": ["Label"],
-    "CIC-IoT-IDAD-2024": ["Label"],
+    # "CIC-IoT-IDAD-2024": ["Label"],
     "CIC-IoT-2025": ["label2"],
 }
 
