@@ -38,17 +38,20 @@ def train_experiment(
     set_all_seeds(42)
     input_dim = X_train.shape[1]
     num_classes = len(np.unique(y_train))
-    outdir = os.path.join(out_root, dataset_key)
+    outdir = os.path.join(out_root, model_name.lower(), dataset_key)
     ensure_dir(outdir)
     ckpt_dir = os.path.join(outdir, "checks")
     ensure_dir(ckpt_dir)
 
+    efficiency_file = "efficiency.json"
     if model_name.lower() in ["cnn_lstm_fusion", "fusion"]:
         model = CNN_LSTM_Fusion(input_dim, num_classes)
         model_readable = "Fusion (CNN+LSTM)"
+        model_suffix = "fusion"
     else:
         model = SimpleMLP(input_dim, num_classes)
         model_readable = "DNN (baseline)"
+        model_suffix = "dnn"
     model.to(DEVICE)
 
     # Training setup
@@ -133,7 +136,7 @@ def train_experiment(
         if val_loss < best_loss - 1e-6:
             best_loss = val_loss
             patience = early_stop_patience
-            ckpt_path = os.path.join(ckpt_dir, f"best_ep{ep}.pt")
+            ckpt_path = os.path.join(ckpt_dir, f"best_ep{ep}_{model_suffix}.pt")
             torch.save({
                 "state_dict": model.state_dict(),
                 "input_dim": input_dim,
@@ -160,10 +163,10 @@ def train_experiment(
     plt.xlabel("Epochs"); plt.ylabel("Loss")
     plt.title("Learning Curve")
     plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(outdir, "learning_curve.eps"), format="eps", dpi=200, transparent=False)
+    plt.savefig(os.path.join(outdir, f"learning_curve_{model_suffix}.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
-    hist_csv = os.path.join(outdir, "history.csv")
+    hist_csv = os.path.join(outdir, f"history_{model_suffix}.csv")
     import pandas as pd
     pd.DataFrame(hist).to_csv(hist_csv, index=False)
 
@@ -181,8 +184,8 @@ def train_experiment(
         "batch_size": int(batch_size),
         "lr": float(lr)
     }
-    with open(os.path.join(outdir, "efficiency.json"), "w") as f:
+    with open(os.path.join(outdir, f"efficiency_{model_suffix}.json"), "w") as f:
         import json as _json
         _json.dump(efficiency, f, indent=2)
 
-    return os.path.join(ckpt_dir, f"best_ep{ep}.pt"), hist_csv, outdir, model
+    return os.path.join(ckpt_dir, f"best_ep{ep}_{model_suffix}.pt"), hist_csv, outdir, model

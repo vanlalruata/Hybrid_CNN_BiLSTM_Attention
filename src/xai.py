@@ -89,8 +89,10 @@ def run_xai(
 
     # Reload the real trained model
     from .models import CNN_LSTM_Fusion, SimpleMLP
-    model_name = (state.get("model_name") or "").lower()
-    if model_name in ["cnn_lstm_fusion", "fusion"]:
+    model_name_raw = (state.get("model_name") or "").lower()
+    model_suffix = "fusion" if "fusion" in model_name_raw else "dnn"
+
+    if model_name_raw in ["cnn_lstm_fusion", "fusion"]:
         model = CNN_LSTM_Fusion(input_dim, num_classes)
     else:
         model = SimpleMLP(input_dim, num_classes)
@@ -187,11 +189,11 @@ def run_xai(
             te_plot = te
 
         shap.summary_plot(vals_2d, features=te_plot, feature_names=feature_names_plot, show=False)
-        _safe_save_plot(os.path.join(outdir, "shap_summary.eps"))
+        _safe_save_plot(os.path.join(outdir, f"shap_summary_{model_suffix}.eps"))
 
         shap_mean = np.abs(vals_2d).mean(axis=0)
         shap_scores = pd.DataFrame({"feature": feature_names_plot, "importance": shap_mean}).sort_values("importance", ascending=False)
-        shap_scores.to_csv(os.path.join(outdir, "shap_feature_importance.csv"), index=False)
+        shap_scores.to_csv(os.path.join(outdir, f"shap_feature_importance_{model_suffix}.csv"), index=False)
 
     # -------------------------
     # LIME
@@ -207,9 +209,9 @@ def run_xai(
         instance = _coerce_feature_dim_np(np.asarray(X_test[0], dtype=np.float32), expected_dim)
         lime_exp = lime_explainer.explain_instance(instance, predict_fn, num_features=min(10, len(feature_names)))
         fig = lime_exp.as_pyplot_figure()
-        _safe_save_plot(os.path.join(outdir, "lime_example.eps"))
+        _safe_save_plot(os.path.join(outdir, f"lime_example_{model_suffix}.eps"))
         lime_scores = pd.DataFrame(lime_exp.as_list(), columns=["feature", "weight"])
-        lime_scores.to_csv(os.path.join(outdir, "lime_feature_importance.csv"), index=False)
+        lime_scores.to_csv(os.path.join(outdir, f"lime_feature_importance_{model_suffix}.csv"), index=False)
 
     # -------------------------
     # ANOVA (F-score)
@@ -234,13 +236,13 @@ def run_xai(
             feature_names_anova = feature_names
 
         anova_scores = pd.DataFrame({"feature": feature_names_anova, "f_score": f_vals}).sort_values("f_score", ascending=False)
-        anova_scores.to_csv(os.path.join(outdir, "anova_feature_importance.csv"), index=False)
+        anova_scores.to_csv(os.path.join(outdir, f"anova_feature_importance_{model_suffix}.csv"), index=False)
 
         plt.figure(figsize=(8, 5))
         plt.barh(anova_scores["feature"].head(20), anova_scores["f_score"].head(20))
         plt.title("Top 20 Features by ANOVA F-score")
         plt.gca().invert_yaxis()
-        _safe_save_plot(os.path.join(outdir, "anova_top20.eps"))
+        _safe_save_plot(os.path.join(outdir, f"anova_top20_{model_suffix}.eps"))
 
     # -------------------------
     # Consolidate all rankings
@@ -260,5 +262,5 @@ def run_xai(
 
     if combined:
         top = pd.concat(combined, ignore_index=True)
-        top.to_csv(os.path.join(outdir, "xai_combined_features.csv"), index=False)
+        top.to_csv(os.path.join(outdir, f"xai_combined_features_{model_suffix}.csv"), index=False)
         print(f"[XAI] Results saved under {outdir}")

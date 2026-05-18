@@ -14,13 +14,13 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 POWER_WATTS = float(os.environ.get("POWER_WATTS", "120"))
 
 
-def load_model(dataset_name: str, classification_type: str, model_root="outputs"):
+def load_model(dataset_name: str, classification_type: str, model_root="outputs", model_type="fusion"):
     """
     Loads a trained model for a specific dataset and classification type.
     Example:
-        model, meta = load_model("EDGE_IIoT", "binary")
+        model, meta = load_model("EDGE_IIoT", "binary", model_type="fusion")
     """
-    base = os.path.join(model_root, f"{dataset_name}_{classification_type}", "checks")
+    base = os.path.join(model_root, model_type.lower(), f"{dataset_name}_{classification_type}", "checks")
     ckpts = [f for f in os.listdir(base) if f.endswith(".pt")]
     if not ckpts:
         raise FileNotFoundError(f"No checkpoint found in {base}")

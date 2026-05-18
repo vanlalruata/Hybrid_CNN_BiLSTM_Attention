@@ -75,8 +75,16 @@ DEFAULT_DATAROOT = os.path.dirname(CFG_PROCESSED)
 # ---------------------------------------------------------------------
 
 def _prompt(msg, default=None, choices=None):
+    # Flush sys.stdin to clear any stray input before prompting the user
+    if sys.stdin.isatty():
+        import msvcrt
+        while msvcrt.kbhit():
+            msvcrt.getch()
     while True:
-        val = input(f"{msg} " + (f"[default: {default}] " if default else "") + (f"choices={choices} " if choices else "")).strip()
+        try:
+            val = input(f"{msg} " + (f"[default: {default}] " if default else "") + (f"choices={choices} " if choices else "")).strip()
+        except EOFError:
+            return default if default is not None else ""
         if not val and default is not None:
             return default
         if choices and val not in choices:
@@ -188,6 +196,7 @@ def opt_load_and_split():
     X, y, feat_cols, y_enc, scaler = load_and_prepare_dataset(dname, class_type=class_type)
 
     # Persist split with a dataset prefix
+    print("\n--- Split configuration ---")
     test_size = float(_prompt("Test size (e.g., 0.2)?", default="0.2"))
     seed = int(_prompt("Random seed?", default="42"))
     split_info = split_and_persist(
@@ -284,6 +293,7 @@ def opt_train_model():
     lr = float(_prompt("Learning rate?", default="0.001"))
     patience = int(_prompt("Early stop patience?", default="8"))
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
 
     ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
         Xtr, ytr, Xte, yte,
@@ -315,7 +325,7 @@ def opt_train_model():
     except Exception as e:
         print(f"[WARN] Failed to measure inference time for complexity: {e}")
 
-    _safe_json_dump(complexity, os.path.join(artifacts_dir, "complexity.json"))
+    _safe_json_dump(complexity, os.path.join(artifacts_dir, f"complexity_{suffix}.json"))
     print(f"[DONE] Checkpoint: {ckpt_path}")
     print(f"       History CSV: {hist_csv}")
     print(f"       Complexity: {complexity}")
@@ -333,17 +343,19 @@ def opt_plot_performance():
         return 0
     print("Available splits:", splits)
     key = _prompt("Split key:")
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     # Locate a checkpoint
-    ckdir = os.path.join(DEFAULT_OUTROOT, key, "checks")
-    ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print("[WARN] No checkpoints found. Train first (option 4).")
+        print(f"[WARN] No checkpoints found for {model_choice} model. Train first (option 4).")
         return 0
     ckpt = ckpts[-1]
-    outdir = os.path.join(DEFAULT_OUTROOT, key, "eval")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "eval")
 
     task = "binary" if len(np.unique(ytr))==2 else "multiclass"
     metrics = evaluate_on_test(Xte, yte, ckpt, outdir, task_type=task)
@@ -363,19 +375,21 @@ def opt_xai():
         return 0
     print("Available splits:", splits)
     key = _prompt("Split key:")
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
-    ckdir = os.path.join(DEFAULT_OUTROOT, key, "checks")
-    ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print("[WARN] No checkpoints found. Train first.")
+        print(f"[WARN] No checkpoints found for {model_choice} model. Train first.")
         return 0
     ckpt = ckpts[-1]
 
     methods = _prompt("Which explainers? (comma sep: shap,lime,anova)", default="shap,lime,anova")
     methods = [m.strip().lower() for m in methods.split(",") if m.strip()]
-    outdir = os.path.join(DEFAULT_OUTROOT, key, "xai")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "xai")
 
     run_xai(
         X_train=Xtr, X_test=Xte, y_train=ytr, y_test=yte,
@@ -407,12 +421,14 @@ def opt_ablation():
     print("Tip: You can copy from XAI top-features CSV.")
     subset_raw = _prompt("Feature subset (comma-separated):")
     subset = [s.strip() for s in subset_raw.split(",") if s.strip()]
-    outdir = os.path.join(DEFAULT_OUTROOT, key, "ablation")
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "ablation")
 
     run_ablation_user_selected(
         X_train=Xtr, y_train=ytr, X_test=Xte, y_test=yte,
         feature_names=feat_names, keep_features=subset,
-        dataset_key=key, outdir=outdir
+        dataset_key=key, outdir=outdir,
+        model_name=("cnn_lstm_fusion" if model_choice=="fusion" else "dnn")
     )
     print(f"[DONE] Ablation results saved to {outdir}")
     return 0
@@ -429,16 +445,18 @@ def opt_evaluate():
         return 0
     print("Available splits:", splits)
     key = _prompt("Split key:")
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
-    ckdir = os.path.join(DEFAULT_OUTROOT, key, "checks")
-    ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print("[WARN] No checkpoints found. Train first.")
+        print(f"[WARN] No checkpoints found for {model_choice} model. Train first.")
         return 0
     ckpt = ckpts[-1]
-    outdir = os.path.join(DEFAULT_OUTROOT, key, "eval")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "eval")
 
     task = "binary" if len(np.unique(ytr))==2 else "multiclass"
     metrics = evaluate_on_test(Xte, yte, ckpt, outdir, task_type=task)
@@ -462,9 +480,11 @@ def opt_inference():
     meta = bundle["meta"]
     dataset_name = meta["dataset_name"]
     class_type = meta["class_type"]
+    model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
 
     # load model by dataset & class type
-    model, state = load_model(dataset_name, class_type, model_root=DEFAULT_OUTROOT)
+    model, state = load_model(dataset_name, class_type, model_root=DEFAULT_OUTROOT, model_type=model_choice)
     in_dim = int(state["input_dim"])
 
     # Provide a CSV path of *already preprocessed & scaled* features or raw?
@@ -490,14 +510,14 @@ def opt_inference():
         pass
 
     result = predict_live(model, X_new, scaler=None, return_proba=True)
-    outdir = os.path.join(DEFAULT_OUTROOT, key, "inference")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "inference")
     ensure_dir(outdir)
-    np.save(os.path.join(outdir, "y_pred.npy"), result["y_pred"])
+    np.save(os.path.join(outdir, f"y_pred_{suffix}.npy"), result["y_pred"])
     if result["y_proba"] is not None:
-        np.save(os.path.join(outdir, "y_proba.npy"), result["y_proba"])
+        np.save(os.path.join(outdir, f"y_proba_{suffix}.npy"), result["y_proba"])
     _safe_json_dump(
         {"infer_time_s": result["infer_time_s"], "energy_j_proxy": result["energy_j_proxy"]},
-        os.path.join(outdir, "inference_meta.json")
+        os.path.join(outdir, f"inference_meta_{suffix}.json")
     )
     print(f"[DONE] Inference saved to {outdir}")
     return 0

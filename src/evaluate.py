@@ -134,7 +134,7 @@ def _tight_eps(path: str):
     plt.close()
 
 
-def plot_confusion(cm: np.ndarray, class_names: List[str], outdir: str, title: str = "Confusion Matrix"):
+def plot_confusion(cm: np.ndarray, class_names: List[str], outdir: str, title: str = "Confusion Matrix", model_suffix: str = "model"):
     plt.figure()
     im = plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
     plt.title(title)
@@ -150,10 +150,10 @@ def plot_confusion(cm: np.ndarray, class_names: List[str], outdir: str, title: s
                      color="white" if cm[i, j] > thresh else "black")
     plt.ylabel("True label")
     plt.xlabel("Predicted label")
-    _tight_eps(os.path.join(outdir, "plots", "confusion_matrix.eps"))
+    _tight_eps(os.path.join(outdir, "plots", f"confusion_matrix_{model_suffix}.eps"))
 
 
-def plot_roc_pr(y_true: np.ndarray, y_proba: np.ndarray, class_names: List[str], task_type: str, outdir: str):
+def plot_roc_pr(y_true: np.ndarray, y_proba: np.ndarray, class_names: List[str], task_type: str, outdir: str, model_suffix: str = "model"):
     # ROC
     try:
         if task_type == "binary":
@@ -162,10 +162,10 @@ def plot_roc_pr(y_true: np.ndarray, y_proba: np.ndarray, class_names: List[str],
             y_bin = label_binarize(y_true, classes=list(range(len(class_names))))
             RocCurveDisplay.from_predictions(y_bin.ravel(), y_proba.ravel())
         plt.title("ROC Curve")
-        _tight_eps(os.path.join(outdir, "plots", "roc_curve.eps"))
+        _tight_eps(os.path.join(outdir, "plots", f"roc_curve_{model_suffix}.eps"))
     except Exception:
         plt.figure(); plt.text(0.5, 0.5, "ROC not available", ha="center")
-        _tight_eps(os.path.join(outdir, "plots", "roc_curve.eps"))
+        _tight_eps(os.path.join(outdir, "plots", f"roc_curve_{model_suffix}.eps"))
 
     # PR
     try:
@@ -175,13 +175,13 @@ def plot_roc_pr(y_true: np.ndarray, y_proba: np.ndarray, class_names: List[str],
             y_bin = label_binarize(y_true, classes=list(range(len(class_names))))
             PrecisionRecallDisplay.from_predictions(y_bin.ravel(), y_proba.ravel())
         plt.title("Precision-Recall Curve")
-        _tight_eps(os.path.join(outdir, "plots", "pr_curve.eps"))
+        _tight_eps(os.path.join(outdir, "plots", f"pr_curve_{model_suffix}.eps"))
     except Exception:
         plt.figure(); plt.text(0.5, 0.5, "PR not available", ha="center")
-        _tight_eps(os.path.join(outdir, "plots", "pr_curve.eps"))
+        _tight_eps(os.path.join(outdir, "plots", f"pr_curve_{model_suffix}.eps"))
 
 
-def plot_calibration(y_true: np.ndarray, y_proba: np.ndarray, task_type: str, outdir: str):
+def plot_calibration(y_true: np.ndarray, y_proba: np.ndarray, task_type: str, outdir: str, model_suffix: str = "model"):
     """
     Reliability diagram. For multiclass we use the max-class confidence proxy.
     """
@@ -204,10 +204,10 @@ def plot_calibration(y_true: np.ndarray, y_proba: np.ndarray, task_type: str, ou
     plt.xlabel("Mean predicted probability")
     plt.ylabel("Fraction of positives")
     plt.legend()
-    _tight_eps(os.path.join(outdir, "plots", "calibration_curve.eps"))
+    _tight_eps(os.path.join(outdir, "plots", f"calibration_curve_{model_suffix}.eps"))
 
 
-def plot_regression(y_true: np.ndarray, y_pred: np.ndarray, outdir: str):
+def plot_regression(y_true: np.ndarray, y_pred: np.ndarray, outdir: str, model_suffix: str = "model"):
     # Scatter y_true vs y_pred
     plt.figure()
     lims = [min(y_true.min(), y_pred.min()), max(y_true.max(), y_pred.max())]
@@ -216,7 +216,7 @@ def plot_regression(y_true: np.ndarray, y_pred: np.ndarray, outdir: str):
     plt.xlabel("True")
     plt.ylabel("Predicted")
     plt.title("Regression: Prediction Scatter")
-    _tight_eps(os.path.join(outdir, "plots", "reg_scatter.eps"))
+    _tight_eps(os.path.join(outdir, "plots", f"reg_scatter_{model_suffix}.eps"))
 
     # Residuals
     plt.figure()
@@ -225,7 +225,7 @@ def plot_regression(y_true: np.ndarray, y_pred: np.ndarray, outdir: str):
     plt.title("Regression: Residuals")
     plt.xlabel("Residual")
     plt.ylabel("Count")
-    _tight_eps(os.path.join(outdir, "plots", "reg_residuals.eps"))
+    _tight_eps(os.path.join(outdir, "plots", f"reg_residuals_{model_suffix}.eps"))
 
 
 # -----------------------------------------------------------------------------
@@ -272,6 +272,9 @@ def evaluate_classification(
     os.makedirs(os.path.join(outdir, "plots"), exist_ok=True)
 
     model, meta = load_checkpoint(ckpt_path)
+    model_name = (meta.get("model_name") or "").lower()
+    model_suffix = "fusion" if "fusion" in model_name else "dnn"
+
     class_names = meta.get("class_names") or [str(i) for i in range(int(meta.get("num_classes", 2)))]
     # Align feature dimension to what the checkpoint expects (guards against stale checkpoints vs new splits)
     exp_in = int(meta.get("input_dim") or X_test.shape[1])
@@ -300,10 +303,10 @@ def evaluate_classification(
         roc_auc = float("nan")
 
     # Plots
-    plot_confusion(cm, class_names, outdir)
+    plot_confusion(cm, class_names, outdir, model_suffix=model_suffix)
     if y_proba is not None:
-        plot_roc_pr(y_test, y_proba, class_names, "binary" if len(class_names) == 2 else "multiclass", outdir)
-        plot_calibration(y_test, y_proba, "binary" if len(class_names) == 2 else "multiclass", outdir)
+        plot_roc_pr(y_test, y_proba, class_names, "binary" if len(class_names) == 2 else "multiclass", outdir, model_suffix=model_suffix)
+        plot_calibration(y_test, y_proba, "binary" if len(class_names) == 2 else "multiclass", outdir, model_suffix=model_suffix)
 
     # Save predictions
     pred_df = pd.DataFrame({
@@ -313,12 +316,12 @@ def evaluate_classification(
     if y_proba is not None:
         for i, cname in enumerate(class_names):
             pred_df[f"proba_{cname}"] = y_proba[:, i]
-    pred_csv = os.path.join(outdir, "predictions.csv")
+    pred_csv = os.path.join(outdir, f"predictions_{model_suffix}.csv")
     pred_df.to_csv(pred_csv, index=False)
 
     # Save report CSV
     rep_df = pd.DataFrame(rep).T
-    rep_csv = os.path.join(outdir, "classification_report.csv")
+    rep_csv = os.path.join(outdir, f"classification_report_{model_suffix}.csv")
     rep_df.to_csv(rep_csv)
 
     # Timing / energy
@@ -381,8 +384,8 @@ def evaluate_classification(
     }
 
     # Write files
-    metrics_path = os.path.join(outdir, "metrics.json")
-    complexity_eval_path = os.path.join(outdir, "complexity_eval.json")
+    metrics_path = os.path.join(outdir, f"metrics_{model_suffix}.json")
+    complexity_eval_path = os.path.join(outdir, f"complexity_eval_{model_suffix}.json")
     with open(metrics_path, "w") as f:
         json.dump(metrics, f, indent=2)
     with open(complexity_eval_path, "w") as f:
@@ -411,6 +414,9 @@ def evaluate_regression(
     os.makedirs(os.path.join(outdir, "plots"), exist_ok=True)
 
     model, meta = load_checkpoint(ckpt_path)
+    model_name = (meta.get("model_name") or "").lower()
+    model_suffix = "fusion" if "fusion" in model_name else "dnn"
+
     exp_in = int(meta.get("input_dim") or X_test.shape[1])
     X_test = _coerce_feature_dim(X_test, exp_in)
     loader = make_loader(X_test, y_test, batch_size=batch_size, shuffle=False)
@@ -428,11 +434,11 @@ def evaluate_regression(
     mae = mean_absolute_error(y_test, y_pred)
 
     # Plots
-    plot_regression(y_test, y_pred, outdir)
+    plot_regression(y_test, y_pred, outdir, model_suffix=model_suffix)
 
     # Save predictions
     pred_df = pd.DataFrame({"y_true": y_test, "y_pred": y_pred})
-    pred_csv = os.path.join(outdir, "predictions_regression.csv")
+    pred_csv = os.path.join(outdir, f"predictions_regression_{model_suffix}.csv")
     pred_df.to_csv(pred_csv, index=False)
 
     # Timing / energy
@@ -457,11 +463,11 @@ def evaluate_regression(
         "samples_per_sec": float(samples_per_sec),
         "energy_j_proxy": float(energy_j),
     }
-    with open(os.path.join(outdir, "metrics_regression.json"), "w") as f:
+    with open(os.path.join(outdir, f"metrics_regression_{model_suffix}.json"), "w") as f:
         json.dump(metrics, f, indent=2)
 
     return {
-        "metrics_json": os.path.join(outdir, "metrics_regression.json"),
+        "metrics_json": os.path.join(outdir, f"metrics_regression_{model_suffix}.json"),
         "predictions_csv": pred_csv
     }
 

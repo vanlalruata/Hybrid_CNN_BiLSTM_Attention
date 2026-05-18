@@ -14,23 +14,12 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 from .utils import ensure_dir, save_scaler, set_all_seeds
-from .config import FORCE_DROP, EXTRA_DROP
+from .config import FORCE_DROP, EXTRA_DROP, LABEL_COLUMNS, DATASETS, COMMON_DROP
 
 
-AVAILABLE_DATASETS = {
-    # "EDGE_IIoT": "H:/Datasets/Edge-IIoT/Selected dataset for ML and DL/*.csv",
-    # "CIC-IoT-2023": "H:/Datasets/CIC-IoT-2023/*.csv",
-    "Apose-IoT-23": "H:/Datasets/Aposemat-IoT-23/aposemat_iot_23/processed/*.csv",
-    "BoT-IoT": "H:/Datasets/BoT-IoT_csvs/*.csv",
-    "CIC-IoMT-2024": "H:/Datasets/CIC-IoMT-2024/WiFi_MQTT/**/*.csv",
-    # "CIC-IoT-IDAD-2024": "H:/Datasets/CIC-IoT-IDAD-2024/Flow_Based/*.csv",
-    "CIC-IoT-2025": "H:/Datasets/CIC-IoT-2025/all_attack_benign_samples/*.csv"
-}
+AVAILABLE_DATASETS = DATASETS
 
-COMMON_DROP = [
-    "Flow ID", "Src IP", "Dst IP", "Timestamp", "saddr", "daddr",
-    "id.orig_h", "id.resp_h", "uid", "frame.time"
-]
+COMMON_DROP = [c for c in COMMON_DROP if c] # Use shared list from config
 
 LABEL_COLS = [
     "Label", "label", "Attack_type", "Attack_label", "attack", "category", "subcategory", "label2"
@@ -51,11 +40,17 @@ def _read_csv_auto(path: str) -> pd.DataFrame:
     return pd.read_csv(path, sep=sep, low_memory=False)
 
 
-def _find_label_column(df: pd.DataFrame):
+def _find_label_column(df: pd.DataFrame, dataset_name: str = None):
+    # Try per-dataset overrides from config first
+    if dataset_name and dataset_name in LABEL_COLUMNS:
+        for col in LABEL_COLUMNS[dataset_name]:
+            if col in df.columns:
+                return col
+    # Fallback to general list
     for col in LABEL_COLS:
         if col in df.columns:
             return col
-    raise ValueError("No label column found.")
+    raise ValueError(f"No label column found. Checked columns: {LABEL_COLS}")
 
 
 def _drop_identifiers(df: pd.DataFrame):
@@ -91,8 +86,11 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
 
             # Normalize/rename label column to 'Label' per file
             try:
-                label_col = _find_label_column(df)
+                label_col = _find_label_column(df, dataset_name=dataset_name)
                 if label_col != "Label":
+                    # If 'Label' already exists, drop it to avoid duplicate columns after rename
+                    if "Label" in df.columns:
+                        df = df.drop(columns=["Label"])
                     df = df.rename(columns={label_col: "Label"})
             except Exception:
                 # If no label found here, combined logic will raise later
@@ -130,34 +128,45 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     for d in dfs:
         # Ensure 'Label' is present after earlier normalization
         if "Label" not in d.columns:
-            lbl_col = _find_label_column(d)
+            lbl_col = _find_label_column(d, dataset_name=dataset_name)
             if lbl_col != "Label":
                 d = d.rename(columns={lbl_col: "Label"})
         aligned.append(d.reindex(columns=selected_cols))
     df = pd.concat(aligned, ignore_index=True)
 
     # Find a label & normalize its name to 'Label'
-    label_col = _find_label_column(df)
+    label_col = _find_label_column(df, dataset_name=dataset_name)
     if label_col != "Label":
+        if "Label" in df.columns:
+            df = df.drop(columns=["Label"])
         df = df.rename(columns={label_col: "Label"})
         label_col = "Label"
-    y_raw = df[label_col].astype(str)
+    
+    # Ensure y_raw is a 1D Series even if duplicate columns somehow persisted
+    raw_labels = df[label_col]
+    if isinstance(raw_labels, pd.DataFrame):
+        # Take the first one if multiple exist
+        y_raw = raw_labels.iloc[:, 0].astype(str)
+    else:
+        y_raw = raw_labels.astype(str)
+
     df = df.drop(columns=[label_col])
     df = _drop_identifiers(df)
     # Drop dataset-specific extra columns
     extra_drop = EXTRA_DROP.get(dataset_name, [])
     if extra_drop:
+        # Use info instead of print to avoid confusing user
+        # print(f"[CLEAN] Extra-dropped columns for {dataset_name}: {drop_extra}")
         drop_extra = [c for c in extra_drop if c in df.columns]
         if drop_extra:
             df = df.drop(columns=drop_extra)
-            print(f"[CLEAN] Extra-dropped columns for {dataset_name}: {drop_extra}")
     # Force-drop per-dataset configured columns (even if numeric)
     extra_forced = FORCE_DROP.get(dataset_name, [])
     if extra_forced:
+        # print(f"[CLEAN] Force-dropped columns for {dataset_name}: {drop_forced}")
         drop_forced = [c for c in extra_forced if c in df.columns]
         if drop_forced:
             df = df.drop(columns=drop_forced)
-            print(f"[CLEAN] Force-dropped columns for {dataset_name}: {drop_forced}")
     df = _encode_non_numeric(df)
 
     # Clean numeric matrix and robustly handle missing values
@@ -165,9 +174,17 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
 
     # Impute numeric columns with median; fallback to 0 if median is NaN
     num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    import warnings
     for c in num_cols:
         if df[c].isna().any():
-            med = pd.to_numeric(df[c], errors="coerce").median(skipna=True)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                # Check if the column is all NaNs to avoid the Mean of empty slice warning
+                if df[c].isna().all():
+                    med = 0
+                else:
+                    med = pd.to_numeric(df[c], errors="coerce").median(skipna=True)
+            
             if pd.isna(med) or not np.isfinite(med):
                 med = 0
             df[c] = df[c].fillna(med)

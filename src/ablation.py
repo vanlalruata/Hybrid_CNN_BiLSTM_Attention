@@ -545,7 +545,8 @@ def run_ablation_user_selected(
         "estimated_macs_per_forward": int(macs),
     }
 
-    with open(os.path.join(outdir, "result.json"), "w") as f:
+    model_suffix = "fusion" if "fusion" in model_name.lower() else "dnn"
+    with open(os.path.join(outdir, f"result_{model_suffix}.json"), "w") as f:
         json.dump(summary, f, indent=2)
 
     # Also save a one-row CSV for a quick glance
@@ -554,6 +555,6 @@ def run_ablation_user_selected(
         "n_features": len(keep_features),
         **({k: v for k, v in result["metrics"].items() if isinstance(v, (int, float))})
     }])
-    df.to_csv(os.path.join(outdir, "ablation_user_selected.csv"), index=False)
+    df.to_csv(os.path.join(outdir, f"ablation_user_selected_{model_suffix}.csv"), index=False)
 
     return summary
