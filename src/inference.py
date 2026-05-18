@@ -35,7 +35,10 @@ def load_model(dataset_name: str, classification_type: str, model_root="outputs"
 
     if name in ["cnn_lstm_fusion", "fusion"]:
         model = CNN_LSTM_Fusion(in_dim, n_cls, hidden_dim=hid)
+    elif name in ["mlp", "simplemlp", "dnn"]:
+        model = SimpleMLP(in_dim, n_cls)
     else:
+        # Fallback for older or other names
         model = SimpleMLP(in_dim, n_cls)
 
     model.load_state_dict(state["state_dict"])

@@ -94,7 +94,10 @@ def run_xai(
 
     if model_name_raw in ["cnn_lstm_fusion", "fusion"]:
         model = CNN_LSTM_Fusion(input_dim, num_classes)
+    elif model_name_raw in ["mlp", "simplemlp", "dnn"]:
+        model = SimpleMLP(input_dim, num_classes)
     else:
+        # Fallback
         model = SimpleMLP(input_dim, num_classes)
     model.load_state_dict(state["state_dict"])
     model.eval()

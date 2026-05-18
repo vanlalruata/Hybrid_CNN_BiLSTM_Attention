@@ -63,7 +63,7 @@ def _build_from_state(state: Dict) -> nn.Module:
 
     if name in ["cnn_lstm_fusion", "cnn+lstm", "fusion"]:
         model = CNN_LSTM_Fusion(input_dim, num_classes, hidden_dim=hidden_dim)
-    elif name in ["mlp", "simplemlp"]:
+    elif name in ["mlp", "simplemlp", "dnn"]:
         model = SimpleMLP(input_dim, num_classes)
     else:
         raise ValueError(f"Unknown model in checkpoint: {name}")

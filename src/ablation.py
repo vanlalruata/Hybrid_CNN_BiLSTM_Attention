@@ -82,7 +82,7 @@ except Exception:
         # Choose model
         input_dim = Xtr.shape[1]
         num_classes = len(np.unique(ytr)) if task_type == "classification" else 1
-        if model_name.lower() in ["mlp", "simplemlp"]:
+        if model_name.lower() in ["mlp", "simplemlp", "dnn"]:
             model = SimpleMLP(input_dim, num_classes)
         else:
             model = CNN_LSTM_Fusion(input_dim, num_classes, hidden_dim=64)
