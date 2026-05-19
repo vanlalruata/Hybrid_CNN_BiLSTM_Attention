@@ -153,7 +153,7 @@ except Exception:
                 ensure_dir(outdir)
                 ckpt_path = os.path.join(outdir, f"best_{run_name}.pt")
                 torch.save({
-                    "model_name": "cnn_lstm_fusion" if model_name.lower() not in ["mlp", "simplemlp"] else "simplemlp",
+                    "model_name": model_name,
                     "state_dict": model.state_dict(),
                     "input_dim": input_dim,
                     "num_classes": num_classes,

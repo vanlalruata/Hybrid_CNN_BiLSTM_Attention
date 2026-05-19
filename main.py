@@ -345,17 +345,18 @@ def opt_plot_performance():
     key = _prompt("Split key:")
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
     suffix = "fusion" if model_choice == "fusion" else "dnn"
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     # Locate a checkpoint
-    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
     ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print(f"[WARN] No checkpoints found for {model_choice} model. Train first (option 4).")
+        print(f"[WARN] No checkpoints found for {model_choice} model at {ckdir}. Train first (option 4).")
         return 0
     ckpt = ckpts[-1]
-    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "eval")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "eval")
 
     task = "binary" if len(np.unique(ytr))==2 else "multiclass"
     metrics = evaluate_on_test(Xte, yte, ckpt, outdir, task_type=task)
@@ -377,19 +378,20 @@ def opt_xai():
     key = _prompt("Split key:")
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
     suffix = "fusion" if model_choice == "fusion" else "dnn"
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
-    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
     ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print(f"[WARN] No checkpoints found for {model_choice} model. Train first.")
+        print(f"[WARN] No checkpoints found for {model_choice} model at {ckdir}. Train first.")
         return 0
     ckpt = ckpts[-1]
 
     methods = _prompt("Which explainers? (comma sep: shap,lime,anova)", default="shap,lime,anova")
     methods = [m.strip().lower() for m in methods.split(",") if m.strip()]
-    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "xai")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "xai")
 
     run_xai(
         X_train=Xtr, X_test=Xte, y_train=ytr, y_test=yte,
@@ -422,7 +424,8 @@ def opt_ablation():
     subset_raw = _prompt("Feature subset (comma-separated):")
     subset = [s.strip() for s in subset_raw.split(",") if s.strip()]
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
-    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "ablation")
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
+    outdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "ablation")
 
     run_ablation_user_selected(
         X_train=Xtr, y_train=ytr, X_test=Xte, y_test=yte,
@@ -447,16 +450,17 @@ def opt_evaluate():
     key = _prompt("Split key:")
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
     suffix = "fusion" if model_choice == "fusion" else "dnn"
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
-    ckdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "checks")
+    ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
     ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
     if not ckpts:
-        print(f"[WARN] No checkpoints found for {model_choice} model. Train first.")
+        print(f"[WARN] No checkpoints found for {model_choice} model at {ckdir}. Train first.")
         return 0
     ckpt = ckpts[-1]
-    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "eval")
+    outdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "eval")
 
     task = "binary" if len(np.unique(ytr))==2 else "multiclass"
     metrics = evaluate_on_test(Xte, yte, ckpt, outdir, task_type=task)
@@ -510,7 +514,8 @@ def opt_inference():
         pass
 
     result = predict_live(model, X_new, scaler=None, return_proba=True)
-    outdir = os.path.join(DEFAULT_OUTROOT, model_choice, key, "inference")
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
+    outdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "inference")
     ensure_dir(outdir)
     np.save(os.path.join(outdir, f"y_pred_{suffix}.npy"), result["y_pred"])
     if result["y_proba"] is not None:

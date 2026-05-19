@@ -222,7 +222,10 @@ def run_xai(
     anova_scores = None
     if "anova" in methods:
         print("[XAI] Running ANOVA F-score...")
-        f_vals, _ = f_classif(X_train, y_train)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            warnings.simplefilter("ignore", UserWarning)
+            f_vals, _ = f_classif(X_train, y_train)
         # Guard against NaNs/Infs produced by constant features
         f_vals = np.nan_to_num(f_vals, nan=0.0, posinf=0.0, neginf=0.0)
 

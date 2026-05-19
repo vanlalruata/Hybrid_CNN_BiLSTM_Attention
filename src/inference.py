@@ -20,7 +20,8 @@ def load_model(dataset_name: str, classification_type: str, model_root="outputs"
     Example:
         model, meta = load_model("EDGE_IIoT", "binary", model_type="fusion")
     """
-    base = os.path.join(model_root, model_type.lower(), f"{dataset_name}_{classification_type}", "checks")
+    model_type = "cnn_lstm_fusion" if model_type.lower() == "fusion" else "dnn"
+    base = os.path.join(model_root, model_type, f"{dataset_name}_{classification_type}", "checks")
     ckpts = [f for f in os.listdir(base) if f.endswith(".pt")]
     if not ckpts:
         raise FileNotFoundError(f"No checkpoint found in {base}")
