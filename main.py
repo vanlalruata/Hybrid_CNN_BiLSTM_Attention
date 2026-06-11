@@ -278,7 +278,7 @@ def opt_train_model():
         print("[WARN] No processed splits found. Run option 1 first.")
         return 0
     print("Available splits:", splits)
-    key = _prompt("Split key (e.g., EDGE_IIoT_binary_2025-10-29_08-30-00):")
+    key = _prompt("Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00):")
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
     Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
