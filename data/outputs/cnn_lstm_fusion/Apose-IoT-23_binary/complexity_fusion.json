@@ -1,0 +1,13 @@
+{
+  "params": 153602,
+  "est_macs_per_sample": 156864,
+  "measured_infer_total_sec": 0.19397650001337752,
+  "measured_ms_per_batch": 1.492126923179827,
+  "measured_ms_per_sample": 0.011686739366994669,
+  "measured_samples_per_sec": 85567.06610777762,
+  "measured_energy_j_proxy": 23.277180001605302,
+  "measured_batches": 130,
+  "measured_samples": 16598,
+  "val_detect_total_sec": 0.19397650001337752,
+  "val_detect_ms_per_sample": 0.011686739366994669
+}

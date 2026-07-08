@@ -1,0 +1,20 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\dnn\\Apose-IoT-23_multiclass\\checks\\best_ep4_dnn.pt",
+  "model_name": "dnn",
+  "num_classes": 5,
+  "class_names": [
+    "Benign",
+    "CandC",
+    "DDoS",
+    "Okiru",
+    "PortScan"
+  ],
+  "accuracy": 0.9828895047596096,
+  "roc_auc_macro": 0.9994030398802363,
+  "samples": 16598,
+  "batches": 33,
+  "total_infer_sec": 0.14452140000000213,
+  "ms_per_batch": 4.379436363636428,
+  "samples_per_sec": 114848.04326556313,
+  "energy_j_proxy": 17.342568000000256
+}

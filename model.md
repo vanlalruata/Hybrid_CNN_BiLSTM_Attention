@@ -1,12 +1,13 @@
 # Model Architecture
+
 **Model:** Parallel Fusion CNN + LSTM  
 **Author:** Dr. Vanlalruata Hnamte  
 **Framework:** PyTorch 2.9 (GPU Accelerated)
 
-
 ## 1. Motivation
 
 Intrusion detection in IoT/IIoT systems involves analyzing large-scale network traffic with:
+
 - High dimensionality,
 - Temporal dependencies,
 - Complex nonlinear patterns.
@@ -18,6 +19,7 @@ To effectively capture both **spatial correlations** (feature-level dependencies
 ## 2. Architecture Overview
 
 The model consists of **two parallel encoding paths**:
+
 ```aiignore
             ┌────────────────────┐
             │ Input Features (X) │
@@ -26,8 +28,8 @@ The model consists of **two parallel encoding paths**:
      ┌────────────────┴────────────────┐
      │                                 │
 ┌────▼────┐                      ┌─────▼─────┐
-│ CNN │                          │    LSTM   │
-│ Branch │                       │    Branch │
+│ CNN     │                      │    LSTM   │
+│ Branch  │                      │    Branch │
 └────┬────┘                      └────┬──────┘
      │                                │
      └───────────┬────────────────────┘
@@ -37,7 +39,6 @@ The model consists of **two parallel encoding paths**:
                Dense → Dropout → Output (Softmax)
 
 ```
-
 
 ---
 
@@ -114,12 +115,12 @@ using **CrossEntropyLoss**, optimized with **AdamW**.
 Complexity metrics are automatically exported as:
 ```outputs/<dataset>_<type>/complexity.json```
 
-
 ---
 
 ## 8. Comparative Baselines
 
 For evaluation, a **Simple MLP** is included as a lightweight baseline:
+
 - 2 Hidden Layers (128 → 64 → num_classes)
 - ReLU activation
 - Dropout regularization
@@ -131,6 +132,7 @@ This helps validate the **incremental gain** from hybridization.
 ## 9. Interpretability Integration
 
 The model supports **SHAP**, **LIME**, and **ANOVA** explainers:
+
 - CNN filters reveal *feature group importance*.
 - LSTM activations expose *temporal influence*.
 - SHAP and LIME quantify per-feature contributions to decisions.
@@ -140,12 +142,14 @@ The model supports **SHAP**, **LIME**, and **ANOVA** explainers:
 ## 10. Deployment Readiness
 
 Saved as PyTorch checkpoints (`.pt`), containing:
+
 - Model architecture
 - Input dimension
 - Class metadata
 - State dictionary
 
 Reloadable for real-time inference:
+
 ```python
 from src.inference import load_model, predict_live
 model, state = load_model("EDGE_IIoT", "binary")
@@ -156,9 +160,9 @@ pred = predict_live(model, live_traffic_features)
 
 The Parallel CNN–LSTM Fusion model achieves:
 
-* High detection accuracy across multiple IoT/IIoT datasets
-* Robustness to feature variation
-* Interpretability through SHAP/LIME/ANOVA
-* Efficiency via GPU optimization and adaptive pooling
+- High detection accuracy across multiple IoT/IIoT datasets
+- Robustness to feature variation
+- Interpretability through SHAP/LIME/ANOVA
+- Efficiency via GPU optimization and adaptive pooling
 
 It forms a strong foundation for **edge-based intelligent intrusion detection systems** capable of real-time operation and post-hoc explainability.

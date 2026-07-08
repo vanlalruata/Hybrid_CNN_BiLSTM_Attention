@@ -1,0 +1,2934 @@
+C:\Python314\python.exe G:\PycharmProjects\PythonProject\HLC\main.py 
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      2111370,
+      2780
+    ],
+    [
+      1007,
+      43490
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:25,  3.33it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): CIC-IoT-2025_multiclass
+[OK] Loaded split 'CIC-IoT-2025_multiclass' → shapes: Xtr=(514253, 93), Xte=(171418, 93), classes=8
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\CIC-IoT-2025_multiclass\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoT-2025_multiclass
+[INFO] Detected classes=8 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoT-2025_multiclass | Classes=8 | InputDim=93
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=173,448 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.021103 val_loss=0.003694 train_acc=0.993402 val_acc=0.999137 lr=0.0010 time=24.37s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.001538 val_loss=0.001672 train_acc=0.999642 val_acc=0.999434 lr=0.0010 time=23.39s best_val=0.003694 patience_left=0
+[CHECKPOINT] Saved best model at epoch 2 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep2_fusion.pt
+[EPOCH 3/20] train_loss=0.001101 val_loss=0.000871 train_acc=0.999761 val_acc=0.999580 lr=0.0010 time=24.16s best_val=0.001672 patience_left=0
+[CHECKPOINT] Saved best model at epoch 3 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep3_fusion.pt
+[EPOCH 4/20] train_loss=0.000866 val_loss=0.000637 train_acc=0.999802 val_acc=0.999895 lr=0.0010 time=23.74s best_val=0.000871 patience_left=0
+[CHECKPOINT] Saved best model at epoch 4 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep4_fusion.pt
+[EPOCH 5/20] train_loss=0.000800 val_loss=0.000364 train_acc=0.999807 val_acc=0.999907 lr=0.0010 time=23.98s best_val=0.000637 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.000695 val_loss=0.000101 train_acc=0.999887 val_acc=0.999971 lr=0.0010 time=23.96s best_val=0.000364 patience_left=0
+[CHECKPOINT] Saved best model at epoch 6 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep6_fusion.pt
+[EPOCH 7/20] train_loss=0.000804 val_loss=0.000261 train_acc=0.999854 val_acc=0.999971 lr=0.0010 time=23.82s best_val=0.000101 patience_left=0
+[EPOCH 8/20] train_loss=0.000483 val_loss=0.000580 train_acc=0.999879 val_acc=0.999918 lr=0.0010 time=23.92s best_val=0.000101 patience_left=-1
+[EPOCH 9/20] train_loss=0.000598 val_loss=0.000356 train_acc=0.999831 val_acc=0.999901 lr=0.0010 time=23.32s best_val=0.000101 patience_left=-2
+[EPOCH 10/20] train_loss=0.000720 val_loss=0.000904 train_acc=0.999860 val_acc=0.999767 lr=0.0010 time=23.27s best_val=0.000101 patience_left=-3
+[EPOCH 11/20] train_loss=0.000590 val_loss=0.000224 train_acc=0.999883 val_acc=0.999907 lr=0.0010 time=24.00s best_val=0.000101 patience_left=-4
+[EPOCH 12/20] train_loss=0.000396 val_loss=0.000605 train_acc=0.999897 val_acc=0.999877 lr=0.0010 time=23.69s best_val=0.000101 patience_left=-5
+[EPOCH 13/20] train_loss=0.000585 val_loss=0.000186 train_acc=0.999860 val_acc=0.999942 lr=0.0010 time=24.05s best_val=0.000101 patience_left=-6
+[EPOCH 14/20] train_loss=0.000277 val_loss=0.000024 train_acc=0.999940 val_acc=0.999994 lr=0.0010 time=23.79s best_val=0.000101 patience_left=0
+[CHECKPOINT] Saved best model at epoch 14 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep14_fusion.pt
+[EPOCH 15/20] train_loss=0.000645 val_loss=0.000103 train_acc=0.999877 val_acc=0.999971 lr=0.0010 time=24.24s best_val=0.000024 patience_left=0
+[EPOCH 16/20] train_loss=0.000586 val_loss=0.000150 train_acc=0.999872 val_acc=0.999982 lr=0.0010 time=23.73s best_val=0.000024 patience_left=-1
+[EPOCH 17/20] train_loss=0.000532 val_loss=0.000096 train_acc=0.999889 val_acc=0.999994 lr=0.0010 time=23.37s best_val=0.000024 patience_left=-2
+[EPOCH 18/20] train_loss=0.000280 val_loss=0.000117 train_acc=0.999942 val_acc=0.999965 lr=0.0010 time=24.13s best_val=0.000024 patience_left=-3
+[EPOCH 19/20] train_loss=0.000601 val_loss=0.000097 train_acc=0.999930 val_acc=0.999988 lr=0.0010 time=23.05s best_val=0.000024 patience_left=-4
+[EPOCH 20/20] train_loss=0.000359 val_loss=0.000363 train_acc=0.999944 val_acc=0.999959 lr=0.0010 time=24.32s best_val=0.000024 patience_left=-5
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\history_fusion.csv
+       Complexity: {'params': 173448, 'est_macs_per_sample': 196544, 'measured_infer_total_sec': 2.0505677000001015, 'measured_ms_per_batch': 1.5302744029851503, 'measured_ms_per_sample': 0.011962382596927402, 'measured_samples_per_sec': 83595.38677995928, 'measured_energy_j_proxy': 246.06812400001218, 'measured_batches': 1340, 'measured_samples': 171418, 'val_detect_total_sec': 2.0505677000001015, 'val_detect_ms_per_sample': 0.011962382596927402}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      100168,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1503,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      14173,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      14433,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      6041,
+      3,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      6373,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      26462,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2260
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:20,  2.37it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): CIC-IoT-2025_binary
+[OK] Loaded split 'CIC-IoT-2025_binary' → shapes: Xtr=(514253, 93), Xte=(171418, 93), classes=2
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\CIC-IoT-2025_binary\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoT-2025_binary
+[INFO] Detected classes=2 → binary
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoT-2025_binary | Classes=2 | InputDim=93
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=173,058 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.001873 val_loss=0.000000 train_acc=0.999368 val_acc=1.000000 lr=0.0010 time=28.30s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=27.80s best_val=0.000000 patience_left=0
+[EPOCH 3/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=26.80s best_val=0.000000 patience_left=-1
+[EPOCH 4/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=27.01s best_val=0.000000 patience_left=-2
+[EPOCH 5/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.35s best_val=0.000000 patience_left=-3
+[EPOCH 6/20] train_loss=0.000256 val_loss=0.000000 train_acc=0.999971 val_acc=1.000000 lr=0.0010 time=24.06s best_val=0.000000 patience_left=-4
+[EPOCH 7/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=23.76s best_val=0.000000 patience_left=-5
+[EPOCH 8/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.21s best_val=0.000000 patience_left=-6
+[EPOCH 9/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.03s best_val=0.000000 patience_left=-7
+[EPOCH 10/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.01s best_val=0.000000 patience_left=-8
+[EPOCH 11/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=23.88s best_val=0.000000 patience_left=-9
+[EPOCH 12/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.36s best_val=0.000000 patience_left=-10
+[EPOCH 13/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.30s best_val=0.000000 patience_left=-11
+[EPOCH 14/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.69s best_val=0.000000 patience_left=-12
+[EPOCH 15/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.50s best_val=0.000000 patience_left=-13
+[EPOCH 16/20] train_loss=0.000122 val_loss=0.000000 train_acc=0.999992 val_acc=1.000000 lr=0.0010 time=26.27s best_val=0.000000 patience_left=-14
+[EPOCH 17/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.46s best_val=0.000000 patience_left=-15
+[EPOCH 18/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.65s best_val=0.000000 patience_left=-16
+[EPOCH 19/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.08s best_val=0.000000 patience_left=-17
+[EPOCH 20/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.60s best_val=0.000000 patience_left=-18
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\history_fusion.csv
+       Complexity: {'params': 173058, 'est_macs_per_sample': 195776, 'measured_infer_total_sec': 2.173835699999927, 'measured_ms_per_batch': 1.6222654477611396, 'measured_ms_per_sample': 0.012681490275233213, 'measured_samples_per_sec': 78855.0855062348, 'measured_energy_j_proxy': 260.8602839999912, 'measured_batches': 1340, 'measured_samples': 171418, 'val_detect_total_sec': 2.173835699999927, 'val_detect_ms_per_sample': 0.012681490275233213}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      71250,
+      0
+    ],
+    [
+      0,
+      100168
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:42,  2.15it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): BoT-IoT_multiclass
+[OK] Loaded split 'BoT-IoT_multiclass' → shapes: Xtr=(55027737, 28), Xte=(18342580, 28), classes=8
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\BoT-IoT_multiclass\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): BoT-IoT_multiclass
+[INFO] Detected classes=8 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=BoT-IoT_multiclass | Classes=8 | InputDim=28
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=156,808 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+
+
+C:\Python314\python.exe G:\PycharmProjects\PythonProject\HLC\main.py 
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      2111370,
+      2780
+    ],
+    [
+      1007,
+      43490
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:25,  3.33it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): CIC-IoT-2025_multiclass
+[OK] Loaded split 'CIC-IoT-2025_multiclass' → shapes: Xtr=(514253, 93), Xte=(171418, 93), classes=8
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\CIC-IoT-2025_multiclass\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoT-2025_multiclass
+[INFO] Detected classes=8 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoT-2025_multiclass | Classes=8 | InputDim=93
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=173,448 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.021103 val_loss=0.003694 train_acc=0.993402 val_acc=0.999137 lr=0.0010 time=24.37s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.001538 val_loss=0.001672 train_acc=0.999642 val_acc=0.999434 lr=0.0010 time=23.39s best_val=0.003694 patience_left=0
+[CHECKPOINT] Saved best model at epoch 2 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep2_fusion.pt
+[EPOCH 3/20] train_loss=0.001101 val_loss=0.000871 train_acc=0.999761 val_acc=0.999580 lr=0.0010 time=24.16s best_val=0.001672 patience_left=0
+[CHECKPOINT] Saved best model at epoch 3 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep3_fusion.pt
+[EPOCH 4/20] train_loss=0.000866 val_loss=0.000637 train_acc=0.999802 val_acc=0.999895 lr=0.0010 time=23.74s best_val=0.000871 patience_left=0
+[CHECKPOINT] Saved best model at epoch 4 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep4_fusion.pt
+[EPOCH 5/20] train_loss=0.000800 val_loss=0.000364 train_acc=0.999807 val_acc=0.999907 lr=0.0010 time=23.98s best_val=0.000637 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.000695 val_loss=0.000101 train_acc=0.999887 val_acc=0.999971 lr=0.0010 time=23.96s best_val=0.000364 patience_left=0
+[CHECKPOINT] Saved best model at epoch 6 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep6_fusion.pt
+[EPOCH 7/20] train_loss=0.000804 val_loss=0.000261 train_acc=0.999854 val_acc=0.999971 lr=0.0010 time=23.82s best_val=0.000101 patience_left=0
+[EPOCH 8/20] train_loss=0.000483 val_loss=0.000580 train_acc=0.999879 val_acc=0.999918 lr=0.0010 time=23.92s best_val=0.000101 patience_left=-1
+[EPOCH 9/20] train_loss=0.000598 val_loss=0.000356 train_acc=0.999831 val_acc=0.999901 lr=0.0010 time=23.32s best_val=0.000101 patience_left=-2
+[EPOCH 10/20] train_loss=0.000720 val_loss=0.000904 train_acc=0.999860 val_acc=0.999767 lr=0.0010 time=23.27s best_val=0.000101 patience_left=-3
+[EPOCH 11/20] train_loss=0.000590 val_loss=0.000224 train_acc=0.999883 val_acc=0.999907 lr=0.0010 time=24.00s best_val=0.000101 patience_left=-4
+[EPOCH 12/20] train_loss=0.000396 val_loss=0.000605 train_acc=0.999897 val_acc=0.999877 lr=0.0010 time=23.69s best_val=0.000101 patience_left=-5
+[EPOCH 13/20] train_loss=0.000585 val_loss=0.000186 train_acc=0.999860 val_acc=0.999942 lr=0.0010 time=24.05s best_val=0.000101 patience_left=-6
+[EPOCH 14/20] train_loss=0.000277 val_loss=0.000024 train_acc=0.999940 val_acc=0.999994 lr=0.0010 time=23.79s best_val=0.000101 patience_left=0
+[CHECKPOINT] Saved best model at epoch 14 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep14_fusion.pt
+[EPOCH 15/20] train_loss=0.000645 val_loss=0.000103 train_acc=0.999877 val_acc=0.999971 lr=0.0010 time=24.24s best_val=0.000024 patience_left=0
+[EPOCH 16/20] train_loss=0.000586 val_loss=0.000150 train_acc=0.999872 val_acc=0.999982 lr=0.0010 time=23.73s best_val=0.000024 patience_left=-1
+[EPOCH 17/20] train_loss=0.000532 val_loss=0.000096 train_acc=0.999889 val_acc=0.999994 lr=0.0010 time=23.37s best_val=0.000024 patience_left=-2
+[EPOCH 18/20] train_loss=0.000280 val_loss=0.000117 train_acc=0.999942 val_acc=0.999965 lr=0.0010 time=24.13s best_val=0.000024 patience_left=-3
+[EPOCH 19/20] train_loss=0.000601 val_loss=0.000097 train_acc=0.999930 val_acc=0.999988 lr=0.0010 time=23.05s best_val=0.000024 patience_left=-4
+[EPOCH 20/20] train_loss=0.000359 val_loss=0.000363 train_acc=0.999944 val_acc=0.999959 lr=0.0010 time=24.32s best_val=0.000024 patience_left=-5
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\history_fusion.csv
+       Complexity: {'params': 173448, 'est_macs_per_sample': 196544, 'measured_infer_total_sec': 2.0505677000001015, 'measured_ms_per_batch': 1.5302744029851503, 'measured_ms_per_sample': 0.011962382596927402, 'measured_samples_per_sec': 83595.38677995928, 'measured_energy_j_proxy': 246.06812400001218, 'measured_batches': 1340, 'measured_samples': 171418, 'val_detect_total_sec': 2.0505677000001015, 'val_detect_ms_per_sample': 0.011962382596927402}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      100168,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1503,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      14173,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      14433,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      6041,
+      3,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      6373,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      26462,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2260
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:20,  2.37it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): CIC-IoT-2025_binary
+[OK] Loaded split 'CIC-IoT-2025_binary' → shapes: Xtr=(514253, 93), Xte=(171418, 93), classes=2
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\CIC-IoT-2025_binary\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoT-2025_binary
+[INFO] Detected classes=2 → binary
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoT-2025_binary | Classes=2 | InputDim=93
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=173,058 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.001873 val_loss=0.000000 train_acc=0.999368 val_acc=1.000000 lr=0.0010 time=28.30s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=27.80s best_val=0.000000 patience_left=0
+[EPOCH 3/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=26.80s best_val=0.000000 patience_left=-1
+[EPOCH 4/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=27.01s best_val=0.000000 patience_left=-2
+[EPOCH 5/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.35s best_val=0.000000 patience_left=-3
+[EPOCH 6/20] train_loss=0.000256 val_loss=0.000000 train_acc=0.999971 val_acc=1.000000 lr=0.0010 time=24.06s best_val=0.000000 patience_left=-4
+[EPOCH 7/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=23.76s best_val=0.000000 patience_left=-5
+[EPOCH 8/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.21s best_val=0.000000 patience_left=-6
+[EPOCH 9/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.03s best_val=0.000000 patience_left=-7
+[EPOCH 10/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.01s best_val=0.000000 patience_left=-8
+[EPOCH 11/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=23.88s best_val=0.000000 patience_left=-9
+[EPOCH 12/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.36s best_val=0.000000 patience_left=-10
+[EPOCH 13/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.30s best_val=0.000000 patience_left=-11
+[EPOCH 14/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.69s best_val=0.000000 patience_left=-12
+[EPOCH 15/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=24.50s best_val=0.000000 patience_left=-13
+[EPOCH 16/20] train_loss=0.000122 val_loss=0.000000 train_acc=0.999992 val_acc=1.000000 lr=0.0010 time=26.27s best_val=0.000000 patience_left=-14
+[EPOCH 17/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.46s best_val=0.000000 patience_left=-15
+[EPOCH 18/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.65s best_val=0.000000 patience_left=-16
+[EPOCH 19/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.08s best_val=0.000000 patience_left=-17
+[EPOCH 20/20] train_loss=0.000000 val_loss=0.000000 train_acc=1.000000 val_acc=1.000000 lr=0.0010 time=25.60s best_val=0.000000 patience_left=-18
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\history_fusion.csv
+       Complexity: {'params': 173058, 'est_macs_per_sample': 195776, 'measured_infer_total_sec': 2.173835699999927, 'measured_ms_per_batch': 1.6222654477611396, 'measured_ms_per_sample': 0.012681490275233213, 'measured_samples_per_sec': 78855.0855062348, 'measured_energy_j_proxy': 260.8602839999912, 'measured_batches': 1340, 'measured_samples': 171418, 'val_detect_total_sec': 2.173835699999927, 'val_detect_ms_per_sample': 0.012681490275233213}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      71250,
+      0
+    ],
+    [
+      0,
+      100168
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:42,  2.15it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoT-2025_binary
+
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoT-2025_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): BoT-IoT_multiclass
+[OK] Loaded split 'BoT-IoT_multiclass' → shapes: Xtr=(55027737, 28), Xte=(18342580, 28), classes=8
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\BoT-IoT_multiclass\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): BoT-IoT_multiclass
+[INFO] Detected classes=8 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=BoT-IoT_multiclass | Classes=8 | InputDim=28
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=156,808 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.007675 val_loss=0.007187 train_acc=0.996604 val_acc=0.996982 lr=0.0010 time=2599.63s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.007039 val_loss=0.008229 train_acc=0.996947 val_acc=0.997094 lr=0.0010 time=2583.66s best_val=0.007187 patience_left=0
+[EPOCH 3/20] train_loss=0.006931 val_loss=0.007647 train_acc=0.997021 val_acc=0.997087 lr=0.0010 time=2704.52s best_val=0.007187 patience_left=-1
+[EPOCH 4/20] train_loss=0.006880 val_loss=0.008595 train_acc=0.997059 val_acc=0.996952 lr=0.0010 time=2571.50s best_val=0.007187 patience_left=-2
+[EPOCH 5/20] train_loss=0.006860 val_loss=0.007033 train_acc=0.997057 val_acc=0.997188 lr=0.0010 time=2546.31s best_val=0.007187 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.006884 val_loss=0.007632 train_acc=0.997056 val_acc=0.997385 lr=0.0010 time=2537.15s best_val=0.007033 patience_left=0
+[EPOCH 7/20] train_loss=0.006926 val_loss=0.006624 train_acc=0.997045 val_acc=0.997190 lr=0.0010 time=2642.32s best_val=0.007033 patience_left=0
+[CHECKPOINT] Saved best model at epoch 7 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\checks\best_ep7_fusion.pt
+[EPOCH 8/20] train_loss=0.006909 val_loss=0.007242 train_acc=0.997060 val_acc=0.997302 lr=0.0010 time=2569.91s best_val=0.006624 patience_left=0
+[EPOCH 9/20] train_loss=0.006887 val_loss=0.006830 train_acc=0.997056 val_acc=0.997251 lr=0.0010 time=2500.65s best_val=0.006624 patience_left=-1
+[EPOCH 10/20] train_loss=0.006912 val_loss=0.007674 train_acc=0.997053 val_acc=0.997160 lr=0.0010 time=2503.20s best_val=0.006624 patience_left=-2
+[EPOCH 11/20] train_loss=0.006904 val_loss=0.008421 train_acc=0.997052 val_acc=0.997146 lr=0.0010 time=2498.31s best_val=0.006624 patience_left=-3
+[EPOCH 12/20] train_loss=0.006888 val_loss=0.006943 train_acc=0.997057 val_acc=0.997419 lr=0.0010 time=2507.35s best_val=0.006624 patience_left=-4
+[EPOCH 13/20] train_loss=0.006878 val_loss=0.007059 train_acc=0.997067 val_acc=0.997075 lr=0.0010 time=2505.87s best_val=0.006624 patience_left=-5
+[EPOCH 14/20] train_loss=0.006881 val_loss=0.007231 train_acc=0.997064 val_acc=0.997378 lr=0.0010 time=2509.46s best_val=0.006624 patience_left=-6
+[EPOCH 15/20] train_loss=0.006896 val_loss=0.011208 train_acc=0.997055 val_acc=0.994756 lr=0.0010 time=2501.43s best_val=0.006624 patience_left=-7
+[EPOCH 16/20] train_loss=0.006874 val_loss=0.007262 train_acc=0.997072 val_acc=0.997303 lr=0.0010 time=2511.17s best_val=0.006624 patience_left=-8
+[EPOCH 17/20] train_loss=0.006869 val_loss=0.007454 train_acc=0.997057 val_acc=0.997084 lr=0.0010 time=2507.26s best_val=0.006624 patience_left=-9
+[EPOCH 18/20] train_loss=0.006910 val_loss=0.007392 train_acc=0.997054 val_acc=0.997004 lr=0.0010 time=2512.58s best_val=0.006624 patience_left=-10
+[EPOCH 19/20] train_loss=0.006871 val_loss=0.008649 train_acc=0.997067 val_acc=0.996771 lr=0.0010 time=2508.55s best_val=0.006624 patience_left=-11
+[EPOCH 20/20] train_loss=0.006904 val_loss=0.007452 train_acc=0.997041 val_acc=0.996845 lr=0.0010 time=2508.09s best_val=0.006624 patience_left=-12
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\history_fusion.csv
+       Complexity: {'params': 156808, 'est_macs_per_sample': 163264, 'measured_infer_total_sec': 223.78909230000136, 'measured_ms_per_batch': 1.561660634882984, 'measured_ms_per_sample': 0.012200524261036417, 'measured_samples_per_sec': 81963.69095331412, 'measured_energy_j_proxy': 26854.691076000163, 'measured_batches': 143302, 'measured_samples': 18342580, 'val_detect_total_sec': 223.78909230000136, 'val_detect_ms_per_sample': 0.012200524261036417}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_multiclass\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_multiclass\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_multiclass\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_multiclass\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      0,
+      5,
+      0,
+      0,
+      2,
+      20,
+      1,
+      1
+    ],
+    [
+      0,
+      12275,
+      0,
+      0,
+      27,
+      2,
+      65,
+      0
+    ],
+    [
+      0,
+      2,
+      5,
+      0,
+      17,
+      340,
+      3,
+      0
+    ],
+    [
+      0,
+      11,
+      1,
+      1991,
+      9,
+      246,
+      117,
+      11
+    ],
+    [
+      0,
+      140,
+      0,
+      0,
+      54517,
+      34572,
+      340,
+      0
+    ],
+    [
+      0,
+      221,
+      0,
+      85,
+      12417,
+      351000,
+      1965,
+      150
+    ],
+    [
+      0,
+      341,
+      0,
+      0,
+      107,
+      70,
+      7965355,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      9,
+      242,
+      9905896
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:31,  2.26it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 
+Unknown option. Please choose 1-9 or q.
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 2
+
+[2] Load an existing processed split
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Enter split folder name (from above): BoT-IoT_binary
+[OK] Loaded split 'BoT-IoT_binary' → shapes: Xtr=(55027737, 28), Xte=(18342580, 28), classes=2
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 3
+
+[3] Visualize dataset features
+Use (raw) dataset or (processed) split? (raw/processed) [default: processed] choices=['raw', 'processed'] processed
+Available processed splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_binary
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Visualizations saved to E:\HLC\data\outputs\BoT-IoT_binary\viz
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): BoT-IoT_binary
+[INFO] Detected classes=2 → binary
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=BoT-IoT_binary | Classes=2 | InputDim=28
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=156,418 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.000217 val_loss=0.000146 train_acc=0.999951 val_acc=0.999964 lr=0.0010 time=2522.64s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.000196 val_loss=0.000215 train_acc=0.999950 val_acc=0.999973 lr=0.0010 time=2521.24s best_val=0.000146 patience_left=0
+[EPOCH 3/20] train_loss=0.000196 val_loss=0.000281 train_acc=0.999952 val_acc=0.999938 lr=0.0010 time=2560.99s best_val=0.000146 patience_left=-1
+[EPOCH 4/20] train_loss=0.000190 val_loss=0.000166 train_acc=0.999952 val_acc=0.999969 lr=0.0010 time=2565.19s best_val=0.000146 patience_left=-2
+[EPOCH 5/20] train_loss=0.000192 val_loss=0.000153 train_acc=0.999953 val_acc=0.999964 lr=0.0010 time=2542.33s best_val=0.000146 patience_left=-3
+[EPOCH 6/20] train_loss=0.000191 val_loss=0.000125 train_acc=0.999951 val_acc=0.999975 lr=0.0010 time=2548.43s best_val=0.000146 patience_left=0
+[CHECKPOINT] Saved best model at epoch 6 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\checks\best_ep6_fusion.pt
+[EPOCH 7/20] train_loss=0.000199 val_loss=0.000276 train_acc=0.999951 val_acc=0.999944 lr=0.0010 time=2545.53s best_val=0.000125 patience_left=0
+[EPOCH 8/20] train_loss=0.000204 val_loss=0.000155 train_acc=0.999948 val_acc=0.999973 lr=0.0010 time=2543.87s best_val=0.000125 patience_left=-1
+[EPOCH 9/20] train_loss=0.000205 val_loss=0.000150 train_acc=0.999947 val_acc=0.999974 lr=0.0010 time=2547.83s best_val=0.000125 patience_left=-2
+[EPOCH 10/20] train_loss=0.000201 val_loss=0.000430 train_acc=0.999952 val_acc=0.999940 lr=0.0010 time=2545.33s best_val=0.000125 patience_left=-3
+[EPOCH 11/20] train_loss=0.000198 val_loss=0.000164 train_acc=0.999951 val_acc=0.999958 lr=0.0010 time=2537.53s best_val=0.000125 patience_left=-4
+[EPOCH 12/20] train_loss=0.000201 val_loss=0.000159 train_acc=0.999951 val_acc=0.999942 lr=0.0010 time=2515.98s best_val=0.000125 patience_left=-5
+[EPOCH 13/20] train_loss=0.000205 val_loss=0.000239 train_acc=0.999948 val_acc=0.999903 lr=0.0010 time=2507.76s best_val=0.000125 patience_left=-6
+[EPOCH 14/20] train_loss=0.000200 val_loss=0.000133 train_acc=0.999949 val_acc=0.999954 lr=0.0010 time=2500.87s best_val=0.000125 patience_left=-7
+[EPOCH 15/20] train_loss=0.000204 val_loss=0.000117 train_acc=0.999950 val_acc=0.999968 lr=0.0010 time=2493.94s best_val=0.000125 patience_left=0
+[CHECKPOINT] Saved best model at epoch 15 → E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\checks\best_ep15_fusion.pt
+[EPOCH 16/20] train_loss=0.000195 val_loss=0.000208 train_acc=0.999950 val_acc=0.999927 lr=0.0010 time=2504.98s best_val=0.000117 patience_left=0
+[EPOCH 17/20] train_loss=0.000198 val_loss=0.000201 train_acc=0.999950 val_acc=0.999975 lr=0.0010 time=2545.58s best_val=0.000117 patience_left=-1
+[EPOCH 18/20] train_loss=0.000205 val_loss=0.000143 train_acc=0.999947 val_acc=0.999960 lr=0.0010 time=2495.78s best_val=0.000117 patience_left=-2
+[EPOCH 19/20] train_loss=0.000205 val_loss=0.000143 train_acc=0.999946 val_acc=0.999973 lr=0.0010 time=2488.22s best_val=0.000117 patience_left=-3
+[EPOCH 20/20] train_loss=0.000191 val_loss=0.000232 train_acc=0.999952 val_acc=0.999952 lr=0.0010 time=2491.19s best_val=0.000117 patience_left=-4
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\history_fusion.csv
+       Complexity: {'params': 156418, 'est_macs_per_sample': 162496, 'measured_infer_total_sec': 210.10295770000084, 'measured_ms_per_batch': 1.4661550969281716, 'measured_ms_per_sample': 0.011454384154246613, 'measured_samples_per_sec': 87302.81667995732, 'measured_energy_j_proxy': 25212.3549240001, 'measured_batches': 143302, 'measured_samples': 18342580, 'val_detect_total_sec': 210.10295770000084, 'val_detect_ms_per_sample': 0.011454384154246613}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      18340010,
+      184
+    ],
+    [
+      270,
+      2116
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [03:31,  2.26it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: BoT-IoT_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\BoT-IoT_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): Apose-IoT-23_multiclass
+[INFO] Detected classes=5 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=Apose-IoT-23_multiclass | Classes=5 | InputDim=17
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=153,797 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.241318 val_loss=0.059623 train_acc=0.922457 val_acc=0.982046 lr=0.0010 time=2.94s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.059699 val_loss=0.034313 train_acc=0.983712 val_acc=0.992409 lr=0.0010 time=2.48s best_val=0.059623 patience_left=0
+[CHECKPOINT] Saved best model at epoch 2 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep2_fusion.pt
+[EPOCH 3/20] train_loss=0.047602 val_loss=0.034560 train_acc=0.985379 val_acc=0.990601 lr=0.0010 time=2.30s best_val=0.034313 patience_left=0
+[EPOCH 4/20] train_loss=0.043988 val_loss=0.031299 train_acc=0.986162 val_acc=0.984396 lr=0.0010 time=2.33s best_val=0.034313 patience_left=0
+[CHECKPOINT] Saved best model at epoch 4 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep4_fusion.pt
+[EPOCH 5/20] train_loss=0.038133 val_loss=0.028519 train_acc=0.988151 val_acc=0.994638 lr=0.0010 time=2.28s best_val=0.031299 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.038893 val_loss=0.036001 train_acc=0.987327 val_acc=0.984094 lr=0.0010 time=2.24s best_val=0.028519 patience_left=0
+[EPOCH 7/20] train_loss=0.034647 val_loss=0.030006 train_acc=0.988914 val_acc=0.994517 lr=0.0010 time=2.23s best_val=0.028519 patience_left=-1
+[EPOCH 8/20] train_loss=0.034399 val_loss=0.062158 train_acc=0.988934 val_acc=0.984275 lr=0.0010 time=2.24s best_val=0.028519 patience_left=-2
+[EPOCH 9/20] train_loss=0.033601 val_loss=0.027210 train_acc=0.989014 val_acc=0.984396 lr=0.0010 time=2.24s best_val=0.028519 patience_left=0
+[CHECKPOINT] Saved best model at epoch 9 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep9_fusion.pt
+[EPOCH 10/20] train_loss=0.034481 val_loss=0.021502 train_acc=0.989175 val_acc=0.996325 lr=0.0010 time=2.25s best_val=0.027210 patience_left=0
+[CHECKPOINT] Saved best model at epoch 10 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep10_fusion.pt
+[EPOCH 11/20] train_loss=0.032239 val_loss=0.026935 train_acc=0.989255 val_acc=0.984516 lr=0.0010 time=2.20s best_val=0.021502 patience_left=0
+[EPOCH 12/20] train_loss=0.033883 val_loss=0.029047 train_acc=0.989195 val_acc=0.983673 lr=0.0010 time=2.28s best_val=0.021502 patience_left=-1
+[EPOCH 13/20] train_loss=0.031488 val_loss=0.027492 train_acc=0.989115 val_acc=0.984516 lr=0.0010 time=2.19s best_val=0.021502 patience_left=-2
+[EPOCH 14/20] train_loss=0.031327 val_loss=0.027565 train_acc=0.989476 val_acc=0.989637 lr=0.0010 time=2.32s best_val=0.021502 patience_left=-3
+[EPOCH 15/20] train_loss=0.028639 val_loss=0.018945 train_acc=0.990782 val_acc=0.995602 lr=0.0010 time=2.26s best_val=0.021502 patience_left=0
+[CHECKPOINT] Saved best model at epoch 15 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep15_fusion.pt
+[EPOCH 16/20] train_loss=0.030293 val_loss=0.025614 train_acc=0.990440 val_acc=0.991083 lr=0.0010 time=2.30s best_val=0.018945 patience_left=0
+[EPOCH 17/20] train_loss=0.031383 val_loss=0.069046 train_acc=0.989135 val_acc=0.984155 lr=0.0010 time=2.36s best_val=0.018945 patience_left=-1
+[EPOCH 18/20] train_loss=0.033926 val_loss=0.028211 train_acc=0.989235 val_acc=0.990059 lr=0.0010 time=2.31s best_val=0.018945 patience_left=-2
+[EPOCH 19/20] train_loss=0.029765 val_loss=0.022476 train_acc=0.990822 val_acc=0.992710 lr=0.0010 time=2.27s best_val=0.018945 patience_left=-3
+[EPOCH 20/20] train_loss=0.027331 val_loss=0.032719 train_acc=0.991545 val_acc=0.989758 lr=0.0010 time=2.32s best_val=0.018945 patience_left=-4
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\history_fusion.csv
+       Complexity: {'params': 153797, 'est_macs_per_sample': 157248, 'measured_infer_total_sec': 0.1916326999780722, 'measured_ms_per_batch': 1.4740976921390168, 'measured_ms_per_sample': 0.011545529580556223, 'measured_samples_per_sec': 86613.61031754625, 'measured_energy_j_proxy': 22.995923997368664, 'measured_batches': 130, 'measured_samples': 16598, 'val_detect_total_sec': 0.1916326999780722, 'val_detect_ms_per_sample': 0.011545529580556223}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      7103,
+      2,
+      3,
+      0,
+      0
+    ],
+    [
+      16,
+      1705,
+      0,
+      0,
+      0
+    ],
+    [
+      16,
+      0,
+      1566,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1732,
+      0
+    ],
+    [
+      216,
+      5,
+      1,
+      0,
+      4233
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:59,  2.71it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): Apose-IoT-23_binary
+[INFO] Detected classes=2 → binary
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=Apose-IoT-23_binary | Classes=2 | InputDim=17
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=153,602 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.113075 val_loss=0.050445 train_acc=0.961319 val_acc=0.983010 lr=0.0010 time=2.65s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.046001 val_loss=0.058354 train_acc=0.983331 val_acc=0.983974 lr=0.0010 time=2.47s best_val=0.050445 patience_left=0
+[EPOCH 3/20] train_loss=0.038021 val_loss=0.033909 train_acc=0.985962 val_acc=0.984576 lr=0.0010 time=2.66s best_val=0.050445 patience_left=0
+[CHECKPOINT] Saved best model at epoch 3 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep3_fusion.pt
+[EPOCH 4/20] train_loss=0.038239 val_loss=0.034207 train_acc=0.986203 val_acc=0.984094 lr=0.0010 time=2.52s best_val=0.033909 patience_left=0
+[EPOCH 5/20] train_loss=0.032585 val_loss=0.028187 train_acc=0.987287 val_acc=0.996988 lr=0.0010 time=2.52s best_val=0.033909 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.031317 val_loss=0.035969 train_acc=0.987950 val_acc=0.984516 lr=0.0010 time=2.59s best_val=0.028187 patience_left=0
+[EPOCH 7/20] train_loss=0.032934 val_loss=0.029782 train_acc=0.987347 val_acc=0.984637 lr=0.0010 time=2.26s best_val=0.028187 patience_left=-1
+[EPOCH 8/20] train_loss=0.031246 val_loss=0.044641 train_acc=0.988834 val_acc=0.984396 lr=0.0010 time=2.28s best_val=0.028187 patience_left=-2
+[EPOCH 9/20] train_loss=0.030316 val_loss=0.026636 train_acc=0.988994 val_acc=0.993132 lr=0.0010 time=2.60s best_val=0.028187 patience_left=0
+[CHECKPOINT] Saved best model at epoch 9 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep9_fusion.pt
+[EPOCH 10/20] train_loss=0.029593 val_loss=0.035765 train_acc=0.988633 val_acc=0.984998 lr=0.0010 time=2.40s best_val=0.026636 patience_left=0
+[EPOCH 11/20] train_loss=0.031139 val_loss=0.028400 train_acc=0.988753 val_acc=0.984637 lr=0.0010 time=2.25s best_val=0.026636 patience_left=-1
+[EPOCH 12/20] train_loss=0.030974 val_loss=0.029894 train_acc=0.988693 val_acc=0.991927 lr=0.0010 time=2.37s best_val=0.026636 patience_left=-2
+[EPOCH 13/20] train_loss=0.028950 val_loss=0.041011 train_acc=0.989496 val_acc=0.984878 lr=0.0010 time=2.71s best_val=0.026636 patience_left=-3
+[EPOCH 14/20] train_loss=0.027663 val_loss=0.026476 train_acc=0.990641 val_acc=0.991686 lr=0.0010 time=2.63s best_val=0.026636 patience_left=0
+[CHECKPOINT] Saved best model at epoch 14 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep14_fusion.pt
+[EPOCH 15/20] train_loss=0.027159 val_loss=0.031440 train_acc=0.990300 val_acc=0.988191 lr=0.0010 time=2.32s best_val=0.026476 patience_left=0
+[EPOCH 16/20] train_loss=0.027306 val_loss=0.022319 train_acc=0.990440 val_acc=0.994035 lr=0.0010 time=2.39s best_val=0.026476 patience_left=0
+[CHECKPOINT] Saved best model at epoch 16 → E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep16_fusion.pt
+[EPOCH 17/20] train_loss=0.027153 val_loss=0.026504 train_acc=0.991023 val_acc=0.992770 lr=0.0010 time=2.29s best_val=0.022319 patience_left=0
+[EPOCH 18/20] train_loss=0.026046 val_loss=0.023552 train_acc=0.991565 val_acc=0.994337 lr=0.0010 time=2.27s best_val=0.022319 patience_left=-1
+[EPOCH 19/20] train_loss=0.026167 val_loss=0.022880 train_acc=0.990480 val_acc=0.993915 lr=0.0010 time=2.27s best_val=0.022319 patience_left=-2
+[EPOCH 20/20] train_loss=0.024161 val_loss=0.024799 train_acc=0.992368 val_acc=0.997409 lr=0.0010 time=2.28s best_val=0.022319 patience_left=-3
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\history_fusion.csv
+       Complexity: {'params': 153602, 'est_macs_per_sample': 156864, 'measured_infer_total_sec': 0.19397650001337752, 'measured_ms_per_batch': 1.492126923179827, 'measured_ms_per_sample': 0.011686739366994669, 'measured_samples_per_sec': 85567.06610777762, 'measured_energy_j_proxy': 23.277180001605302, 'measured_batches': 130, 'measured_samples': 16598, 'val_detect_total_sec': 0.19397650001337752, 'val_detect_ms_per_sample': 0.011686739366994669}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      9452,
+      38
+    ],
+    [
+      76,
+      7032
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:45,  2.83it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: Apose-IoT-23_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\Apose-IoT-23_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoMT-2024_multiclass
+[INFO] Detected classes=19 → multiclass
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoMT-2024_multiclass | Classes=19 | InputDim=45
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=161,875 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.471230 val_loss=0.453734 train_acc=0.787246 val_acc=0.793466 lr=0.0010 time=325.11s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.317604 val_loss=0.047408 train_acc=0.862052 val_acc=0.983553 lr=0.0010 time=315.36s best_val=0.453734 patience_left=0
+[CHECKPOINT] Saved best model at epoch 2 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep2_fusion.pt
+[EPOCH 3/20] train_loss=0.068158 val_loss=0.031265 train_acc=0.978106 val_acc=0.989908 lr=0.0010 time=319.41s best_val=0.047408 patience_left=0
+[CHECKPOINT] Saved best model at epoch 3 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep3_fusion.pt
+[EPOCH 4/20] train_loss=0.041831 val_loss=0.041317 train_acc=0.986805 val_acc=0.989650 lr=0.0010 time=317.56s best_val=0.031265 patience_left=0
+[EPOCH 5/20] train_loss=0.038859 val_loss=0.023711 train_acc=0.987395 val_acc=0.990704 lr=0.0010 time=319.50s best_val=0.031265 patience_left=0
+[CHECKPOINT] Saved best model at epoch 5 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep5_fusion.pt
+[EPOCH 6/20] train_loss=0.037166 val_loss=0.022056 train_acc=0.988276 val_acc=0.992084 lr=0.0010 time=318.54s best_val=0.023711 patience_left=0
+[CHECKPOINT] Saved best model at epoch 6 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep6_fusion.pt
+[EPOCH 7/20] train_loss=0.036669 val_loss=0.022714 train_acc=0.988230 val_acc=0.991661 lr=0.0010 time=311.82s best_val=0.022056 patience_left=0
+[EPOCH 8/20] train_loss=0.039595 val_loss=0.050480 train_acc=0.987274 val_acc=0.986193 lr=0.0010 time=325.52s best_val=0.022056 patience_left=-1
+[EPOCH 9/20] train_loss=0.040874 val_loss=0.112098 train_acc=0.987007 val_acc=0.966706 lr=0.0010 time=330.41s best_val=0.022056 patience_left=-2
+[EPOCH 10/20] train_loss=0.045044 val_loss=0.052935 train_acc=0.984699 val_acc=0.983838 lr=0.0010 time=330.58s best_val=0.022056 patience_left=-3
+[EPOCH 11/20] train_loss=0.045672 val_loss=0.022400 train_acc=0.984537 val_acc=0.991771 lr=0.0010 time=324.73s best_val=0.022056 patience_left=-4
+[EPOCH 12/20] train_loss=0.056991 val_loss=0.025020 train_acc=0.979759 val_acc=0.991401 lr=0.0010 time=317.56s best_val=0.022056 patience_left=-5
+[EPOCH 13/20] train_loss=0.040533 val_loss=0.025836 train_acc=0.986831 val_acc=0.990165 lr=0.0010 time=321.84s best_val=0.022056 patience_left=-6
+[EPOCH 14/20] train_loss=0.041271 val_loss=0.023542 train_acc=0.986521 val_acc=0.991839 lr=0.0010 time=331.28s best_val=0.022056 patience_left=-7
+[EPOCH 15/20] train_loss=0.037330 val_loss=0.022059 train_acc=0.987972 val_acc=0.991789 lr=0.0010 time=340.74s best_val=0.022056 patience_left=-8
+[EPOCH 16/20] train_loss=0.045289 val_loss=0.023893 train_acc=0.984719 val_acc=0.990882 lr=0.0010 time=307.82s best_val=0.022056 patience_left=-9
+[EPOCH 17/20] train_loss=0.038675 val_loss=0.037328 train_acc=0.987305 val_acc=0.986703 lr=0.0010 time=307.66s best_val=0.022056 patience_left=-10
+[EPOCH 18/20] train_loss=0.043476 val_loss=0.028877 train_acc=0.985414 val_acc=0.990142 lr=0.0010 time=308.11s best_val=0.022056 patience_left=-11
+[EPOCH 19/20] train_loss=0.116373 val_loss=0.030998 train_acc=0.953799 val_acc=0.989009 lr=0.0010 time=311.58s best_val=0.022056 patience_left=-12
+[EPOCH 20/20] train_loss=0.038381 val_loss=0.022200 train_acc=0.987346 val_acc=0.991359 lr=0.0010 time=316.43s best_val=0.022056 patience_left=-13
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\history_fusion.csv
+       Complexity: {'params': 161875, 'est_macs_per_sample': 173376, 'measured_infer_total_sec': 25.930987799998547, 'measured_ms_per_batch': 1.5375622769047463, 'measured_ms_per_sample': 0.012012611510820689, 'measured_samples_per_sec': 83245.84534338953, 'measured_energy_j_proxy': 3111.7185359998257, 'measured_batches': 16865, 'measured_samples': 2158647, 'val_detect_total_sec': 25.930987799998547, 'val_detect_ms_per_sample': 0.012012611510820689}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      2769,
+      1468,
+      0,
+      0,
+      0,
+      0,
+      129,
+      1,
+      74,
+      3,
+      0,
+      0,
+      0,
+      1,
+      2,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      1011,
+      43218,
+      0,
+      0,
+      0,
+      1,
+      91,
+      8,
+      147,
+      4,
+      3,
+      0,
+      0,
+      5,
+      8,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      53637,
+      1,
+      82,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      0,
+      2,
+      8,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      6,
+      7485,
+      29,
+      1476,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      1,
+      1,
+      6,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      217,
+      0,
+      3753,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      39,
+      0,
+      7924,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      1,
+      4,
+      0
+    ],
+    [
+      390,
+      638,
+      0,
+      0,
+      0,
+      0,
+      683,
+      3,
+      2,
+      2,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      4,
+      628,
+      0,
+      0,
+      0,
+      0,
+      16,
+      811,
+      3,
+      3409,
+      39,
+      0,
+      2,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      71,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      160,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      234,
+      67,
+      0,
+      0,
+      0,
+      0,
+      2,
+      102,
+      1,
+      9903,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      164,
+      160,
+      0,
+      0,
+      0,
+      0,
+      6,
+      131,
+      2,
+      232,
+      89,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      471218,
+      0,
+      28,
+      49,
+      265,
+      1,
+      8,
+      57
+    ],
+    [
+      0,
+      4,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      26,
+      242942,
+      45,
+      120,
+      33,
+      333,
+      29,
+      52
+    ],
+    [
+      0,
+      3,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      6,
+      10,
+      246364,
+      107,
+      22,
+      4,
+      200,
+      48
+    ],
+    [
+      0,
+      8,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      20,
+      498994,
+      32,
+      2,
+      5,
+      444
+    ],
+    [
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      977,
+      0,
+      31,
+      18,
+      127522,
+      1,
+      2,
+      128
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      4,
+      544,
+      29,
+      14,
+      55,
+      134384,
+      4,
+      86
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      20,
+      0,
+      560,
+      23,
+      34,
+      2,
+      114951,
+      28
+    ],
+    [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      31,
+      459,
+      91,
+      1,
+      8,
+      175530
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:21,  3.42it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_multiclass
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_multiclass\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 4
+
+[4] Train a model
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00): CIC-IoMT-2024_binary
+[INFO] Detected classes=2 → binary
+Epochs? [default: 50] 20
+Batch size? [default: 256] 128
+Learning rate? [default: 0.001] 0.001
+Early stop patience? [default: 8] 0
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+[TRAIN] Dataset=CIC-IoMT-2024_binary | Classes=2 | InputDim=45
+[TRAIN] Model=Fusion (CNN+LSTM) | Params=160,770 | Device=cuda | Batch=128 | LR=0.001
+[TRAIN] Epochs=20 | EarlyStop=0 | Optim=AdamW | Loss=CrossEntropy
+[EPOCH 1/20] train_loss=0.005328 val_loss=0.004592 train_acc=0.997739 val_acc=0.998021 lr=0.0010 time=308.94s best_val=inf patience_left=0
+[CHECKPOINT] Saved best model at epoch 1 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep1_fusion.pt
+[EPOCH 2/20] train_loss=0.004555 val_loss=0.004477 train_acc=0.998078 val_acc=0.998157 lr=0.0010 time=309.12s best_val=0.004592 patience_left=0
+[CHECKPOINT] Saved best model at epoch 2 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep2_fusion.pt
+[EPOCH 3/20] train_loss=0.004459 val_loss=0.004144 train_acc=0.998130 val_acc=0.998172 lr=0.0010 time=319.09s best_val=0.004477 patience_left=0
+[CHECKPOINT] Saved best model at epoch 3 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep3_fusion.pt
+[EPOCH 4/20] train_loss=0.004383 val_loss=0.004127 train_acc=0.998177 val_acc=0.998228 lr=0.0010 time=327.81s best_val=0.004144 patience_left=0
+[CHECKPOINT] Saved best model at epoch 4 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep4_fusion.pt
+[EPOCH 5/20] train_loss=0.004331 val_loss=0.004915 train_acc=0.998185 val_acc=0.998128 lr=0.0010 time=334.13s best_val=0.004127 patience_left=0
+[EPOCH 6/20] train_loss=0.004327 val_loss=0.004016 train_acc=0.998187 val_acc=0.998288 lr=0.0010 time=329.19s best_val=0.004127 patience_left=0
+[CHECKPOINT] Saved best model at epoch 6 → E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep6_fusion.pt
+[EPOCH 7/20] train_loss=0.004309 val_loss=0.004295 train_acc=0.998203 val_acc=0.998275 lr=0.0010 time=336.30s best_val=0.004016 patience_left=0
+[EPOCH 8/20] train_loss=0.004280 val_loss=0.004284 train_acc=0.998222 val_acc=0.998317 lr=0.0010 time=317.67s best_val=0.004016 patience_left=-1
+[EPOCH 9/20] train_loss=0.004263 val_loss=0.005372 train_acc=0.998225 val_acc=0.997973 lr=0.0010 time=322.13s best_val=0.004016 patience_left=-2
+[EPOCH 10/20] train_loss=0.004245 val_loss=0.004432 train_acc=0.998217 val_acc=0.998281 lr=0.0010 time=334.31s best_val=0.004016 patience_left=-3
+[EPOCH 11/20] train_loss=0.004247 val_loss=0.004097 train_acc=0.998229 val_acc=0.998245 lr=0.0010 time=350.29s best_val=0.004016 patience_left=-4
+[EPOCH 12/20] train_loss=0.004250 val_loss=0.004059 train_acc=0.998217 val_acc=0.998205 lr=0.0010 time=317.20s best_val=0.004016 patience_left=-5
+[EPOCH 13/20] train_loss=0.004221 val_loss=0.004033 train_acc=0.998238 val_acc=0.998335 lr=0.0010 time=312.82s best_val=0.004016 patience_left=-6
+[EPOCH 14/20] train_loss=0.004209 val_loss=0.004297 train_acc=0.998248 val_acc=0.998268 lr=0.0010 time=319.08s best_val=0.004016 patience_left=-7
+[EPOCH 15/20] train_loss=0.004214 val_loss=0.004098 train_acc=0.998237 val_acc=0.998279 lr=0.0010 time=319.06s best_val=0.004016 patience_left=-8
+[EPOCH 16/20] train_loss=0.004202 val_loss=0.004565 train_acc=0.998232 val_acc=0.998028 lr=0.0010 time=322.73s best_val=0.004016 patience_left=-9
+[EPOCH 17/20] train_loss=0.004189 val_loss=0.004123 train_acc=0.998234 val_acc=0.998235 lr=0.0010 time=318.28s best_val=0.004016 patience_left=-10
+[EPOCH 18/20] train_loss=0.004188 val_loss=0.004099 train_acc=0.998235 val_acc=0.998273 lr=0.0010 time=322.48s best_val=0.004016 patience_left=-11
+[EPOCH 19/20] train_loss=0.004213 val_loss=0.004098 train_acc=0.998226 val_acc=0.998263 lr=0.0010 time=316.51s best_val=0.004016 patience_left=-12
+[EPOCH 20/20] train_loss=0.004187 val_loss=0.004825 train_acc=0.998231 val_acc=0.997938 lr=0.0010 time=321.75s best_val=0.004016 patience_left=-13
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Checkpoint: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\checks\best_ep20_fusion.pt
+       History CSV: E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\history_fusion.csv
+       Complexity: {'params': 160770, 'est_macs_per_sample': 171200, 'measured_infer_total_sec': 25.337868900001922, 'measured_ms_per_batch': 1.5023936495702295, 'measured_ms_per_sample': 0.011737847318251629, 'measured_samples_per_sec': 85194.49715835557, 'measured_energy_j_proxy': 3040.5442680002307, 'measured_batches': 16865, 'measured_samples': 2158647, 'val_detect_total_sec': 25.337868900001922, 'val_detect_ms_per_sample': 0.011737847318251629}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 5
+
+[5] Evaluate & plot performance
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+[DONE] Metrics written to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\eval
+{
+  "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\metrics_fusion.json",
+  "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\complexity_eval_fusion.json",
+  "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\predictions_fusion.csv",
+  "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\eval\\classification_report_fusion.csv",
+  "confusion_matrix": [
+    [
+      2111542,
+      2608
+    ],
+    [
+      1088,
+      43409
+    ]
+  ]
+}
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] shap
+[XAI] Running SHAP...
+PermutationExplainer explainer: 501it [02:18,  3.31it/s]
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] lime
+[XAI] Running LIME...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 6
+
+[6] XAI (SHAP / LIME / ANOVA)
+Available splits: ['Apose-IoT-23_binary', 'Apose-IoT-23_multiclass', 'BoT-IoT_binary', 'BoT-IoT_multiclass', 'CIC-IoMT-2024_binary', 'CIC-IoMT-2024_multiclass', 'CIC-IoT-2025_binary', 'CIC-IoT-2025_multiclass']
+Split key: CIC-IoMT-2024_binary
+Model (fusion/dnn)? [default: fusion] choices=['fusion', 'dnn'] fusion
+Which explainers? (comma sep: shap,lime,anova) [default: shap,lime,anova] anova
+[XAI] Running ANOVA F-score...
+[XAI] Results saved under E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+[DONE] XAI artifacts saved to E:\HLC\data\outputs\cnn_lstm_fusion\CIC-IoMT-2024_binary\xai
+
+==================== IDS EXPERIMENT CLI ====================
+(1) Load & split dataset (persist)
+(2) Load existing split (validate)
+(3) Visualize features (EPS)
+(4) Train model (save ckpt + curves + history CSV)
+(5) Evaluate & plot performance (EPS + CSV/JSON)
+(6) XAI (SHAP/LIME/ANOVA)
+(7) Ablation (user-selected feature subset)
+(8) Evaluate (explicit)
+(9) Inference (load_model → predict live CSV)
+(q) Quit
+============================================================
+
+Select option: 
