@@ -173,6 +173,96 @@ def _measure_infer_time(model, X: np.ndarray, batch_size: int = 512):
         "energy_j": float(energy_j),
     }
 
+
+def run_reproducible_experiments(Xtr, ytr, Xval, yval, Xte, yte, key, model_choice, epochs, batch, lr, patience, meta):
+    import shutil
+    from HLC.src.evaluate import evaluate_on_test, aggregate_seed_stats
+    from HLC.src.train import train_experiment
+    from HLC.src.utils import ensure_dir
+    
+    seeds = [13, 23, 33, 43, 53]
+    eval_results = []
+    
+    best_f1 = -1
+    best_ckpt = None
+    best_model = None
+    best_artifacts_dir = None
+    best_hist_csv = None
+    model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
+    suffix = "fusion" if model_choice == "fusion" else "dnn"
+    
+    # Confirm a classification basis
+    ncls = len(np.unique(ytr))
+    class_type = "binary" if ncls == 2 else "multiclass"
+    
+    for seed in seeds:
+        print(f"\n==================== RUNNING SEED {seed} ====================")
+        ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
+            Xtr, ytr, Xval, yval, Xte, yte,
+            model_name=("cnn_lstm_fusion" if model_choice=="fusion" else "dnn"),
+            dataset_key=key,
+            out_root=DEFAULT_OUTROOT,
+            epochs=epochs, batch_size=batch, lr=lr, early_stop_patience=patience,
+            class_names=meta["class_names"],
+            seed=seed
+        )
+        
+        # Evaluate this seed model on the untouched test set (Xte, yte)
+        eval_outdir_seed = os.path.join(DEFAULT_OUTROOT, model_folder, key, f"eval_seed{seed}")
+        res = evaluate_on_test(Xte, yte, ckpt_path, eval_outdir_seed, task_type=class_type)
+        eval_results.append(res)
+        
+        # Parse classification report to get macro f1
+        rep_csv = res["report_csv"]
+        rep_df = pd.read_csv(rep_csv, index_col=0)
+        macro_f1 = rep_df.loc["macro avg", "f1-score"]
+        
+        if macro_f1 > best_f1:
+            best_f1 = macro_f1
+            best_ckpt = ckpt_path
+            best_model = model
+            best_artifacts_dir = artifacts_dir
+            best_hist_csv = hist_csv
+
+    # 1. Aggregate statistics over the 5 seed runs
+    eval_outdir_main = os.path.join(DEFAULT_OUTROOT, model_folder, key, "eval")
+    ensure_dir(eval_outdir_main)
+    stats = aggregate_seed_stats(eval_results, eval_outdir_main, suffix)
+    
+    # 2. Copy the best seed checkpoint as the main deployment checkpoint
+    main_ckpt_path = os.path.join(best_artifacts_dir, "checks", f"best_{suffix}.pt")
+    ensure_dir(os.path.dirname(main_ckpt_path))
+    shutil.copy(best_ckpt, main_ckpt_path)
+    print(f"[BEST SEED MODEL] Copying best checkpoint {best_ckpt} -> {main_ckpt_path}")
+    
+    # 3. Run evaluation on the best seed model for the main eval/ directory
+    metrics = evaluate_on_test(Xte, yte, main_ckpt_path, eval_outdir_main, task_type=class_type)
+    
+    # Complexity snapshot
+    complexity = estimate_model_complexity(best_model, input_dim=meta["input_dim"], seq_len=meta.get("seq_len", 1))
+    
+    # Measure inference/detection time on validation (test) split for complexity report
+    try:
+        infer = _measure_infer_time(best_model, Xte, batch_size=batch)
+        complexity.update({
+            "measured_infer_total_sec": infer["total_time_sec"],
+            "measured_ms_per_batch": infer["ms_per_batch"],
+            "measured_ms_per_sample": infer["ms_per_sample"],
+            "measured_samples_per_sec": infer["samples_per_sec"],
+            "measured_energy_j_proxy": infer["energy_j"],
+            "measured_batches": infer["batches"],
+            "measured_samples": infer["samples"],
+            "val_detect_total_sec": infer["total_time_sec"],
+            "val_detect_ms_per_sample": infer["ms_per_sample"]
+        })
+    except Exception as e:
+        print(f"[WARN] Failed to measure inference time for complexity: {e}")
+        
+    _safe_json_dump(complexity, os.path.join(best_artifacts_dir, f"complexity_{suffix}.json"))
+    
+    return main_ckpt_path, best_hist_csv, best_artifacts_dir, best_model, complexity
+
+
 # ---------------------------------------------------------------------
 # Option 1: Load & split dataset
 # ---------------------------------------------------------------------
@@ -254,12 +344,12 @@ def opt_visualize_dataset():
         print("Available processed splits:", splits)
         key = _prompt("Split key:")
         bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-        Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
         outdir = os.path.join(DEFAULT_OUTROOT, f"{key}", "viz")
         # Use meta['class_names'] for readable class labels in plots
         plot_dataset_overview(
-            np.vstack([Xtr, Xte]),
-            np.hstack([ytr, yte]),
+            np.vstack([Xtr, Xval, Xte]),
+            np.hstack([ytr, yval, yte]),
             meta["feature_names"],
             outdir=outdir,
             class_names=meta.get("class_names")
@@ -278,9 +368,9 @@ def opt_train_model():
         print("[WARN] No processed splits found. Run option 1 first.")
         return 0
     print("Available splits:", splits)
-    key = _prompt("Split key (e.g., CIC-IoT_binary_2025-10-29_08-30-00):")
+    key = _prompt("Split key:")
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-    Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     # Confirm a classification basis
     ncls = len(np.unique(ytr))
@@ -295,40 +385,15 @@ def opt_train_model():
     model_choice = _prompt("Model (fusion/dnn)?", default="fusion", choices=["fusion","dnn"])
     suffix = "fusion" if model_choice == "fusion" else "dnn"
 
-    ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
-        Xtr, ytr, Xte, yte,
-        model_name=("cnn_lstm_fusion" if model_choice=="fusion" else "dnn"),
-        dataset_key=key,
-        out_root=DEFAULT_OUTROOT,
-        epochs=epochs, batch_size=batch, lr=lr, early_stop_patience=patience,
-        class_names=meta["class_names"]
+    ckpt_path, hist_csv, artifacts_dir, model, complexity = run_reproducible_experiments(
+        Xtr, ytr, Xval, yval, Xte, yte,
+        key=key, model_choice=model_choice,
+        epochs=epochs, batch=batch, lr=lr, patience=patience, meta=meta
     )
 
-    # Complexity snapshot
-    complexity = estimate_model_complexity(model, input_dim=meta["input_dim"], seq_len=meta.get("seq_len", 1))
-
-    # Measure inference/detection time on validation (test) split for complexity report
-    try:
-        infer = _measure_infer_time(model, Xte, batch_size=batch)
-        complexity.update({
-            "measured_infer_total_sec": infer["total_time_sec"],
-            "measured_ms_per_batch": infer["ms_per_batch"],
-            "measured_ms_per_sample": infer["ms_per_sample"],
-            "measured_samples_per_sec": infer["samples_per_sec"],
-            "measured_energy_j_proxy": infer["energy_j"],
-            "measured_batches": infer["batches"],
-            "measured_samples": infer["samples"],
-            # Alias emphasizing detection time on validation (same pass)
-            "val_detect_total_sec": infer["total_time_sec"],
-            "val_detect_ms_per_sample": infer["ms_per_sample"]
-        })
-    except Exception as e:
-        print(f"[WARN] Failed to measure inference time for complexity: {e}")
-
-    _safe_json_dump(complexity, os.path.join(artifacts_dir, f"complexity_{suffix}.json"))
-    print(f"[DONE] Checkpoint: {ckpt_path}")
-    print(f"       History CSV: {hist_csv}")
-    print(f"       Complexity: {complexity}")
+    print(f"[DONE] Best Checkpoint: {ckpt_path}")
+    print(f"       Best History CSV: {hist_csv}")
+    print(f"       Best Model Complexity: {complexity}")
     return 0
 
 # ---------------------------------------------------------------------
@@ -347,11 +412,13 @@ def opt_plot_performance():
     suffix = "fusion" if model_choice == "fusion" else "dnn"
     model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-    Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     # Locate a checkpoint
     ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
-    ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
+    ckpts = sorted(glob.glob(os.path.join(ckdir, f"best_{suffix}.pt")))
+    if not ckpts:
+        ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}*.pt")))
     if not ckpts:
         print(f"[WARN] No checkpoints found for {model_choice} model at {ckdir}. Train first (option 4).")
         return 0
@@ -380,10 +447,12 @@ def opt_xai():
     suffix = "fusion" if model_choice == "fusion" else "dnn"
     model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-    Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
-    ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
+    ckpts = sorted(glob.glob(os.path.join(ckdir, f"best_{suffix}.pt")))
+    if not ckpts:
+        ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}*.pt")))
     if not ckpts:
         print(f"[WARN] No checkpoints found for {model_choice} model at {ckdir}. Train first.")
         return 0
@@ -415,7 +484,7 @@ def opt_ablation():
     print("Available splits:", splits)
     key = _prompt("Split key:")
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-    Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     feat_names = meta["feature_names"]
     print(f"[INFO] There are {len(feat_names)} features.")
@@ -452,7 +521,7 @@ def opt_evaluate():
     suffix = "fusion" if model_choice == "fusion" else "dnn"
     model_folder = "cnn_lstm_fusion" if model_choice == "fusion" else "dnn"
     bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-    Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
 
     ckdir = os.path.join(DEFAULT_OUTROOT, model_folder, key, "checks")
     ckpts = sorted(glob.glob(os.path.join(ckdir, f"*_{suffix}.pt")))
@@ -649,52 +718,60 @@ def main():
                 print("[ERROR] --split_key required for processed viz")
                 sys.exit(2)
             bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-            Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+            Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
             outdir = os.path.join(DEFAULT_OUTROOT, f"{args.split_key}", "viz")
-            plot_dataset_overview(np.vstack([Xtr, Xte]), np.hstack([ytr, yte]), meta["feature_names"], outdir=outdir)
+            plot_dataset_overview(np.vstack([Xtr, Xval, Xte]), np.hstack([ytr, yval, yte]), meta["feature_names"], outdir=outdir)
             print(f"[DONE] {outdir}")
 
     elif args.cmd == "train":
         bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-        Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
-        ckpt_path, hist_csv, artifacts_dir, model = train_experiment(
-            Xtr, ytr, Xte, yte,
-            model_name=("cnn_lstm_fusion" if args.model=="fusion" else "dnn"),
-            dataset_key=args.split_key,
-            out_root=DEFAULT_OUTROOT,
-            epochs=args.epochs, batch_size=args.batch, lr=args.lr,
-            early_stop_patience=args.patience,
-            class_names=meta["class_names"]
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        ckpt_path, hist_csv, artifacts_dir, model, complexity = run_reproducible_experiments(
+            Xtr, ytr, Xval, yval, Xte, yte,
+            key=args.split_key, model_choice=args.model,
+            epochs=args.epochs, batch=args.batch, lr=args.lr, patience=args.patience, meta=meta
         )
-        complexity = estimate_model_complexity(model, input_dim=meta["input_dim"], seq_len=meta.get("seq_len", 1))
-        _safe_json_dump(complexity, os.path.join(artifacts_dir, "complexity.json"))
         print(json.dumps({"ckpt": ckpt_path, "history_csv": hist_csv, "complexity": complexity}, indent=2))
 
     elif args.cmd == "eval":
         bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-        Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
-        ckdir = os.path.join(DEFAULT_OUTROOT, args.split_key, "checks")
-        ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
-        if not ckpts:
-            print("[ERROR] no checkpoints under", ckdir)
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        
+        ckpt = None
+        for folder in ["cnn_lstm_fusion", "dnn", ""]:
+            ckdir = os.path.join(DEFAULT_OUTROOT, folder, args.split_key, "checks") if folder else os.path.join(DEFAULT_OUTROOT, args.split_key, "checks")
+            ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
+            if ckpts:
+                ckpt = ckpts[-1]
+                model_folder = folder if folder else "cnn_lstm_fusion"
+                break
+        if not ckpt:
+            print("[ERROR] no checkpoints under checks directories")
             sys.exit(2)
-        ckpt = ckpts[-1]
+            
         task = "binary" if len(np.unique(ytr))==2 else "multiclass"
-        outdir = os.path.join(DEFAULT_OUTROOT, args.split_key, "eval")
+        outdir = os.path.join(DEFAULT_OUTROOT, model_folder, args.split_key, "eval")
         metrics = evaluate_on_test(Xte, yte, ckpt, outdir, task_type=task)
         print(json.dumps(metrics, indent=2))
 
     elif args.cmd == "xai":
         bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-        Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
-        ckdir = os.path.join(DEFAULT_OUTROOT, args.split_key, "checks")
-        ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
-        if not ckpts:
-            print("[ERROR] no checkpoints under", ckdir)
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        
+        ckpt = None
+        for folder in ["cnn_lstm_fusion", "dnn", ""]:
+            ckdir = os.path.join(DEFAULT_OUTROOT, folder, args.split_key, "checks") if folder else os.path.join(DEFAULT_OUTROOT, args.split_key, "checks")
+            ckpts = sorted(glob.glob(os.path.join(ckdir, "*.pt")))
+            if ckpts:
+                ckpt = ckpts[-1]
+                model_folder = folder if folder else "cnn_lstm_fusion"
+                break
+        if not ckpt:
+            print("[ERROR] no checkpoints under checks directories")
             sys.exit(2)
-        ckpt = ckpts[-1]
+            
         methods = [m.strip().lower() for m in args.methods.split(",") if m.strip()]
-        outdir = os.path.join(DEFAULT_OUTROOT, args.split_key, "xai")
+        outdir = os.path.join(DEFAULT_OUTROOT, model_folder, args.split_key, "xai")
         run_xai(
             X_train=Xtr, X_test=Xte, y_train=ytr, y_test=yte,
             checkpoint=ckpt, feature_names=meta["feature_names"],
@@ -704,13 +781,14 @@ def main():
 
     elif args.cmd == "ablate":
         bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
-        Xtr, ytr, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
         keep = [s.strip() for s in args.keep_feats.split(",") if s.strip()]
-        outdir = os.path.join(DEFAULT_OUTROOT, args.split_key, "ablation")
+        outdir = os.path.join(DEFAULT_OUTROOT, "cnn_lstm_fusion", args.split_key, "ablation")
         run_ablation_user_selected(
             X_train=Xtr, y_train=ytr, X_test=Xte, y_test=yte,
             feature_names=meta["feature_names"], keep_features=keep,
-            dataset_key=args.split_key, outdir=outdir
+            dataset_key=args.split_key, outdir=outdir,
+            model_name="cnn_lstm_fusion"
         )
         print(f"[DONE] {outdir}")
 
