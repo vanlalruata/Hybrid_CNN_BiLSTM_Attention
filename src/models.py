@@ -29,11 +29,14 @@ class CNN_LSTM_Fusion(nn.Module):
       └─ Classifier: Dense → Dropout → Dense(num_classes)
     """
 
-    def __init__(self, input_dim: int, num_classes: int, hidden_dim: int = 64):
+    def __init__(self, input_dim: int, num_classes: int, hidden_dim: int = 64, cnn_only: bool = False, lstm_only: bool = False, no_gating: bool = False):
         super().__init__()
         self.input_dim = input_dim
         self.num_classes = num_classes
         self.hidden_dim = hidden_dim
+        self.cnn_only = cnn_only
+        self.lstm_only = lstm_only
+        self.no_gating = no_gating
 
         # CNN branch
         self.cnn_fc = nn.Linear(input_dim, hidden_dim * 2)
@@ -47,6 +50,9 @@ class CNN_LSTM_Fusion(nn.Module):
         self.lstm = nn.LSTM(hidden_dim * 2, hidden_dim, num_layers=1, batch_first=True, bidirectional=True)
         self.lstm_fc_out = nn.Linear(hidden_dim * 2, hidden_dim)
 
+        # Feature gating layer (dynamic feature refinement / gating mechanism)
+        self.gate_fc = nn.Linear(hidden_dim * 2, hidden_dim * 2)
+
         # Fusion & Classifier
         self.fc1 = nn.Linear(hidden_dim * 2, hidden_dim)
         self.drop = nn.Dropout(0.25)
@@ -58,19 +64,34 @@ class CNN_LSTM_Fusion(nn.Module):
             x = x.unsqueeze(0)
 
         # CNN branch
-        cnn_in = F.relu(self.cnn_fc(x)).unsqueeze(1)  # [B, 1, 2H]
-        cnn_feat = self.cnn_pool(F.relu(self.cnn_bn(self.cnn_conv(cnn_in))))  # [B, 32, 16]
-        cnn_feat = cnn_feat.flatten(1)
-        cnn_feat = F.relu(self.cnn_fc_out(cnn_feat))  # [B, H]
+        if not self.lstm_only:
+            cnn_in = F.relu(self.cnn_fc(x)).unsqueeze(1)  # [B, 1, 2H]
+            cnn_feat = self.cnn_pool(F.relu(self.cnn_bn(self.cnn_conv(cnn_in))))  # [B, 32, 16]
+            cnn_feat = cnn_feat.flatten(1)
+            cnn_feat = F.relu(self.cnn_fc_out(cnn_feat))  # [B, H]
+        else:
+            cnn_feat = torch.zeros(x.shape[0], self.hidden_dim, device=x.device, dtype=x.dtype)
 
         # LSTM branch
-        lstm_in = F.relu(self.lstm_fc(x)).unsqueeze(1)  # [B, 1, 2H]
-        lstm_out, _ = self.lstm(lstm_in)
-        lstm_feat = F.relu(self.lstm_fc_out(lstm_out[:, -1, :]))  # [B, H]
+        if not self.cnn_only:
+            lstm_in = F.relu(self.lstm_fc(x)).unsqueeze(1)  # [B, 1, 2H]
+            lstm_out, _ = self.lstm(lstm_in)
+            lstm_feat = F.relu(self.lstm_fc_out(lstm_out[:, -1, :]))  # [B, H]
+        else:
+            lstm_feat = torch.zeros(x.shape[0], self.hidden_dim, device=x.device, dtype=x.dtype)
 
         # Fusion
-        fused = torch.cat([cnn_feat, lstm_feat], dim=1)
-        fused = F.relu(self.fc1(fused))
+        f = torch.cat([cnn_feat, lstm_feat], dim=1)  # [B, hidden_dim * 2]
+        
+        # Gating / Dynamic Feature Refinement
+        if not self.no_gating:
+            e = torch.tanh(self.gate_fc(f))
+            alpha = torch.softmax(e, dim=1)
+            f_prime = alpha * f
+        else:
+            f_prime = f
+        
+        fused = F.relu(self.fc1(f_prime))
         fused = self.drop(fused)
         return self.out(fused)
 

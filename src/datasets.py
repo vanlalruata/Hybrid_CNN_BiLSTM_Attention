@@ -223,30 +223,25 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     if X.shape[0] == 0:
         raise ValueError("No samples remain after preprocessing; please review preprocessing rules.")
 
-    scaler = StandardScaler()
-    X = scaler.fit_transform(X)
-
-    return X, y, features, y_enc, scaler
+    return X, y, features, y_enc, None
 
 
 def split_and_persist(
     dataset_name: str,
-    X, y, feature_names, y_encoder, scaler,
-    test_size=0.2, random_state=42,
+    X, y, feature_names, y_encoder, scaler_placeholder,
+    test_size=0.15, random_state=42,
     processed_root="data/processed",
     class_type: str = None
 ):
-    """Split dataset, persist train/test + scaler for reuse.
+    """Split dataset into train (70%), validation (15%), and test (15%) and persist.
 
     Folder naming policy (no timestamps):
       data/processed/<dataset_name>_<binary|multiclass>/
     """
     set_all_seeds(random_state)
-    # Determine classification type if not explicitly provided
     inferred_class = "binary" if len(np.unique(y)) == 2 else "multiclass"
     class_type = class_type or inferred_class
 
-    # Report class distribution and decide safe stratification
     unique, counts = np.unique(y, return_counts=True)
     try:
         classes = list(y_encoder.classes_)
@@ -258,41 +253,54 @@ def split_and_persist(
     def _can_stratify(cnts: np.ndarray, ts: float) -> bool:
         if cnts.size == 0:
             return False
-        # sklearn requires at least 2 samples for the least populated class
         if np.min(cnts) < 2:
             return False
-        # Ensure each class will have at least one sample in both splits
         if np.any(cnts * ts < 1) or np.any(cnts * (1 - ts) < 1):
             return False
         return True
 
-    if _can_stratify(counts, test_size):
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=test_size, stratify=y, random_state=random_state
+    # 1. Split off test set (15%)
+    if _can_stratify(counts, 0.15):
+        X_temp, X_test, y_temp, y_test = train_test_split(
+            X, y, test_size=0.15, stratify=y, random_state=random_state
         )
     else:
-        min_count = int(counts.min()) if counts.size else 0
-        print(f"[WARN] Stratified split not feasible (min class count={min_count}, test_size={test_size}). Falling back to non-stratified split.")
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=test_size, stratify=None, random_state=random_state
+        print("[WARN] Stratified split for test set not feasible. Falling back to non-stratified.")
+        X_temp, X_test, y_temp, y_test = train_test_split(
+            X, y, test_size=0.15, stratify=None, random_state=random_state
         )
+
+    # 2. Split remainder into train (70%) and validation (15%)
+    # 0.15 / 0.85 = 0.17647
+    temp_unique, temp_counts = np.unique(y_temp, return_counts=True)
+    if _can_stratify(temp_counts, 0.17647):
+        X_train, X_val, y_train, y_val = train_test_split(
+            X_temp, y_temp, test_size=0.17647, stratify=y_temp, random_state=random_state
+        )
+    else:
+        print("[WARN] Stratified split for validation set not feasible. Falling back to non-stratified.")
+        X_train, X_val, y_train, y_val = train_test_split(
+            X_temp, y_temp, test_size=0.17647, stratify=None, random_state=random_state
+        )
+
+    # 3. Fit scaler ONLY on training data, then transform all partitions
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_val = scaler.transform(X_val)
+    X_test = scaler.transform(X_test)
 
     # Folder
     suffix = f"{dataset_name}_{class_type}"
     save_dir = os.path.join(processed_root, suffix)
     ensure_dir(save_dir)
 
-    # Persist splits (filenames already signal train/test role)
+    # Persist splits
     np.save(os.path.join(save_dir, "X_train.npy"), X_train)
     np.save(os.path.join(save_dir, "y_train.npy"), y_train)
+    np.save(os.path.join(save_dir, "X_val.npy"), X_val)
+    np.save(os.path.join(save_dir, "y_val.npy"), y_val)
     np.save(os.path.join(save_dir, "X_test.npy"), X_test)
     np.save(os.path.join(save_dir, "y_test.npy"), y_test)
-
-    # Also persist CSV copies with a unified comma delimiter for interoperability
-    # pd.DataFrame(X_train, columns=feature_names).to_csv(os.path.join(save_dir, "X_train.csv"), index=False)
-    # pd.DataFrame({"Label": y_train}).to_csv(os.path.join(save_dir, "y_train.csv"), index=False)
-    # pd.DataFrame(X_test, columns=feature_names).to_csv(os.path.join(save_dir, "X_test.csv"), index=False)
-    # pd.DataFrame({"Label": y_test}).to_csv(os.path.join(save_dir, "y_test.csv"), index=False)
 
     save_scaler(scaler, os.path.join(save_dir, "scaler.joblib"))
     meta = {
@@ -310,16 +318,19 @@ def split_and_persist(
 
 
 def load_processed_split(split_key: str, processed_root="data/processed"):
-    """Load previously split train/test data and metadata."""
+    """Load previously split train/validation/test data and metadata."""
     folder = os.path.join(processed_root, split_key)
     if not os.path.exists(folder):
         raise FileNotFoundError(f"Split not found: {folder}")
 
     X_train = np.load(os.path.join(folder, "X_train.npy"))
     y_train = np.load(os.path.join(folder, "y_train.npy"))
+    X_val = np.load(os.path.join(folder, "X_val.npy"))
+    y_val = np.load(os.path.join(folder, "y_val.npy"))
     X_test = np.load(os.path.join(folder, "X_test.npy"))
     y_test = np.load(os.path.join(folder, "y_test.npy"))
     meta = json.load(open(os.path.join(folder, "meta.json")))
 
     return {"X_train": X_train, "y_train": y_train,
+            "X_val": X_val, "y_val": y_val,
             "X_test": X_test, "y_test": y_test, "meta": meta}

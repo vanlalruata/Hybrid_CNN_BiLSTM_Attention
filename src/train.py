@@ -28,14 +28,15 @@ POWER_WATTS = float(os.environ.get("POWER_WATTS", "120"))
 
 
 def train_experiment(
-    X_train, y_train, X_test, y_test,
+    X_train, y_train, X_val, y_val, X_test, y_test,
     model_name: str, dataset_key: str,
     out_root="outputs", epochs=50, batch_size=256,
-    lr=1e-3, early_stop_patience=8, class_names=None
+    lr=1e-3, early_stop_patience=8, class_names=None,
+    seed=42
 ):
-    """Train CNN+LSTM Fusion (or MLP) model and save artifacts."""
+    """Train CNN+LSTM Fusion (or MLP) model on train split, validate on validation split, and save artifacts."""
 
-    set_all_seeds(42)
+    set_all_seeds(seed)
     input_dim = X_train.shape[1]
     num_classes = len(np.unique(y_train))
     outdir = os.path.join(out_root, model_name.lower(), dataset_key)
@@ -43,7 +44,6 @@ def train_experiment(
     ckpt_dir = os.path.join(outdir, "checks")
     ensure_dir(ckpt_dir)
 
-    efficiency_file = "efficiency.json"
     if model_name.lower() in ["cnn_lstm_fusion", "fusion"]:
         model = CNN_LSTM_Fusion(input_dim, num_classes)
         model_readable = "Fusion (CNN+LSTM)"
@@ -60,18 +60,19 @@ def train_experiment(
 
     # Console header: show run context
     param_count = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"[TRAIN] Dataset={dataset_key} | Classes={num_classes} | InputDim={input_dim}")
+    print(f"[TRAIN] Dataset={dataset_key} | Classes={num_classes} | InputDim={input_dim} | Seed={seed}")
     print(f"[TRAIN] Model={model_readable} | Params={param_count:,} | Device={DEVICE} | Batch={batch_size} | LR={lr}")
     print(f"[TRAIN] Epochs={epochs} | EarlyStop={early_stop_patience} | Optim=AdamW | Loss=CrossEntropy", flush=True)
 
     train_ds = TensorDataset(torch.tensor(X_train, dtype=torch.float32), torch.tensor(y_train, dtype=torch.long))
-    test_ds = TensorDataset(torch.tensor(X_test, dtype=torch.float32), torch.tensor(y_test, dtype=torch.long))
+    val_ds = TensorDataset(torch.tensor(X_val, dtype=torch.float32), torch.tensor(y_val, dtype=torch.long))
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False)
 
     best_loss = float("inf")
     patience = early_stop_patience
     hist = []
+    saved_ckpt_path = None
 
     if torch.cuda.is_available(): torch.cuda.synchronize()
     t0 = time.perf_counter()
@@ -95,11 +96,11 @@ def train_experiment(
         train_loss = total_loss / max(1, total_samples)
         train_acc = total_correct / max(1, total_samples)
 
-        # Validation
+        # Validation on validation set
         model.eval()
         with torch.no_grad():
             val_loss, val_correct, val_total = 0.0, 0, 0
-            for xb, yb in test_loader:
+            for xb, yb in val_loader:
                 xb, yb = xb.to(DEVICE), yb.to(DEVICE)
                 out = model(xb)
                 loss = criterion(out, yb)
@@ -110,7 +111,7 @@ def train_experiment(
         val_acc = val_correct / max(1, val_total)
 
         hist.append({"epoch": ep, "train_loss": train_loss, "val_loss": val_loss,
-                     "train_acc": train_acc, "val_acc": val_acc})
+                      "train_acc": train_acc, "val_acc": val_acc})
 
         # Epoch timing and LR
         ep_t1 = time.perf_counter()
@@ -118,7 +119,6 @@ def train_experiment(
         lr_now = optim.param_groups[0].get("lr", lr)
         patience_left = patience if val_loss >= best_loss - 1e-6 else early_stop_patience
 
-        # Real-time console log (fusion and mlp use this same function)
         print(
             f"[EPOCH {ep}/{epochs}] "
             f"train_loss={train_loss:.6f} "
@@ -132,18 +132,28 @@ def train_experiment(
             flush=True
         )
 
-        # Checkpointing with live feedback
+        # Checkpointing based on validation set performance
         if val_loss < best_loss - 1e-6:
             best_loss = val_loss
             patience = early_stop_patience
-            ckpt_path = os.path.join(ckpt_dir, f"best_ep{ep}_{model_suffix}.pt")
+            ckpt_path = os.path.join(ckpt_dir, f"best_ep{ep}_{model_suffix}_seed{seed}.pt")
+            
+            # Clean up older seed checkpoint files to save space
+            if saved_ckpt_path and os.path.exists(saved_ckpt_path):
+                try:
+                    os.remove(saved_ckpt_path)
+                except Exception:
+                    pass
+            
             torch.save({
                 "state_dict": model.state_dict(),
                 "input_dim": input_dim,
                 "num_classes": num_classes,
                 "model_name": model_name,
-                "class_names": class_names
+                "class_names": class_names,
+                "seed": seed
             }, ckpt_path)
+            saved_ckpt_path = ckpt_path
             print(f"[CHECKPOINT] Saved best model at epoch {ep} → {ckpt_path}", flush=True)
         else:
             patience -= 1
@@ -156,17 +166,16 @@ def train_experiment(
     total_time = t1 - t0
 
     # Save learning curve
-    hist_df = torch.tensor([(h["train_loss"], h["val_loss"]) for h in hist])
     plt.figure()
     plt.plot([h["epoch"] for h in hist], [h["train_loss"] for h in hist], label="Train")
     plt.plot([h["epoch"] for h in hist], [h["val_loss"] for h in hist], label="Val")
     plt.xlabel("Epochs"); plt.ylabel("Loss")
     plt.title("Learning Curve")
     plt.legend(); plt.tight_layout()
-    plt.savefig(os.path.join(outdir, f"learning_curve_{model_suffix}.eps"), format="eps", dpi=200, transparent=False)
+    plt.savefig(os.path.join(outdir, f"learning_curve_{model_suffix}_seed{seed}.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 
-    hist_csv = os.path.join(outdir, f"history_{model_suffix}.csv")
+    hist_csv = os.path.join(outdir, f"history_{model_suffix}_seed{seed}.csv")
     import pandas as pd
     pd.DataFrame(hist).to_csv(hist_csv, index=False)
 
@@ -182,10 +191,11 @@ def train_experiment(
         "energy_j_proxy": float(total_time * POWER_WATTS),
         "device": str(DEVICE),
         "batch_size": int(batch_size),
-        "lr": float(lr)
+        "lr": float(lr),
+        "seed": int(seed)
     }
-    with open(os.path.join(outdir, f"efficiency_{model_suffix}.json"), "w") as f:
+    with open(os.path.join(outdir, f"efficiency_{model_suffix}_seed{seed}.json"), "w") as f:
         import json as _json
         _json.dump(efficiency, f, indent=2)
 
-    return os.path.join(ckpt_dir, f"best_ep{ep}_{model_suffix}.pt"), hist_csv, outdir, model
+    return saved_ckpt_path, hist_csv, outdir, model

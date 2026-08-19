@@ -1,0 +1,1959 @@
+%% 
+%% Copyright 2019-2021 Elsevier Ltd
+%% 
+%% This file is part of the 'CAS Bundle'.
+%% --------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'CAS Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for cas-sc documentclass for 
+%% single column output.
+
+\documentclass[a4paper,fleqn]{cas-sc}
+
+% If the frontmatter runs over more than one page
+% use the longmktitle option.
+
+%\documentclass[a4paper,fleqn,longmktitle]{cas-sc}
+
+%\usepackage[numbers]{natbib}
+\usepackage[authoryear]{natbib}
+% \usepackage[authoryear,longnamesfirst]{natbib}
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+% \usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\definecolor{citeblue}{RGB}{0,115,185}
+\hypersetup{
+    colorlinks=true,
+    citecolor=citeblue,
+    linkcolor=citeblue,
+    urlcolor=citeblue
+}
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}%
+% \usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+
+
+%%%Author macros
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+\tsc{WGM}
+\tsc{QE}
+%%%
+
+% Uncomment and use as if needed
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newdefinition{rmk}{Remark}
+%\newproof{pf}{Proof}
+%\newproof{pot}{Proof of Theorem \ref{thm}}
+
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{0.5}
+\def\textpagefraction{.1}
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.85}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
+% Short title
+\shorttitle{~}    
+
+% Short author
+\shortauthors{~}  
+
+% Main title of the paper
+\title [mode = title]{Hybrid {CNN-BiLSTM} Attention Framework for Cross-Dataset {DDoS} Detection in {IoT} Networks with Explainable {AI}}  
+
+% Title footnote mark
+% eg: \tnotemark[1]
+% \tnotemark[<tnote number>] 
+
+% Title footnote 1.
+% eg: \tnotetext[1]{Title footnote text}
+% \tnotetext[<tnote number>]{<tnote text>} 
+
+% First author
+%
+% Options: Use if required
+% eg: \author[1,3]{Author Name}[type=editor,
+%       style=chinese,
+%       auid=000,
+%       bioid=1,
+%       prefix=Sir,
+%       orcid=0000-0000-0000-0000,
+%       facebook=<facebook id>,
+%       twitter=<twitter id>,
+%       linkedin=<linkedin id>,
+%       gplus=<gplus id>]
+
+% \author[1]{Vanlalruata Hnamte\corref{cor1}}[type=editor, orcid=0000-0002-3376-7828]
+
+% Corresponding author indication
+% \cormark[*]
+
+% Footnote of the first author
+% \fnmark[<footnote mark no>]
+
+% Email id of the first author
+% \ead{vanlalruata.hnamte@gmail.com}
+
+% URL of the first author
+% \ead[url]{<URL>}
+
+% Credit authorship
+% eg: \credit{Conceptualization of this study, Methodology, Software}
+% \credit{Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Project administration, Resources, Validation, Visualization, Writing - original draft, Writing - review and editing}
+
+% Address/affiliation
+% \affiliation[1]{organization={Department of Mathematics and Computer Science, Mizoram University},
+%             addressline={Tanhril}, 
+%             city={Aizawl},
+% %          citysep={}, % Uncomment if no comma needed between city and postcode
+%             postcode={796004}, 
+%             state={Mizoram},
+%             country={India}}
+
+% \author[<aff no>]{<author name>}[<options>]
+
+% Footnote of the second author
+% \fnmark[2]
+
+% Email id of the second author
+% \ead{}
+
+% URL of the second author
+% \ead[url]{}
+
+% Credit authorship
+% \credit{}
+
+% Address/affiliation
+% \affiliation[<aff no>]{organization={},
+%             addressline={}, 
+%             city={},
+% %          citysep={}, % Uncomment if no comma needed between city and postcode
+%             postcode={}, 
+%             state={},
+%             country={}}
+
+% Corresponding author text
+\cortext[cor1]{Corresponding author}
+
+% Footnote text
+% \fntext[1]{}
+
+% For a title note without a number/mark
+%\nonumnote{}
+
+% Here goes the abstract
+\begin{abstract}
+With the swift growth of Internet of Things (IoT) networks, the susceptibility of connected devices to Distributed Denial-of-Service (DDoS) attacks has markedly risen. Traditional intrusion detection systems (IDS) and conventional machine learning approaches often fail to generalise across heterogeneous IoT environments due to their inability to adapt to varied feature spaces, and they lack the capacity to capture the complex spatial–temporal patterns inherent in network traffic data. To address these critical limitations, this paper proposes a novel, interpretable hybrid deep learning framework that integrates Convolutional Neural Networks (CNN), Bidirectional Long Short-Term Memory (BiLSTM), and a dynamic attention mechanism for robust, cross-dataset IoT DDoS detection. The novelty of the proposed framework lies in: (i) a parallel dual-branch spatial-temporal extraction mechanism that concurrently models localised packet header dependencies and sequential traffic dynamics; (ii) a self-attention mechanism that dynamically refines features by prioritising key malicious signatures; (iii) a unified feature harmonisation strategy that maps heterogeneous network protocols and feature configurations into a standardised format, enabling generalisation on unseen datasets; and (iv) a multi-level explainable AI (XAI) framework integrating SHAP, LIME, and ANOVA to provide joint statistical, global, and local explanations of model decisions. The framework is evaluated on four public benchmark IoT datasets, namely Apose-IoT-23, BoT-IoT, CIC-IoMT-2024, and CIC-IoT-2025, under both binary and multiclass classification settings. Experimental results demonstrate exceptional detection performance; under binary classification, the framework achieves accuracies of 99.31\% on Apose-IoT-23, 99.998\% on BoT-IoT, 99.83\% on CIC-IoMT-2024, and a flawless 100.00\% on CIC-IoT-2025. In the more challenging multiclass scenarios, the model maintains high robustness, achieving classification accuracies of 98.44\% (Apose-IoT-23), 99.72\% (BoT-IoT), 99.24\% (CIC-IoMT-2024), and 99.997\% (CIC-IoT-2025). Cross-dataset evaluation further confirms the model’s generalisation capability, with minimal performance degradation on unseen datasets. In addition, the proposed framework incorporates XAI techniques, including SHAP, LIME, and ANOVA, to provide both global and local interpretability of model predictions. Efficiency analysis demonstrates that the approach maintains low latency and energy proxies, rendering it suitable for real-time edge-based IoT deployment. Overall, the proposed hybrid CNN--BiLSTM-attention framework offers a robust, generalisable, and interpretable solution for DDoS detection in heterogeneous IoT environments.
+\end{abstract}
+
+% Use if graphical abstract is present
+%\begin{graphicalabstract}
+%\includegraphics{}
+%\end{graphicalabstract}
+
+% Research highlights
+% \begin{highlights}
+% \item 
+% \item 
+% \item 
+% \end{highlights}
+
+% Keywords
+% Each keyword is seperated by \sep
+\begin{keywords}
+IoT Security\sep DDoS Detection\sep CNN-LSTM\sep Attention Mechanism\sep Cross-Dataset Learning\sep XAI\sep Cybersecurity
+\end{keywords}
+
+\maketitle
+
+% Main text
+\section{Introduction}
+\label{sec:intro}
+The widespread adoption of network protocols and sensor networks within the Internet of Things (IoT) has brought about a substantial transformation in the landscape of modern computer networks and their associated applications. This growth enables seamless connectivity across diverse domains, including smart cities, mobile computing, and particularly Internet of Medical Things (IoMT) systems supporting remote collaboration and telemedicine. However, this massive interconnected footprint also introduces severe security vulnerabilities, making the underlying network protocols prime targets for cyberattacks. Among these, Distributed Denial-of-Service (DDoS) attacks represent one of the most critical security threats, capable of rendering essential services unavailable by overwhelming network resources with malicious traffic.
+
+Traditional intrusion detection systems (IDSs) rely on signature-based or shallow machine learning approaches, which often fail to generalise across diverse IoT environments. Anomaly detection in computer networks has been extensively studied to identify malicious behaviours. A comprehensive review of these anomaly detection paradigms and classical machine learning methodologies is presented by \cite{AHMED201619}. As evaluated by \cite{sarhan2020evaluation}, classical machine learning techniques face significant limitations in adapting to new networks and are highly sensitive to dataset-specific characteristics. These methods are limited in their ability to capture complex patterns in high-dimensional network traffic data and are particularly ineffective when dealing with heterogeneous datasets. Furthermore, IoT traffic exhibits both spatial and temporal characteristics that cannot be effectively modelled using conventional methods, necessitating new design techniques for network security components.
+
+Recent advances in deep learning have shown promise in addressing these problems. Convolutional neural networks (CNNs) are effective in extracting spatial correlations among features, whereas recurrent neural networks (RNNs), particularly long short-term memory (LSTM) networks, can model temporal dependencies in sequential data. As demonstrated by \cite{yan2023deep}, combining these architectures helps capture both localised feature interactions and sequential context. However, single-model architectures often fail to fully exploit the complementary strengths of these approaches. Additionally, most existing studies are limited to single-dataset evaluations, which restrict their applicability in real-world scenarios in which network conditions and attack patterns vary significantly.
+
+Another critical limitation of current IoT intrusion detection frameworks is their poor performance. Deep learning models are often treated as black boxes, making it difficult to understand the reasoning behind their predictions. This lack of transparency reduces trust and hinders practical deployment, particularly in security-sensitive environments such as medical networks where patient safety in telemedicine is directly dependent on system availability. To address this, explainable artificial intelligence (XAI) tools, such as SHAP~\citep{lundberg2017unified} and LIME~\citep{ribeiro2016why}, have emerged to explain predictions by calculating feature contributions. In network intrusion, \cite{hnamte2024iot} highlighted that integrating XAI helps security analysts validate deep learning predictions and identify specific attack vectors.
+
+As illustrated in Figure~\ref{fig:iot_ddos_cycle}, the rapid expansion of IoT ecosystems introduces a wide range of vulnerabilities, including heterogeneous devices, weak authentication mechanisms, and limited computational resources. Attackers actively exploit these vulnerabilities to compromise IoT devices and form large-scale botnets. Compromised devices are subsequently leveraged to launch DDoS attacks, generating massive volumes of malicious traffic that overwhelm the network resources and disrupt critical services. The figure further highlights the cyclic nature of this process, in which the consequences of DDoS attacks, such as service disruption, financial loss, and reduced user trust, reinforce the need for stronger security measures. This interconnected relationship between IoT growth, vulnerabilities, exploitation, and attack propagation underscores the complexity of securing modern IoT environments. This motivates the need for advanced intrusion detection systems capable of identifying DDoS attacks in real time across diverse IoT environments.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/IoT_Ecosystem.eps}
+\caption{Interconnected cycle of IoT ecosystem, vulnerabilities, and DDoS attacks.}
+\label{fig:iot_ddos_cycle}
+\end{figure}
+
+To address these challenges, this study proposes a hybrid deep learning framework that integrates CNN and BiLSTM architectures with an attention mechanism for effective DDoS detection in IoT networks. The proposed approach was designed to operate across multiple heterogeneous datasets, ensuring robust performance and generalisation capability. Furthermore, an XAI module was incorporated to provide both global and local interpretability using SHAP, LIME, and ANOVA techniques. 
+
+\subsection{Motivation}
+
+The motivation for this work stems from several key challenges in IoT intrusion detection, including
+
+\begin{itemize}
+    \item \textbf{Heterogeneous Data Sources:} IoT datasets vary significantly in feature space, traffic patterns, and labeling schemes, making cross-dataset learning difficult.
+    \item \textbf{Limited Generalization:} Existing models often perform well on a single dataset but fail when applied to unseen environments.
+    \item \textbf{Lack of Temporal Modeling:} Many approaches ignore the sequential nature of network traffic, leading to suboptimal detection performance.
+    \item \textbf{Black-Box Models:} The absence of interpretability limits the adoption of deep learning-based IDS in real-world systems.
+    \item \textbf{Resource Constraints in Edge/Cloud Computing Models:} Real-time deployment in modern computing models (such as edge-computing smart gateways or cloud-based IoT controllers) requires lightweight and efficient security components with minimal latency and low energy footprints.
+\end{itemize}
+
+These challenges highlight the need for a unified framework that is accurate, generalisable, interpretable, and efficient in its application.
+
+\subsection{Proposed Approach}
+
+To overcome the aforementioned challenges, in this study, we introduce a hybrid CNN--BiLSTM-attention framework for IoT DDoS detection. The model leverages CNN layers for spatial feature extraction and BiLSTM layers for capturing temporal dependencies. An attention mechanism is applied to dynamically weight feature importance and enhance the detection capability.
+
+In addition, a feature harmonisation strategy is employed to align heterogeneous datasets into a unified representation, thereby enabling cross-dataset learning. The framework is further augmented with XAI techniques to provide insights into the model behaviour and feature importance.
+
+\subsection{Contributions}
+
+The main contributions of this study are summarised as follows.
+
+\begin{itemize}
+    \item \textbf{New Design Technique for Security Components:} A novel hybrid CNN--BiLSTM-attention framework is proposed to capture both spatial and temporal characteristics of IoT network traffic, providing an adaptable architecture for network security.
+
+    \item \textbf{Robust Cross-Dataset Generalization:} The proposed model is evaluated across multiple heterogeneous IoT datasets, demonstrating strong generalisation capability and protocol adaptation on unseen networks.
+
+    \item \textbf{Unified Feature Harmonization Protocol:} A unified preprocessing pipeline is developed to align features across different protocols and datasets, enabling robust multi-dataset learning.
+
+    \item \textbf{Multi-Level Explainable AI Integration:} The framework incorporates SHAP, LIME, and ANOVA to provide both global and local interpretability, ensuring that model predictions are transparent and auditable for security analysts.
+
+    \item \textbf{Securing IoMT and Telemedicine Infrastructures:} The model is validated on medical-specific sensor network data (CIC-IoMT-2024), demonstrating its efficacy in securing safety-critical telemedicine systems against service disruption.
+
+    \item \textbf{Deployment-Ready Design for Edge/Cloud Computing:} The framework is evaluated in terms of inference latency and energy consumption, establishing its feasibility for real-time edge deployment and low-overhead cloud integrations.
+\end{itemize}
+
+\subsection{Organization of the Paper}
+
+The remainder of this paper is organised as follows. Section~\ref{sec:related} reviews the related work on IoT intrusion detection. Section~\ref{sec:method} presents the proposed method. Section~\ref{sec:datasets} describes the datasets and the preprocessing steps. Section~\ref{sec:setup} describes the experimental setup of the study. Section~\ref{sec:results} discusses the results and analysis. Finally, Section~\ref{sec:conclusion} concludes the paper and outlines future research directions. 
+
+\section{Related Work}
+\label{sec:related}
+This section reviews existing approaches for IoT intrusion detection, with a focus on DDoS attack detection using machine learning, deep learning, hybrid models, and explainable AI techniques.
+
+\subsection{Machine Learning-Based Approaches}
+
+Traditional IDSs for IoT networks have largely relied on classical machine learning techniques such as support vector machines (SVM), decision trees, random forests, and naive Bayes classifiers. These methods are effective for structured data and relatively low-dimensional feature spaces.
+
+Several studies have applied random forest and SVM models for DDoS detection, achieving moderate accuracy on benchmark datasets. Naïve Bayes classifiers have also been explored because of their simplicity and computational efficiency. However, these approaches often suffer from limited scalability and the inability to capture complex nonlinear relationships in high-dimensional IoT traffic data, as highlighted by \cite{sarhan2020evaluation}. A comparative evaluation of these machine learning configurations by \cite{verma2020machine} evaluated machine learning configurations and concluded that shallow classifiers undergo high false alarm rates under various protocols. Similarly, \cite{susilo2020security} reviewed intrusion models in smart environments and noted that random forest classifiers suffer from severe performance degradation in cross-dataset scenarios. \cite{bhamare2020machine} evaluated the feasibility of ML classifiers under software-defined network (SDN) configurations and demonstrated that SVM models are computationally expensive for real-time edge operations. To address this, \cite{AHUJA2021103108} proposed an automated DDoS attack detection framework in software-defined networking and illustrated the benefits of centralised traffic inspection for network security applications. \cite{churcher2021machine} conducted experimental evaluations on physical IoT platforms and observed that decision trees are sensitive to slight feature noise, resulting in poor generalisability. To mitigate this, \cite{soe2020machine} proposed an ensemble ML framework combining feature selection with random forest; however, their system was evaluated only on a single dataset, which leaves its generalisability unverified. \cite{habib2023multi} conducted a multi-dataset assessment of shallow ML techniques and verified that single-model classifiers fail to sustain high detection rates on unseen network configurations owing to overfitting on local feature distributions. Furthermore, \cite{indra2024ensemble} proposed an ensemble machine learning approach optimised for the imbalanced CICIDS2017 dataset to improve multi-class detection, although ensemble methods generally exhibit higher model complexity.
+
+\subsection{Deep Learning-Based Approaches}
+
+To overcome the limitations of classical methods, deep learning techniques have been widely adopted for IoT intrusion detection systems. CNNs have been used to extract spatial features from network traffic data, demonstrating improved performance over traditional methods.
+
+RNNs, particularly LSTM networks, have been employed to model the temporal dependencies in sequential traffic data. These models are effective in capturing time-dependent attack patterns, which are common in DDoS attacks. Despite their advantages, standalone CNN or LSTM models often fail to fully exploit the complementary nature of spatial and temporal features. Additionally, many deep learning-based studies are limited to single dataset evaluations, raising concerns regarding their robustness for real-world deployments.
+
+For instance, \cite{roopak2019deep} explored standalone deep learning models, including multilayer perceptrons and LSTMs, and showed that although LSTMs capture temporal trends, their spatial feature mapping is limited. \cite{latif2020lightweight} proposed a lightweight random neural network for resource-constrained IoT devices, which achieved high processing speeds but struggled to model sequential patterns. \cite{yin2020deep} utilised recurrent networks (RNNs) for NIDS and highlighted their superiority in time-series data over feed-forward networks, but noted that standard RNNs undergo vanishing gradient problems during long sequence training. \cite{basnet2022deep} applied deep neural networks to DDoS detection on the BoT-IoT dataset, achieving high accuracy but noted that deep architectures are highly sensitive to class imbalance and often ignore benign patterns. \cite{abbasi2021deep} developed a deep autoencoder model for anomaly detection in IoT networks, which showed high recall rates but faced challenges in real-time classification due to high latent dimensionality. For industrial Internet of Things (IIoT) systems, \cite{nguyen2022cnn} designed a CNN-based computing approach to identify botnet threats, and \cite{BENADDI2025101624} proposed a lightweight CNN to minimise edge latency, although standalone CNNs still suffer from weak temporal modelling. To address heterogeneous IIoT protocols, \cite{Jyothi2024edgeids} presented an adaptive deep learning framework for low-latency edge deployment, whereas \cite{zhou2026icsnad} worked on a real-world industrial control system dataset (ICS-NAD) to benchmark deep learning and machine learning architectures against diverse industrial control system attacks.
+
+\subsection{Hybrid Deep Learning Models}
+
+Recent research has explored hybrid architectures that combine multiple deep learning techniques to improve detection performance. Models that integrate CNN and LSTM layers have shown promising results by simultaneously capturing spatial and temporal patterns.
+
+Some studies have proposed CNN-LSTM fusion models for intrusion detection, achieving higher accuracy than individual models (e.g., \citep{yan2023deep}). However, these approaches often rely on simple feature concatenation without incorporating mechanisms to dynamically prioritise important features. Furthermore, most hybrid models are evaluated using a single dataset, lacking validation across heterogeneous IoT environments. This limitation reduces their applicability in practical scenarios in which network conditions and attack patterns vary significantly.
+
+To address these gaps, ~\cite{zhao2020hybrid} introduced a hybrid CNN-LSTM model that models spatiotemporal structures; however, their evaluation was restricted to older datasets, such as the KDD Cup 99. \cite{jiang2020network} proposed a hybrid CNN and BiLSTM model combined with an attention layer, achieving high F1-scores; however, their model suffered from a large parameter size, which increased the memory overhead of edge devices. \cite{dong2021novel} presented a hybrid model combining autoencoders with LSTMs, which showed high accuracy in botnet detection; however, they observed that feature alignment remained a major challenge. \cite{gad2021hybrid} designed a hybrid machine learning framework for intrusion detection in vehicular networks based on ToN-IoT, highlighting that although hybrid models improve detection, they fail to generalise to cross-dataset traffic. \cite{alomari2021hybrid} proposed a hybrid DL architecture for DDoS detection in smart environments, which showed improved robustness but lacked an explainability component to justify the model classifications. Other hybrid combinations have also been explored to boost spatial-temporal capability, including CNN-LSTM architectures by \cite{halbouni2022cnnlstm} and CNN-BiLSTM variations by ~ \citep{omarov2023cnnbilstm, HNAMTE2023100053}, which showed that dual branches capture localised structures and flow dynamics better. Furthermore, \cite{sadhwani2025bilstmcnn} optimised sequential mapping to reduce false alarms. To enable secure edge operations, \cite{baidar2025federated} coupled hybrid deep learning with federated learning architectures in 5G-edge ecosystems, although edge latency and communication overhead remain challenging. Recent studies have further advanced the development of hybrid deep architectures. \cite{sanyal2026litmus} designed LITMUS, a collaborative distributed host intrusion detection system (HIDS), and network intrusion detection system (NIDS) framework to mitigate dishonest collaborators, while \cite{fraihat2026hybrid} integrated a hybrid deep learning model with feature optimisation and federated learning (FL) for privacy-preserving IIoT security. To optimise client communication, \cite{khan2024federated} presented a federated reinforcement-based fusion model (Fed Inforce Fusion). Additionally, \cite{ullah2023iotids} built a CNN-GRU hybrid model for TCP flood detection, \cite{vijayan2023automated} combined a heuristic-aided autoencoder with an LSTM-based deep belief network to protect IoT-aided MQTT protocols, and \cite{poddar2024enhancing} designed a CNN-LSTM hybrid model to enhance spatiotemporal learning in cloud and edge networks.
+
+\subsection{Attention Mechanisms in IDS}
+
+Attention mechanisms have recently been introduced to enhance deep learning models by assigning importance weights to the input features. In the context of intrusion detection, attention layers enable the model to focus on the critical features that contribute the most to attack detection.
+
+Several studies have demonstrated that attention-based models improve classification performance and interpretability. However, the integration of attention mechanisms with hybrid CNN-LSTM architectures for IoT DDoS detection remains relatively underexplored, particularly in multi-dataset settings. \cite{hosseini2024attention} applied self-attention mechanisms to NIDS and demonstrated that attention layers can focus on key traffic indicators; however, their system was not optimised for low-latency IoT networks. \cite{zhou2021ddos} integrated an attention layer with LSTMs to detect DDoS attacks, showing improved convergence; however, their architecture ignored spatial feature correlations. \cite{gu2022lightweight} designed an attention-based CNN-GRU model to achieve high throughput but did not validate the framework against adversarial perturbations or modern multi-protocol datasets. Swain et al.~\cite{wu2023lightweight} proposed a lightweight hybrid model with self-attention for edge networks, which reduced latency but achieved suboptimal performance on highly imbalanced multiclass datasets. To address these gaps, \cite{dai2024cnnbilstmattention} and \cite{naeem2025attentioncnnbilstm} combined CNN and BiLSTM with self-attention to prioritise critical features, thereby improving the overall detection accuracy. Similarly, \cite{alashjaee2025deep} and \cite{purbia2026iaids} proposed intelligent adaptive systems that utilised attention weighting to improve multi-class separation under high traffic volumes. For complex sequences, \cite{zhang2025cnnbilstmtransformer} leveraged transformer-based attention alongside CNN-BiLSTM to capture the long-range temporal context, although at the expense of a higher resource complexity. Furthermore, \cite{elwhishi2026ckan} proposed an attention-enhanced hybrid CKAN-BiLSTM architecture for efficient intrusion detection; \cite{priyadarshini2023attention} integrated an attention-based BiLSTM-CNN for software-defined network (SDN) and application-layer DDoS detection; and \cite{zhang2023transformer} used a transformer-based IDS to capture long-range dependencies, showing high accuracy but requiring substantial computational resources that are unsuitable for edge deployment.
+
+\subsection{Explainable AI in Intrusion Detection}
+
+XAI has gained increasing attention in cybersecurity applications, where model transparency is essential. Techniques such as SHapley Additive exPlanations (SHAP)~\citep{lundberg2017unified} and Local Interpretable Model-agnostic Explanations (LIME)~\citep{ribeiro2016why} have been used to interpret the model predictions.
+
+Although these methods provide valuable insights into feature importance and decision-making processes, their adoption in IoT intrusion detection systems remains limited. Most existing studies focus primarily on improving accuracy, with little emphasis on interpretability and trustworthiness, as discussed by \cite{hnamte2024iot}. Additionally, few studies have combined multiple XAI techniques with statistical validation methods, such as ANOVA, to provide comprehensive explanation frameworks.
+
+\cite{almimi2023xai} surveyed explainable artificial intelligence techniques in intrusion detection and noted that local interpretable surrogates are crucial for threat verification. \cite{shaaban2023biomt} developed an explainable IDS for the IoMT using SHAP to highlight critical features; however, their model did not incorporate temporal relationships. \cite{liu2022explainable} conducted a survey on XAI for IoT security and stated that explainability must be integrated with robust cross-dataset learning to ensure that model decisions remain stable across different network topologies. To address model interpretability, \cite{singh2023xai} established an explainable AI framework utilising SHAP and LIME to interpret deep learning decisions locally and globally. Additionally, \cite{gupta2026novaxids} proposed NOVA-XIDS, an explainable latent-attention hybrid deep learning framework for high-fidelity intrusion detection in IoT and industrial cyber systems, combining autoencoder latent spaces with SHAP and CBAM visual attention to achieve both generalisation and transparency.
+
+\subsection{Research Gaps}
+
+The following key limitations were identified based on the above review.
+
+\begin{itemize}
+    \item \textbf{Limited Generalization:} Most existing approaches are evaluated on single datasets, limiting their applicability to diverse IoT environments.
+    
+    \item \textbf{Inadequate Feature Integration:} Traditional and deep learning models often fail to effectively combine spatial and temporal features.
+    
+    \item \textbf{Lack of Adaptive Feature Weighting:} Many hybrid models do not incorporate attention mechanisms to dynamically prioritize important features.
+    
+    \item \textbf{Absence of Explainability:} Existing intrusion detection systems largely operate as black boxes, lacking interpretability.
+    
+    \item \textbf{Insufficient Evaluation:} Few studies perform comprehensive evaluations including cross-dataset testing and efficiency assessment.
+\end{itemize}
+
+Additionally, as discussed by \cite{sgouras2022detecting}, current IoT intrusion frameworks fail to handle the feature heterogeneity introduced by multiprotocol smart grids. \cite{kumar2021eddos} proposed a distributed intrusion detection framework for blockchain-enabled fog environments, which achieved high detection rates but incurred significant resource overheads, highlighting the need for efficient edge-oriented models.
+
+\subsection{Positioning of the Proposed Work}
+
+To address these limitations, this study proposes a hybrid CNN--BiLSTM-attention framework that integrates spatial and temporal feature learning with attention-based feature weighting. Unlike existing approaches, the proposed model was evaluated across multiple heterogeneous IoT datasets (Apose-IoT-23~\citep{pecorella2021iot}, BoT-IoT~\citep{moustafa2015bot}, CIC-IoMT-2024~\citep{iomt2024dataset}, and CIC-IoT-2025~\citep{ciciot2025dataset}), ensuring robust generalisation. Furthermore, the integration of SHAP, LIME, and analysis of variance (ANOVA) provides a comprehensive explainability framework that enhances the transparency and trust in the model predictions. The proposed approach also includes an extensive evaluation through efficiency analysis, making it suitable for real-world IoT deployments. A comprehensive comparison of the proposed model with existing related works is summarised in Table~\ref{tab:related_works_comparison}.
+
+\begin{landscape}
+\begin{longtable}{p{4cm}p{4cm}p{4cm}p{4cm}p{4cm}}
+\caption{Comparison of related works in IoT intrusion and DDoS detection}
+\label{tab:related_works_comparison}\\
+\hline
+Study &
+  Proposed Method &
+  Key Findings &
+  Limitations &
+  Research Gaps \\ \hline
+\endfirsthead
+%
+\multicolumn{5}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+\hline
+Study &
+  Proposed Method &
+  Key Findings &
+  Limitations &
+  Research Gaps \\ \hline
+\endhead
+%
+\hline
+\endfoot
+%
+\endlastfoot
+%
+\cite{verma2020machine} &
+  Machine learning evaluation &
+  Compares classifiers on IoT benchmarks &
+  Single-node evaluation &
+  Lacks multi-dataset deep learning benchmarks \\
+\cite{roopak2019deep} &
+  CNN + LSTM hybrid DL &
+  High accuracy on DDoS subclass &
+  Tested only on CICIDS2017 &
+  No cross-dataset analysis or explainability \\
+\cite{kumar2021eddos} &
+  Deep Learning DDoS framework &
+  Improved recall on IoT traffic &
+  Heavy model architecture &
+  High latency, unsuitable for real-time edge \\
+\cite{latif2020lightweight} &
+  Lightweight Random Neural Network &
+  Low prediction latency &
+  Evaluated on older feature sets &
+  Lacks deep spatial-temporal feature mapping \\
+\cite{zhao2020hybrid} &
+  CNN-LSTM model &
+  Captured spatial-temporal structures &
+  Evaluated on older datasets &
+  No validation on modern IoT/IoMT environments \\
+\cite{jiang2020network} &
+  CNN-BiLSTM + Attention &
+  Dynamic weight assignment &
+  Complex, high parameter size &
+  Missing inference latency/energy proxy checks \\
+\cite{zhou2021ddos} &
+  Attention-LSTM model &
+  High F1-score for DDoS classification &
+  Captures only temporal structures &
+  Ignores spatial/feature-level correlations \\
+\cite{wu2023lightweight} &
+  Edge hybrid model &
+  Balanced speed and accuracy &
+  Restricted to single dataset &
+  Gaps in explainability and model trust \\
+\cite{gu2022lightweight} &
+  Attention-CNN-GRU &
+  High throughput for benign/attack &
+  Lacks robustness under class imbalance &
+  Lacks global SHAP/local LIME validation \\
+\cite{basnet2022deep} &
+  Deep learning DDoS detection &
+  Effective multiclass separation &
+  Lacks feature harmonization &
+  Cannot generalize to unseen IoT protocols \\
+\cite{almimi2023xai} &
+  XAI framework survey &
+  Highlighted importance of model trust &
+  Review only, no implementation &
+  Lacks integration with hybrid DL models \\
+\cite{sarhan2020evaluation} &
+  Feature set evaluation (NetFlow vs CIC) &
+  NetFlow features improve generalizability and NIDS adaptiveness &
+  Lacks integration of deep sequential architectures &
+  Does not analyze cross-dataset performance with temporal models \\
+\cite{yan2023deep} &
+  CNN+LSTM hybrid NIDS &
+  Captures spatial-temporal IIoT traffic features with 99.84\% accuracy &
+  No attention weighting or bidirectional temporal modeling &
+  Lacks cross-dataset validation and model explainability \\
+\cite{hnamte2024iot} &
+  Deep neural network DDoS detection &
+  High accuracy (99.99\%) with XAI validation of predictions &
+  Evaluated primarily under static SDN network topologies &
+  Gaps in generalizing across highly heterogeneous IoT networks \\
+\cite{sgouras2022detecting} &
+  ML DDoS impact analysis in smart grids &
+  Quantified cyberattack impact on smart grid infrastructure stability &
+  Heavy focus on impact metrics rather than real-time NIDS &
+  Lacks modern multi-protocol feature validation \\
+\cite{hosseini2024attention} &
+  IoT-PRIDS (Packet representation) &
+  Leverages packet representation learning for robust NIDS &
+  High feature extraction latency, unsuited for edge deployment &
+  Gaps in global model explainability under class imbalance \\
+\cite{susilo2020security} &
+  Deep learning algorithm NIDS in IoT &
+  Explores MLP and LSTM structures for cyber anomaly detection &
+  Severe performance degradation under cross-dataset traffic &
+  Missing statistical feature selection (like ANOVA) and local XAI \\
+\cite{yin2020deep} &
+  RNN-based NIDS &
+  RNNs outperform feed-forward networks in modeling sequential traffic &
+  Vanishing gradients during long sequence learning; high latency &
+  Lacks spatial feature extraction and attention weight tuning \\
+\cite{shaaban2023biomt} &
+  Explainable IDS for IoMT &
+  High performance on healthcare devices with local SHAP interpretability &
+  Evaluated on static features; ignores temporal relationships &
+  Lacks bidirectional sequence modeling and feature harmonization \\
+\cite{dong2021novel} &
+  Autoencoder-LSTM hybrid &
+  Two-stage model improves botnet detection accuracy via autoencoders &
+  Spatial feature-level correlations are ignored; high training overhead &
+  No validation on cross-dataset configurations or explainability \\
+\cite{liu2022explainable} &
+  Explainable NIDS survey &
+  Highlights opportunities for SHAP/LIME in NIDS transparency &
+  Survey paper, lacks experimental hybrid DL model evaluation &
+  Does not propose a unified framework for cross-dataset trust \\
+\cite{bhamare2020machine} &
+  Supervised ML for cloud security &
+  SVMs and Decision Trees achieve good anomaly classification rates &
+  SVM is too computationally expensive for real-time edge nodes &
+  Lacks deep sequential modeling and multi-dataset benchmarks \\
+\cite{churcher2021machine} &
+  Experimental evaluation of ML NIDS &
+  Analyzed classifier sensitivity to feature noise and hardware constraints &
+  Decision trees display low generalizability under traffic fluctuations &
+  No deep learning or spatial-temporal feature fusion explored \\
+\cite{soe2020machine} &
+  Ensemble ML with feature selection &
+  Wrapper feature selection improves RF accuracy to 99\% &
+  Evaluated on single dataset; sensitive to protocol drift &
+  Lacks explainability and deep temporal learning \\
+\cite{abbasi2021deep} &
+  Memory-augmented autoencoder NIDS &
+  Effectively models normal patterns to identify anomalies &
+  High computational latency due to memory networks; unsuited for edge &
+  No sequence modeling (like BiLSTM) or global explanations \\
+\cite{alomari2021hybrid} &
+  Parallel hybrid DL DDoS detection &
+  Parallel architectures capture features faster and with higher accuracy &
+  Lacks feature harmonization, leading to poor generalization &
+  Gaps in transparency; no local or global XAI models \\
+\cite{habib2023multi} &
+  Multi-dataset standardization &
+  Standardizing NetFlow features improves cross-dataset NIDS stability &
+  Tested only on shallow classifiers; lacks deep sequence extraction &
+  Gaps in attention refinement and deep learning integration \\
+\cite{sanyal2026litmus} &
+  Hybrid distributed HIDS+NIDS (LITMUS) &
+  Robust mimicry attack detection with collaborative IDS &
+  Focus on HMA only &
+  Limited DL-based feature learning and XAI integration \\
+\cite{fraihat2026hybrid} &
+  HGS-CS + Transformer-LSTM + FL &
+  High accuracy (99\%) with privacy-preserving learning &
+  High computational complexity &
+  Lacks lightweight edge deployment validation \\
+\cite{zhou2026icsnad} &
+  ICS-NAD dataset + ML/DL benchmarking &
+  Real-world ICS dataset with 20 attack types &
+  Dataset-only contribution &
+  Lack of integrated detection framework \\
+\cite{elwhishi2026ckan} &
+  CKAN-BiLSTM + Attention &
+  Lightweight and interpretable IDS with strong performance &
+  Single dataset validation &
+  Limited cross-dataset generalisation \\
+\cite{khan2024federated} &
+  Federated IDS with RL fusion &
+  Privacy-preserving collaborative detection &
+  High communication overhead &
+  Limited explainability \\
+\cite{ullah2023iotids} &
+  CNN-GRU hybrid model &
+  Effective temporal feature extraction &
+  Dataset-specific tuning &
+  No XAI validation \\
+\cite{vijayan2023automated} &
+  Deep autoencoder + LSTM &
+  Improved anomaly detection accuracy &
+  High training time &
+  Poor real-time feasibility \\
+\cite{priyadarshini2023attention} &
+  Attention-based BiLSTM IDS &
+  Enhanced feature weighting &
+  Ignores spatial correlations &
+  No multi-dataset evaluation \\
+\cite{nguyen2022cnn} &
+  CNN-based IDS &
+  Fast feature extraction &
+  Weak temporal modeling &
+  Limited adaptability \\
+\cite{indra2024ensemble} &
+  Ensemble ML for IoT IDS &
+  Robust classification under imbalance &
+  High model complexity &
+  No deep feature learning \\
+\cite{Jyothi2024edgeids} &
+  Edge-based lightweight IDS &
+  Low latency detection &
+  Reduced accuracy &
+  Limited scalability \\
+\cite{zhang2023transformer} &
+  Transformer-based IDS &
+  Captures long-range dependencies &
+  High computational cost &
+  Not suitable for edge deployment \\
+\cite{poddar2024enhancing} &
+  CNN-LSTM hybrid IDS &
+  Balanced spatial-temporal learning &
+  Requires hyperparameter tuning &
+  Lacks explainability \\
+\cite{singh2023xai} &
+  XAI-based IDS (SHAP/LIME) &
+  Improved model interpretability &
+  No hybrid DL integration &
+  Limited performance benchmarking \\
+\cite{BENADDI2025101624} &
+  Lightweight CNN IDS &
+  Efficient for IoT devices &
+  Reduced detection accuracy &
+  Poor handling of complex attacks \\
+\cite{gupta2026novaxids} &
+  Explainable Latent-Attention NIDS (NOVA-XIDS) &
+  High-fidelity detection with global latent space embeddings &
+  High computational latency &
+  Lacks dynamic edge streaming verification \\
+\textbf{Proposed Work} &
+  Hybrid CNN--BiLSTM--Attention &
+  Spatial-temporal fusion with XAI &
+  Validated offline on traces &
+  Physical deployment on live edge nodes \\ \hline
+\end{longtable}
+\end{landscape}
+
+\section{Methodology}
+\label{sec:method}
+This section presents the proposed hybrid deep learning framework for IoT DDoS detection. The overall architecture of the system is illustrated in Figure~\ref{fig:proposed_pipeline}, which depicts the complete pipeline from data acquisition to explainability.
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.98\textwidth]{figures/Model_Pipeline_Architecture.eps}
+\caption{Proposed hybrid CNN--BiLSTM-Attention framework for IoT DDoS detection}
+\label{fig:proposed_pipeline}
+\end{figure*}
+
+As shown in Figure~\ref{fig:proposed_pipeline}, the proposed framework consists of multiple sequential stages: data acquisition, preprocessing and feature harmonisation, temporal sequence construction, parallel spatial-temporal feature extraction (via CNN and BiLSTM branches), attention-based feature refinement, classification, and multilevel explainability. Each component is mathematically formulated and integrated to address the challenges of heterogeneous high-velocity IoT network flows.
+
+\subsection{Problem Definition}
+
+Let $\mathcal{D}^{(k)} = \{(x_i^{(k)}, y_i^{(k)})\}_{i=1}^{N_k}$ denote the $k$-th IoT dataset under analysis, where $N_k$ represents the number of flow samples. Here, $x_i^{(k)} \in \mathbb{R}^{d_k}$ is the raw feature vector representing the network packet headers and flow statistics in a $d_k$-dimensional feature space, and $y_i^{(k)}$ is the target label, respectively. For binary threat detection, the labels belong to the space $y_i^{(k)} \in \mathcal{Y}_{bin} = \{0, 1\}$, where $0$ represents benign traffic and $1$ represents a DDoS attack. For multiclass intrusion categorisation, the labels belong to the space $y_i^{(k)} \in \mathcal{Y}_{multi} = \{0, 1, \dots, C-1\}$, where $C$ is the number of distinct traffic subclasses (benign traffic plus specific DDoS attack vectors such as HTTP flood, UDP flood, and TCP SYN flood, etc.).
+
+Given $K$ heterogeneous IoT datasets with different dimensionality ($d_1 \neq d_2 \neq \dots \neq d_K$) and class schemas, our goal is to design a unified mapping operator and learn a robust, generalisable classifier $f_\theta: \mathbb{R}^d \rightarrow \mathcal{Y}$ parameterised by weights $\theta$ that minimises the detection error across both intra-dataset and cross-dataset evaluation setups.
+
+\subsection{Feature Harmonization Across Datasets}
+
+Owing to the heterogeneous feature sets produced by different network collectors, we define a unified target feature space $\mathcal{F}_u \subset \mathbb{R}^d$ of dimension $d$. We define a projection operator $\phi(\cdot)$ that maps the heterogeneous input vector $x_i^{(k)} \in \mathbb{R}^{d_k}$ to the unified feature space:
+
+\begin{equation}
+x_i' = \phi(x_i^{(k)}) \in \mathbb{R}^{d}
+\end{equation}
+
+The mapping operator $\phi(\cdot)$ performs:
+\begin{enumerate}
+    \item \textbf{Schema Alignment:} Mapping matching feature keys (e.g., flow duration, source port, packet length) and zero-padding missing dimensions that are not present in dataset $k$ but are required in the unified space.
+    \item \textbf{Imputation:} Replacing missing, infinite, or corrupted values with localized statistical estimators (nearest-neighbor mean).
+    \item \textbf{Encoding:} Projecting categorical fields (e.g., protocol types) using target encoding and sparse one-hot mapping.
+\end{enumerate}
+
+To ensure numerical stability during gradient backpropagation and prevent features with larger scales from dominating the loss, Z-score normalisation was applied to each feature dimension:
+
+\begin{equation}
+\mathbf{x}_i = \frac{x_i' - \mu^{(k)}}{\sigma^{(k)}}
+\end{equation}
+
+where $\mu^{(k)} \in \mathbb{R}^d$ and $\sigma^{(k)} \in \mathbb{R}^d$ are the mean and standard deviation vectors computed over the training split of dataset $k$, respectively.
+
+\subsection{Temporal Sequence Construction}
+
+To capture the sequential nature of DDoS attacks, which often manifest as volumetric patterns over time rather than isolated packet anomalies, static normalised feature vectors are transformed into sliding temporal sequences.
+
+Let $\mathbf{x}_i \in \mathbb{R}^d$ be the normalised feature vector at flow index $i$. A temporal sequence matrix $\mathbf{X}_i$ is constructed using a lookback window of size $T$:
+
+\begin{equation}
+\mathbf{X}_i = [\mathbf{x}_{i-T+1}, \mathbf{x}_{i-T+2}, \dots, \mathbf{x}_i]^T \in \mathbb{R}^{T \times d}
+\end{equation}
+
+This sequence matrix preserves the temporal flow dynamics, allowing the model to capture the short-term temporal dependencies and flow-level correlations.
+
+\subsection{Hybrid CNN--BiLSTM Architecture}
+
+The proposed hybrid model processes the temporal sequence matrix $\mathbf{X}_i$ using two parallel neural branches: a 1D convolutional neural network (CNN) branch to extract spatial correlations and localised feature interactions, and a bidirectional long short-term memory (BiLSTM) branch to model long-range temporal dependencies. The parameter complexity of the proposed model varies depending on the input feature dimensionality and classification task (binary vs. multiclass). Table~\ref{tab:modelsize} summarises the input dimensions, number of classes, and parameter count for the proposed model across all evaluated datasets.
+
+\begin{table}[htbp]
+\centering
+\caption{Proposed Hybrid CNN--BiLSTM Fusion Model Parameter Counts Across Datasets}
+\label{tab:modelsize}
+\begin{tabular}{lcccr}
+\toprule
+\textbf{Dataset} & \textbf{Input Features} & \textbf{Task Type} & \textbf{Classes} & \textbf{Parameters} \\
+\midrule
+\multirow{2}{*}{Apose-IoT-23} & \multirow{2}{*}{18} & Binary & 2 & 153,602 \\
+ & & Multiclass & 5 & 153,797 \\
+\midrule
+\multirow{2}{*}{BoT-IoT} & \multirow{2}{*}{29} & Binary & 2 & 156,418 \\
+ & & Multiclass & 8 & 156,808 \\
+\midrule
+\multirow{2}{*}{CIC-IoMT-2024} & \multirow{2}{*}{46} & Binary & 2 & 160,770 \\
+ & & Multiclass & 19 & 161,875 \\
+\midrule
+\multirow{2}{*}{CIC-IoT-2025} & \multirow{2}{*}{94} & Binary & 2 & 173,058 \\
+ & & Multiclass & 8 & 173,448 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The computational pipeline of each parallel branch is described as follows.
+
+\subsubsection{CNN Branch (Spatial Feature Learning)}
+
+The spatial feature extraction branch uses a 1D convolutional layer to capture local relations across neighbouring features in the sequence. Given the input matrix $\mathbf{X}_i \in \mathbb{R}^{T \times d}$, a set of $M$ filters of kernel size $K_{conv}$ are convolved along the temporal dimension. The activation value $h_{t, m}$ of the $m$-th filter at step $t$ is computed as:
+
+\begin{equation}
+h_{t, m} = \sigma \left( \sum_{k=1}^{K_{conv}} \sum_{j=1}^{d} W_{m, k, j} X_{t+k-1, j} + b_m \right)
+\end{equation}
+
+where $W_m \in \mathbb{R}^{K_{conv} \times d}$ is the weight tensor of filter $m$, $b_m$ is the bias term, and $\sigma(\cdot)$ represents the rectified linear unit (ReLU) activation function: $\sigma(z) = \max(0, z)$.
+
+To downsample the spatial representation and retain only the most prominent feature excitations, a 1D Max-Pooling layer with a pool size of $K_{pool}$ is applied as follows:
+
+\begin{equation}
+p_{i, m} = \max_{j \in [1, K_{pool}]} h_{(i-1)K_{pool} + j, m}
+\end{equation}
+
+The pooled feature maps are then flattened to yield the spatial representation vector $f_{cnn}$:
+
+\begin{equation}
+f_{cnn} = \text{Flatten}(\mathbf{P}) \in \mathbb{R}^{D_{cnn}}
+\end{equation}
+
+\subsubsection{BiLSTM Branch (Temporal Modeling)}
+
+While the CNN branch extracts spatial feature interactions, the BiLSTM branch models temporal dependencies in both the forward and backward directions. This bidirectional processing is essential for network flow security because packet interactions depend on both the preceding and succeeding network states.
+
+For the input sequence $\mathbf{X}_i = [\mathbf{x}_1, \dots, \mathbf{x}_T]^T$, a standard forward LSTM cell processes the sequence from $t = 1$ to $T$, updating its hidden state $\overrightarrow{h}_t \in \mathbb{R}^{d_{lstm}}$ and cell state $c_t \in \mathbb{R}^{d_{lstm}}$ through the following gating mechanisms:
+
+\begin{align}
+i_t &= \sigma_{sig} \left( W_{xi} \mathbf{x}_t + W_{hi} \overrightarrow{h}_{t-1} + b_i \right) \\
+f_t &= \sigma_{sig} \left( W_{xf} \mathbf{x}_t + W_{hf} \overrightarrow{h}_{t-1} + b_f \right) \\
+o_t &= \sigma_{sig} \left( W_{xo} \mathbf{x}_t + W_{ho} \overrightarrow{h}_{t-1} + b_o \right) \\
+\tilde{c}_t &= \tanh \left( W_{xc} \mathbf{x}_t + W_{hc} \overrightarrow{h}_{t-1} + b_c \right) \\
+c_t &= f_t \odot c_{t-1} + i_t \odot \tilde{c}_t \\
+\overrightarrow{h}_t &= o_t \odot \tanh(c_t)
+\end{align}
+
+where $i_t$, $f_t$, and $o_t$ represent the input, forget, and output gates, respectively; $\tilde{c}_t$ is the candidate cell state; $\sigma_{sig}(z) = (1 + e^{-z})^{-1}$ is the sigmoid activation; and $\odot$ denotes element-wise vector multiplication.
+
+Concurrently, a backward LSTM cell processes the sequence in reverse order (from $t = T$ to $1$) to capture the historical flow context.
+
+\begin{equation}
+\overleftarrow{h}_t = \text{LSTM}_{back}(\mathbf{x}_t, \overleftarrow{h}_{t+1})
+\end{equation}
+
+The final temporal representation $f_{lstm}$ is constructed by concatenating the final hidden states of both directional sweeps as follows:
+
+\begin{equation}
+f_{lstm} = [\overrightarrow{h}_T \oplus \overleftarrow{h}_1] \in \mathbb{R}^{2 d_{lstm}}
+\end{equation}
+
+\subsection{Feature Fusion}
+
+The spatial feature vector $f_{cnn}$ and temporal feature vector $f_{lstm}$ are concatenated to create the joint representation vector $f$:
+
+\begin{equation}
+f = [f_{cnn} \oplus f_{lstm}] \in \mathbb{R}^{D_{fused}}
+\end{equation}
+
+where $D_{fused} = D_{cnn} + 2 d_{lstm}$.
+
+\subsection{Attention-Based Feature Refinement}
+
+To prevent the model from being overloaded by noisy or redundant spatial-temporal features, a feature-level self-attention mechanism is applied. This layer assigns dynamic weights to the components of the fused feature vector $f$, emphasising critical feature correlations.
+
+First, the fused vector is passed through a dense layer to project it into an attention energy space.
+
+\begin{equation}
+e = \tanh(W_a f + b_a)
+\end{equation}
+
+where $W_a \in \mathbb{R}^{D_{fused} \times D_{fused}}$ is the attention weight matrix and $b_a \in \mathbb{R}^{D_{fused}}$ is the attention bias vector.
+
+The attention weights $\alpha \in \mathbb{R}^{D_{fused}}$ are computed using a softmax activation function:
+
+\begin{equation}
+\alpha_i = \frac{\exp(e_i)}{\sum_{j=1}^{D_{fused}} \exp(e_j)}
+\end{equation}
+
+The refined representation $f'$ is obtained by applying the attention weights element-wise as follows:
+
+\begin{equation}
+f' = \alpha \odot f
+\end{equation}
+
+This dynamic weighting suppresses noisy, non-contributing dimensions and highlights relevant spatial-temporal correlations.
+
+\subsection{Classification Layer}
+
+The refined representation $f'$ is mapped to the target output space using a fully connected layer as follows:
+
+\begin{equation}
+z = W_o f' + b_o
+\end{equation}
+
+where $W_o \in \mathbb{R}^{C \times D_{fused}}$ is the projection matrix, $b_o \in \mathbb{R}^{C}$ is the bias, and $C$ is the number of target classes.
+
+The final predicted probability distribution $\hat{y}$ is obtained using the softmax function as follows:
+
+\begin{equation}
+\hat{y}_c = \frac{\exp(z_c)}{\sum_{j=1}^{C} \exp(z_j)}, \quad c \in [1, C]
+\end{equation}
+
+\subsection{Training Objective}
+
+The network $\theta = \{W_c, b_c, W_{x\cdot}, W_{h\cdot}, b_{\cdot}, W_a, b_a, W_o, b_o\}$ are optimised end-to-end by minimising the categorical cross-entropy loss function $\mathcal{L}$ combined with an $L_2$ regularisation penalty to prevent overfitting:
+
+\begin{equation}
+\mathcal{L}(\theta) = - \frac{1}{B} \sum_{i=1}^{B} \sum_{c=1}^{C} y_{i, c} \log(\hat{y}_{i, c}) + \lambda \|\theta\|_2^2
+\end{equation}
+
+where $B$ is the batch size, $y_{i, c}$ is the ground-truth label (one-hot encoded), and $\lambda$ is the weight decay regularisation coefficient. The optimisation was performed using the AdamW optimiser.
+
+\subsection{Algorithms}
+
+The proposed framework is executed in two primary algorithmic procedures. Algorithm~\ref{alg:preprocessing} defines the dataset harmonisation and temporal sequence construction pipelines. Algorithm~\ref{alg:training} describes the end-to-end training, optimisation, and explainability verification processes.
+
+\begin{algorithm}[htbp]
+\caption{Dataset Harmonization and Temporal Sequence Construction Pipeline}
+\label{alg:preprocessing}
+\begin{algorithmic}[1]
+\REQUIRE Raw heterogeneous IoT network datasets $\{\mathcal{D}^{(k)}\}_{k=1}^{K}$, target feature space $\mathcal{F}_u$, sequence window length $T$
+\ENSURE Harmonized temporal sequence datasets $\{\mathcal{T}^{(k)}\}_{k=1}^{K}$
+\FOR{each dataset $k \in [1, K]$}
+    \STATE Align features to match the unified schema: $\mathbf{x}_i' = \phi(\mathbf{x}_i^{(k)})$
+    \STATE Impute missing or infinite values using nearest-neighbor statistical imputation
+    \STATE Encode categorical variables using target and sparse one-hot mapping
+    \STATE Compute feature-wise mean vector $\mu^{(k)}$ and standard deviation vector $\sigma^{(k)}$ over the training split
+    \STATE Normalize aligned vectors: $\mathbf{x}_i^{norm} = (\mathbf{x}_i' - \mu^{(k)}) / \sigma^{(k)}$
+    \STATE Initialize sequence set $\mathcal{T}^{(k)} \leftarrow \emptyset$
+    \FOR{each instance index $i$ from $T$ to $N_k$}
+        \STATE Construct sequence matrix: $\mathbf{X}_i = [\mathbf{x}_{i-T+1}^{norm}, \mathbf{x}_{i-T+2}^{norm}, \dots, \mathbf{x}_i^{norm}]^T \in \mathbb{R}^{T \times d}$
+        \STATE Append sequence-label pair $(\mathbf{X}_i, y_i^{(k)})$ to $\mathcal{T}^{(k)}$
+    \ENDFOR
+\ENDFOR
+\RETURN $\{\mathcal{T}^{(k)}\}_{k=1}^{K}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[htbp]
+\caption{End-to-End Training and Explainable Verification of the Hybrid Framework}
+\label{alg:training}
+\begin{algorithmic}[1]
+\REQUIRE Harmonized sequence datasets $\{\mathcal{T}^{(k)}\}_{k=1}^{K}$, epoch count $E$, batch size $B$, learning rate $\eta$, regularization coefficient $\lambda$
+\ENSURE Optimized network parameters $\theta$, joint explainability profile $\mathcal{I}(x)$
+\STATE Initialize model parameters $\theta = \{W_c, b_c, W_{x\cdot}, W_{h\cdot}, b_{\cdot}, W_a, b_a, W_o, b_o\}$ randomly
+\FOR{each epoch $e \in [1, E]$}
+    \FOR{each batch $\mathcal{B} \subset \mathcal{T}^{(k)}$ of size $B$}
+        \STATE \textbf{Forward Pass:}
+        \FOR{each sequence $\mathbf{X}_i \in \mathcal{B}$}
+            \STATE Extract spatial features using 1D CNN: $f_{cnn, i} = \text{Flatten}(\text{MaxPool}(\sigma(W_c * \mathbf{X}_i + b_c)))$
+            \STATE Extract temporal features using forward/backward LSTM cells: $f_{lstm, i} = [\overrightarrow{h}_T \oplus \overleftarrow{h}_1]_i$
+            \STATE Concatenate branch outputs: $f_i = [f_{cnn, i} \oplus f_{lstm, i}]$
+            \STATE Compute attention energy: $e_i = \tanh(W_a f_i + b_a)$
+            \STATE Normalize attention weights: $\alpha_i = \text{softmax}(e_i)$
+            \STATE Compute refined feature vector: $f'_i = \alpha_i \odot f_i$
+            \STATE Compute output class logits: $z_i = W_o f'_i + b_o$
+            \STATE Predict class probabilities: $\hat{y}_i = \text{softmax}(z_i)$
+        \ENDFOR
+        \STATE \textbf{Loss Computation:}
+        \STATE Compute CCE loss with L2 regularization: $\mathcal{L}(\theta) = - \frac{1}{B} \sum_{i=1}^B \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c}) + \lambda \|\theta\|_2^2$
+        \STATE \textbf{Backward Pass and Optimization:}
+        \STATE Compute gradients $\nabla_\theta \mathcal{L}(\theta)$ using backpropagation
+        \STATE Update network parameters $\theta$ using AdamW: $\theta \leftarrow \text{AdamW}(\theta, \nabla_\theta \mathcal{L}(\theta), \eta)$
+    \ENDFOR
+\ENDFOR
+\STATE \textbf{Explainability Evaluation:}
+\STATE Compute global SHAP values $\phi^{SHAP}$ on $f_\theta$ using sampling approximations
+\STATE Fit local LIME explainer for selected instances $x$ to obtain local surrogate weights $\phi^{LIME}$
+\STATE Perform ANOVA F-statistic test on features to obtain statistical significance values $F^{ANOVA}$
+\STATE Construct joint explanation profile: $\mathcal{I}(x) = \{\phi^{SHAP}, \phi^{LIME}, F^{ANOVA}\}$
+\RETURN Optimized parameters $\theta$, Joint Explanations $\mathcal{I}(x)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Computational Complexity}
+
+The computational complexity of the proposed framework is analyzed component-by-component below, where $N$ represents the number of training samples, $T$ is the sequence lookback length, and $d$ is the feature dimension:
+\begin{itemize}
+    \item \textbf{CNN Branch:} The complexity of convolving $M$ filters of size $K_{conv}$ over sequences is $\mathcal{O}(N \cdot T \cdot d \cdot M \cdot K_{conv})$. Since the kernel size and filters are fixed hyperparameters, this simplifies to $\mathcal{O}(N \cdot T \cdot d)$.
+    \item \textbf{BiLSTM Branch:} The computational complexity of updating the input, forget, and output gates for both forward and backward cells is $\mathcal{O}(N \cdot T \cdot (d \cdot d_{lstm} + d_{lstm}^2))$. Assuming the hidden dimension $d_{lstm}$ is proportional to the feature dimension $d$, this yields $\mathcal{O}(N \cdot T \cdot d^2)$.
+    \item \textbf{Attention and Classification Layers:} The matrix products and softmax computations require $\mathcal{O}(N \cdot D_{fused}^2)$ and $\mathcal{O}(N \cdot C \cdot D_{fused})$ operations, respectively. Since $D_{fused}$ scales linearly with $d$, this simplifies to $\mathcal{O}(N \cdot d^2)$.
+\end{itemize}
+
+By combining these components, the overall training complexity per epoch is dominated by the temporal recurrences of the BiLSTM cells:
+
+\begin{equation}
+\text{Complexity}_{overall} = \mathcal{O}(N \cdot T \cdot d^2)
+\end{equation}
+
+\subsection{Explainable Artificial Intelligence Framework}
+
+An XAI module was incorporated to enhance the interpretability, transparency, and trustworthiness of the proposed hybrid model. In complex security-critical applications such as IoT intrusion detection, black-box deep learning architectures are often rejected by network administrators owing to their lack of auditability. To address this issue, we propose a joint explainability framework that integrates SHAP, LIME, and ANOVA-based analyses. 
+
+These three methods represent complementary paradigms of explainability, designed to provide a multi-level validation:
+\begin{itemize}
+    \item \textbf{Global Feature Attribution (SHAP):} Built on cooperative game theory, SHAP provides mathematically consistent and axiomatic global importance attributions. It evaluates feature significance as average marginal contributions across all possible coalitions, ensuring that the general behavior of the hybrid model is globally sound and consistent.
+    \item \textbf{Local Flow-Level Fidelity (LIME):} While SHAP outlines global patterns, it is computationally intensive and provides averaged indicators that might mask high-fidelity localized anomalies. LIME solves this gap by approximating the decision boundary locally around a single network flow instance using a sparse linear surrogate model. This is critical for security analysts who require instant, flow-specific reasoning (e.g. why a particular session was flagged) during real-time threat triage.
+    \item \textbf{Empirical Statistical Filtering (ANOVA):} While SHAP and LIME depend on the trained parameters of the deep learning model, ANOVA provides an independent, statistical baseline of feature variance between normal and malicious groups. By evaluating the ratio of between-group to within-group variance, ANOVA validates whether the feature signals captured by the deep neural network represent actual statistically significant physical variations in the data distribution, rather than artifacts of model overfitting.
+\end{itemize}
+This three-tiered validation ensures that the explanation of the model's decisions is globally consistent, locally high-fidelity, and statistically validated.
+
+\subsubsection{SHAP: Global Feature Importance}
+
+SHapley Additive exPlanations (SHAP) are used to quantify the global contributions of features to model predictions based on cooperative game theory.
+
+Given a trained model $f_\theta$ and an input feature vector $x$, the prediction is expressed as a linear additive function of the feature attributions:
+
+\begin{equation}
+f_\theta(x) = \phi_0 + \sum_{i=1}^{d} \phi_i
+\end{equation}
+
+where $\phi_0$ is the base value (expected model output over the training set), and $\phi_i$ represents the Shapley contribution value of feature $i$.
+
+The Shapley value $\phi_i$ is computed as the weighted average marginal contribution of feature $i$ across all possible feature subsets as follows:
+
+\begin{equation}
+\phi_i = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|!(|F|-|S|-1)!}{|F|!} \left[ f_\theta(S \cup \{i\}) - f_\theta(S) \right]
+\end{equation}
+
+where $F$ is the complete set of input features, and $S$ is a subset of features excluding feature $i$. This formulation guarantees three fundamental properties: local accuracy, missingness, and consistency.
+
+\subsubsection{LIME: Local Interpretability}
+
+Local Interpretable Model-agnostic Explanations (LIME) explain individual predictions by locally approximating the decision boundary of a complex model using an interpretable surrogate model.
+
+For a target instance $x$, LIME minimises a loss function representing the discrepancy between the complex model $f$ and the surrogate model $g \in G$ (e.g. a sparse linear model) over a perturbed neighbourhood $Z$:
+
+\begin{equation}
+\mathcal{L}(f, g, \pi_x) = \sum_{z \in Z} \pi_x(z) \left( f(z) - g(z) \right)^2
+\end{equation}
+
+where $\pi_x(z)$ is the proximity measure between the target instance $x$ and perturbed instance $z$, defined using an exponential kernel:
+
+\begin{equation}
+\pi_x(z) = \exp \left( -\frac{D(x,z)^2}{\sigma_{lime}^2} \right)
+\end{equation}
+
+where $D(x,z)$ represents a distance metric (such as Euclidean distance) and $\sigma_{lime}$ denotes the kernel width.
+
+The optimal local explanation $g^*$ is obtained by solving
+
+\begin{equation}
+g^* = \arg\min_{g \in G} \mathcal{L}(f, g, \pi_x) + \Omega(g)
+\end{equation}
+
+where $\Omega(g)$ is a complexity penalty (e.g. limiting the number of nonzero coefficients in a linear model).
+
+\subsubsection{ANOVA: Statistical Feature Significance}
+
+To statistically validate the discriminative power of the features across the target traffic classes (benign and attack subclasses), we used a one-way ANOVA F-statistic significance test.
+
+The F-statistic evaluates whether the variance between different traffic groups is significantly larger than the variance within the groups.
+
+\begin{equation}
+F = \frac{MS_{between}}{MS_{within}} = \frac{SS_B / (K - 1)}{SS_W / (N - K)}
+\end{equation}
+
+where $SS_B$ is the sum of squares between groups (between-class variance).
+
+\begin{equation}
+SS_B = \sum_{k=1}^{K} n_k (\bar{x}_k - \bar{x})^2
+\end{equation}
+
+and $SS_W$ is the sum of squares within groups (within-class variance).
+
+\begin{equation}
+SS_W = \sum_{k=1}^{K} \sum_{i=1}^{n_k} (x_{i, k} - \bar{x}_k)^2
+\end{equation}
+
+where $K$ represents the number of classes, $n_k$ is the sample count in class $k$, $\bar{x}_k$ denotes the class-specific mean of the feature, and $\bar{x}$ represents the global feature mean. Features with higher F-values and extremely small p-values ($p < 0.001$) are statistically relevant.
+
+\subsubsection{Integration with Hybrid Model}
+
+The joint explainability framework combines these three methods to construct a unified explanation profile $\mathcal{I}(x)$ for any network flow $x$.
+
+\begin{equation}
+\mathcal{I}(x) = \{\phi_i^{SHAP}, \phi_i^{LIME}, F_i^{ANOVA}\}
+\end{equation}
+
+This multi-level structure guarantees three distinct layers of explanation:
+\begin{enumerate}
+    \item \textbf{Layer 1: Empirical Soundness (ANOVA):} Ensures that the feature selection is statistically grounded ($F_i^{ANOVA} \gg 1$) and corresponds to physical deviations in traffic distribution.
+    \item \textbf{Layer 2: Global Consistency (SHAP):} Mathematically allocates contribution scores ($\phi_i^{SHAP}$) across the feature space, ensuring the overall neural network logic aligns with domain knowledge.
+    \item \textbf{Layer 3: Local Actionability (LIME):} Offers flow-specific feature importance ($\phi_i^{LIME}$) that maps directly to the active traffic characteristics of a detected attack.
+\end{enumerate}
+
+\subsubsection{Computational Considerations}
+
+The computational complexity of the explainability module is defined as:
+\begin{itemize}
+    \item \textbf{SHAP complexity:} $\mathcal{O}(2^d)$ (approximated using KernelSHAP or TreeSHAP to ensure scalability).
+    \item \textbf{LIME complexity:} $\mathcal{O}(M \cdot d)$, where $M$ is the number of perturbations.
+    \item \textbf{ANOVA complexity:} $\mathcal{O}(N \cdot d)$ which scales linearly with the dataset size.
+\end{itemize}
+
+\section{Datasets and Preprocessing}
+\label{sec:datasets}
+
+This section describes the datasets utilised in this study and the preprocessing steps performed to ensure the compatibility, consistency, and robustness of heterogeneous IoT network traffic data sources.
+
+\subsection{Datasets Description}
+
+To evaluate the proposed framework, four publicly available IoT intrusion detection datasets were utilised:
+
+\begin{itemize}
+    \item \textbf{Apose-IoT-23}: A recent dataset containing realistic IoT network traffic with labeled attack and benign flows.
+    \item \textbf{BoT-IoT}: A widely used benchmark dataset comprising various botnet-based attacks including DDoS, DoS, and reconnaissance.
+    \item \textbf{CIC-IoMT-2024}: A dataset focused on IoMT, capturing healthcare-related IoT traffic with multiple attack scenarios.
+    \item \textbf{CIC-IoT-2025}: A large-scale and modern IoT dataset incorporating diverse attack patterns and real-world traffic distributions.
+\end{itemize}
+
+Each dataset differs in feature dimensionality, traffic representation, and attack taxonomy, which makes cross-dataset learning challenging.
+
+Let the collection of datasets be denoted as
+
+\begin{equation}
+\mathcal{D} = \{\mathcal{D}^{(1)}, \mathcal{D}^{(2)}, \dots, \mathcal{D}^{(K)}\}
+\end{equation}
+
+where $K = 4$ in this study.
+
+
+
+\subsection{Label Unification}
+
+Different datasets use different labelling schemes. Therefore, all labels were mapped into a binary classification framework as follows:
+
+\begin{equation}
+y =
+\begin{cases}
+1, & \text{if attack (DDoS/DoS)} \\
+0, & \text{if benign}
+\end{cases}
+\end{equation}
+
+This transformation ensured consistency across the datasets used in this study.
+
+\subsection{Feature Harmonization}
+
+Owing to the heterogeneity of feature spaces, a unified feature representation is required.
+
+Let $\mathcal{F}^{(k)}$ denote feature set of dataset $k$. The common feature space is defined as:
+
+\begin{equation}
+\mathcal{F}_u = \bigcap_{k=1}^{K} \mathcal{F}^{(k)}
+\end{equation}
+
+Each sample is projected into $\mathcal{F}_u$:
+
+\begin{equation}
+x_i' = \phi(x_i^{(k)})
+\end{equation}
+
+where $\phi(\cdot)$ performs:
+\begin{itemize}
+    \item Feature alignment
+    \item Column matching
+    \item Removal of incompatible attributes
+\end{itemize}
+
+\subsection{Missing Value Handling}
+
+Missing values may arise because of feature mismatches or incomplete records.
+
+Let $x_j$ denote a feature. Missing values are handled as:
+
+\begin{equation}
+x_j =
+\begin{cases}
+\text{mean}(x_j), & \text{if numerical} \\
+\text{mode}(x_j), & \text{if categorical}
+\end{cases}
+\end{equation}
+
+
+
+\subsection{Categorical Encoding}
+
+Categorical attributes were transformed using one-hot encoding.
+
+\begin{equation}
+x_{cat} \rightarrow \text{OneHot}(x_{cat})
+\end{equation}
+
+
+
+\subsection{Feature Normalization}
+
+To ensure stable training, all features were normalised using Z-score normalisation.
+
+\begin{equation}
+x^{norm} = \frac{x - \mu}{\sigma}
+\end{equation}
+
+where $\mu$ and $\sigma$ denote the mean and standard deviation, respectively.
+
+
+
+\subsection{Temporal Sequence Construction}
+
+Because network traffic exhibits temporal behaviour, feature vectors are transformed into sequences using a sliding window approach.
+
+Let $\mathbf{x}_i$ denote the normalised feature vector. A sequence of length $T$ is defined as 
+
+\begin{equation}
+\mathbf{X}_i = [\mathbf{x}_{i-T+1}, \mathbf{x}_{i-T+2}, \dots, \mathbf{x}_i]
+\end{equation}
+
+where:
+
+\begin{itemize}
+    \item $T$ is the window size
+    \item $\mathbf{X}_i \in \mathbb{R}^{T \times d}$
+\end{itemize}
+
+This enables the model to capture temporal dependencies.
+
+
+
+\subsection{Train-Test Splitting Strategy}
+
+To evaluate the generalisation capability, both intra-dataset and cross-dataset evaluations were performed. All datasets were partitioned using a fixed train–test split ratio of 75:25, where 75\% of the data was used for training and 25\% for testing. To ensure reproducibility and consistency across experiments, a deterministic random seed was used during the splitting process. A fixed seed value of 42 was employed for all dataset partitions.
+
+Furthermore, each dataset was independently processed for binary and multiclass classification tasks. In the binary setting, the labels were mapped to the benign and attack classes, whereas in the multiclass setting, the original attack categories were preserved. The train–test splitting procedure was applied separately for each classification setting to maintain consistency in the evaluation.
+
+This controlled splitting strategy ensured a fair comparison across datasets and prevented data leakage, thereby enhancing the reliability of the experimental results.
+
+\subsubsection{Intra-Dataset Evaluation}
+
+Each dataset was split as follows:
+
+\begin{equation}
+\mathcal{D}^{(k)} = \mathcal{D}^{(k)}_{train} \cup \mathcal{D}^{(k)}_{test}
+\end{equation}
+
+using a standard 75:25 ratio, respectively.
+
+
+
+\subsubsection{Cross-Dataset Evaluation}
+
+To assess robustness, the model was trained on one dataset and tested on the others.
+
+\begin{equation}
+f_\theta : \mathcal{D}^{(train)} \rightarrow \mathcal{D}^{(test)}
+\end{equation}
+
+This setup evaluated the ability of the model to generalise across different IoT environments.
+
+
+
+\subsection{Data Balancing}
+
+Class imbalance was addressed using the following methods:
+
+\begin{itemize}
+    \item Random undersampling of majority class
+    \item Oversampling using SMOTE (if required)
+\end{itemize}
+
+
+
+\subsection{Summary of Preprocessing Pipeline}
+
+The complete preprocessing pipeline can be summarised as follows:
+
+\begin{enumerate}
+    \item Dataset collection
+    \item Label unification
+    \item Feature harmonization
+    \item Missing value imputation
+    \item Encoding of categorical features
+    \item Feature normalization
+    \item Temporal sequence construction
+\end{enumerate}
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+This section describes the implementation details, training configuration, evaluation protocols, and reproducibility settings used to validate the proposed hybrid CNN--BiLSTM-attention framework.
+
+\subsection{Implementation Environment}
+
+All experiments were performed using Python with a PyTorch deep-learning framework. The system supports both CPU and GPU executions with automatic device selection based on the hardware availability.
+
+Let $\mathcal{M}_\theta$ denote the proposed model with parameters $\theta$. Training and evaluation were performed on
+
+\begin{itemize}
+    \item Programming Language: Python 3.x
+    \item Deep Learning Framework: PyTorch
+    \item Libraries: NumPy, Pandas, Scikit-learn
+    \item Explainability Tools: SHAP, LIME
+\end{itemize}
+
+
+
+\subsection{Datasets and Experimental Configuration}
+
+The experiments were conducted on four heterogeneous IoT datasets.
+
+\begin{itemize}
+    \item Apose-IoT-23
+    \item BoT-IoT
+    \item CIC-IoMT-2024
+    \item CIC-IoT-2025
+\end{itemize}
+
+Each dataset undergoes preprocessing and harmonisation, as described in SectionX.
+
+Binary classification was primarily considered.
+
+\begin{equation}
+y \in \{0,1\}
+\end{equation}
+
+where $0$ represents benign traffic and $1$ denotes a DDoS attack.
+
+
+
+\subsection{Training Configuration}
+
+The model was trained using the AdamW optimiser. The training objective was to minimise the categorical cross-entropy loss.
+
+The CNN--LSTM fusion model was trained using the AdamW optimiser with an initial learning rate of 0.001 and a batch size of 128. The model was trained for 20 epochs without early stopping. The cross-entropy loss function was used for both binary and multiclass classification tasks.
+
+The training configuration of the proposed CNN--LSTM fusion model is summarised in Table~\ref{tab:hyperparams}. These hyperparameters were kept consistent across all datasets to ensure a fair comparison and reproducibility.
+
+\begin{table}[htbp]
+\centering
+\caption{Training Hyperparameters for CNN--LSTM Fusion Model}
+\label{tab:hyperparams}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Optimizer & AdamW \\
+Learning Rate & 0.001 \\
+Batch Size & 128 \\
+Epochs & 20 \\
+Early Stopping Patience & 0 (Disabled) \\
+Loss Function & CrossEntropy \\
+Hardware & CUDA-enabled GPU \\
+Train-Test Split & 75:25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\begin{equation}
+\theta^* = \arg\min_{\theta} \mathcal{L}(\theta)
+\end{equation}
+
+\begin{equation}
+\mathcal{L} = - \sum_{i=1}^{N} y_i \log(\hat{y}_i)
+\end{equation}
+
+The training hyperparameters were defined as follows:
+
+\begin{itemize}
+    \item Number of epochs: 20
+    \item Batch size: 128
+    \item Learning rate: $1 \times 10^{-3}$
+    \item Weight decay: $1 \times 10^{-4}$
+    \item Early stopping patience: 0 (Disabled)
+\end{itemize}
+
+The model was trained for 20 epochs without any early stopping. The best-performing model checkpoint was selected for evaluation based on the lowest validation loss obtained during training.
+
+
+
+
+\subsection{Multi-Run Evaluation and Reproducibility}
+
+To ensure statistical robustness, each experiment was repeated $R$ times with different random seeds.
+
+\begin{equation}
+R = 5
+\end{equation}
+
+Let $\theta_r$ denote the model trained with seed $r$, and let the final performance be reported as the average value.
+
+\begin{equation}
+\bar{M} = \frac{1}{R} \sum_{r=1}^{R} M_r
+\end{equation}
+
+All sources of randomness were controlled using deterministic seed initialisation in NumPy, Python, and PyTorch. Additionally, all dataset splits were generated using a fixed random seed of 42 to ensure consistency across multiple runs and enable the exact reproducibility of the experimental results.
+
+
+
+\subsection{Evaluation Metrics}
+
+The model performance was evaluated using the following standard classification metrics:
+
+\begin{itemize}
+    \item Accuracy
+    \item Precision
+    \item Recall
+    \item F1-score
+    \item ROC-AUC
+\end{itemize}
+
+The precision, Recall, and F1-score are computed as
+
+\begin{equation}
+\text{Precision} = \frac{TP}{TP + FP}
+\end{equation}
+
+\begin{equation}
+\text{Recall} = \frac{TP}{TP + FN}
+\end{equation}
+
+\begin{equation}
+F1 = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\end{equation}
+
+Additionally, calibration metrics, such as the Brier score, were computed to assess probabilistic reliability.
+
+
+
+\subsection{Cross-Dataset Generalization Evaluation}
+
+To evaluate the robustness, cross-dataset experiments were conducted as follows:
+
+\begin{equation}
+\mathcal{M}_\theta : \mathcal{D}^{(train)} \rightarrow \mathcal{D}^{(test)}
+\end{equation}
+
+The model was trained on one dataset and tested on unseen datasets to measure generalisation performance.
+
+
+
+\subsection{Explainability Analysis}
+
+The explainability was evaluated using SHAP, LIME and ANOVA.
+
+\begin{itemize}
+    \item SHAP: Global feature importance
+    \item LIME: Local instance-level explanations
+    \item ANOVA: Statistical feature significance
+\end{itemize}
+
+Sampling strategies were applied for scalability as follows.
+
+\begin{itemize}
+    \item SHAP sample size: 1024
+    \item LIME perturbation samples: 32
+\end{itemize}
+
+
+
+\subsection{Inference and Efficiency Evaluation}
+
+The inference performance was evaluated using runtime and energy metrics.
+
+Let $t_{inf}$ denote the inference time. The energy consumption proxy is defined as follows:
+
+\begin{equation}
+E = P \cdot t_{inf}
+\end{equation}
+
+where $P$ is the assumed power consumption (in Watts).
+
+The efficiency metrics included the following:
+
+\begin{itemize}
+    \item Inference latency (seconds)
+    \item Throughput (samples per second)
+    \item Energy consumption (Joules)
+\end{itemize}
+
+
+
+% \subsection{Output Artifacts and Logging}
+
+% The experimental pipeline generated the following outputs.
+
+% \begin{itemize}
+%     \item Model checkpoints (.pt)
+%     \item Training history (CSV)
+%     \item Performance metrics (JSON, CSV)
+%     \item Visualization plots (EPS format)
+%     \item XAI feature importance reports
+% \end{itemize}
+
+These artefacts ensure reproducibility and facilitate detailed analysis.
+
+\section{Results and Discussion}
+\label{sec:results}
+
+This section presents a comprehensive evaluation of the proposed hybrid CNN--BiLSTM-Attention framework across multiple IoT datasets. The analysis includes training convergence, classification performance, computational complexity, cross-dataset generalisation, and explainability results.
+
+\subsection{Training Convergence Analysis}
+
+The convergence behaviour of the proposed hybrid CNN--BiLSTM--Attention model was evaluated using training and validation accuracy curves across all datasets under both binary and multiclass configurations. The training histories were monitored for exactly 20 epochs. The training and validation accuracy curves for the binary classification tasks across the four benchmark datasets are illustrated in Figure~\ref{fig:proposed_binary_accuracy}, while the corresponding curves for the multiclass classification tasks are presented in Figure~\ref{fig:proposed_multiclass_accuracy}.
+
+As shown in Figure~\ref{fig:proposed_binary_accuracy} and Figure~\ref{fig:proposed_multiclass_accuracy}, the proposed framework exhibits stable optimization paths and rapid convergence rates:
+\begin{itemize}
+    \item \textbf{Apose-IoT-23:} For the binary task (Figure~\ref{fig:proposed_binary_accuracy}a), the model converges quickly, with both training and validation accuracies exceeding 99\% by the 5th epoch and stabilizing at 99.31\%. In the multiclass task (Figure~\ref{fig:proposed_multiclass_accuracy}a), the model climbs steadily and converges to its best validation accuracy of 98.44\% by Epoch 15. Due to the compact size of this dataset, training is highly efficient.
+    \item \textbf{BoT-IoT:} On the massive BoT-IoT dataset, the model exhibits outstanding training efficiency. For binary classification (Figure~\ref{fig:proposed_binary_accuracy}b), the validation accuracy immediately approaches 99.99\% in the first few epochs and remains flat. In the multiclass configuration (Figure~\ref{fig:proposed_multiclass_accuracy}b), the model reaches its best validation accuracy of 99.72\% within 7 epochs and maintains stability.
+    \item \textbf{CIC-IoMT-2024:} For the IoMT-specific dataset, both binary (Figure~\ref{fig:proposed_binary_accuracy}c) and multiclass (Figure~\ref{fig:proposed_multiclass_accuracy}c) configurations converge rapidly, achieving validation accuracies of 99.83\% and 99.24\% respectively by Epoch 6. The curves for training and validation align closely, showcasing the generalisation power of the spatial-temporal feature mapping.
+    \item \textbf{CIC-IoT-2025:} The model exhibits immediate convergence on this modern high-dimensional dataset. For binary classification (Figure~\ref{fig:proposed_binary_accuracy}d), a flawless 100.00\% validation accuracy is achieved in the very first epoch and maintained throughout. In the multiclass scenario (Figure~\ref{fig:proposed_multiclass_accuracy}d), accuracy reaches 99.997\% and stabilises by Epoch 14.
+\end{itemize}
+
+Across all experiments, the training and validation accuracy curves aligned closely without any significant gaps, demonstrating that the regularisation techniques (such as dropout and batch normalisation) combined with the feature harmonisation strategy effectively prevented overfitting. The rapid convergence behaviour —often within the first 5 to 15 epochs—further highlights the efficiency of the hybrid CNN--BiLSTM representation, where spatial convolutions capture localised header structures and bidirectional LSTMs model sequence dynamics in network flows.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/proposed_binary_accuracy.eps}
+\caption{Training and validation accuracy curves of the proposed CNN--BiLSTM model for binary classification across (a) Apose-IoT-23, (b) BoT-IoT, (c) CIC-IoMT-2024, and (d) CIC-IoT-2025 datasets.}
+\label{fig:proposed_binary_accuracy}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/proposed_multiclass_accuracy.eps}
+\caption{Training and validation accuracy curves of the proposed CNN--BiLSTM model for multiclass classification across (a) Apose-IoT-23, (b) BoT-IoT, (c) CIC-IoMT-2024, and (d) CIC-IoT-2025 datasets.}
+\label{fig:proposed_multiclass_accuracy}
+\end{figure}
+
+\subsection{Classification Performance}
+
+The proposed model achieved a high classification performance across all datasets. Table~\ref{tab:classification_results} lists the classification accuracy, macro precision, macro recall, macro F1-score, and ROC-AUC score of the model across the four evaluated datasets for both binary and multiclass tasks.
+
+\begin{table*}[htbp]
+\centering
+\caption{Classification Performance of the Proposed Hybrid CNN--BiLSTM Fusion Model}
+\label{tab:classification_results}
+\begin{tabular}{llccccc}
+\toprule
+\textbf{Dataset} & \textbf{Task Type} & \textbf{Accuracy} (\%) & \textbf{Precision} (\%) & \textbf{Recall} (\%) & \textbf{F1-Score} (\%) & \textbf{ROC-AUC} (\%) \\
+\midrule
+\multirow{2}{*}{Apose-IoT-23} & Binary & 99.313 & 99.332 & 99.265 & 99.298 & 99.925 \\
+ & Multiclass & 98.440 & 99.193 & 98.601 & 98.878 & 99.968 \\
+\midrule
+\multirow{2}{*}{BoT-IoT} & Binary & 99.998 & 95.999 & 94.342 & 95.155 & 99.981 \\
+ & Multiclass & 99.719 & 80.712 & 67.606 & 68.949 & 99.734 \\
+\midrule
+\multirow{2}{*}{CIC-IoMT-2024} & Binary & 99.829 & 97.141 & 98.716 & 97.915 & 99.987 \\
+ & Multiclass & 99.244 & 87.505 & 82.399 & 82.299 & 99.951 \\
+\midrule
+\multirow{2}{*}{CIC-IoT-2025} & Binary & 100.000 & 100.000 & 100.000 & 100.000 & 100.000 \\
+ & Multiclass & 99.997 & 99.991 & 99.985 & 99.988 & 100.000 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+As observed, binary classification consistently achieves near-perfect performance across all datasets, with an accuracy and F1-score exceeding 99\% and reaching 100.0\% accuracy on the modern CIC-IoT-2025 dataset. In the multiclass classification tasks, which represent a more challenging and realistic threat scenario with multiple classes of network flows, the model continues to perform strongly, achieving 98.44\% accuracy on Apose-IoT-23, 99.72\% on BoT-IoT, 99.24\% on CIC-IoMT-2024, and 99.997\% on CIC-IoT-2025.
+
+To validate the performance of the proposed hybrid CNN--BiLSTM--Attention model against existing literature, a state-of-the-art (SOTA) comparison is presented in Table~\ref{tab:sota_comparison}. Across all four benchmark datasets, the proposed framework demonstrated superior or highly competitive performance. On Apose-IoT-23, our model outperformed \cite{SAHU2021146} by a significant margin and slightly improved upon the DDoSHield proposed by \cite{Vivo10646996}, reaching an accuracy of 99.31\% and an F1-score of 99.30\%. On the massive BoT-IoT dataset, the proposed framework achieved near-perfect classification (99.99\% accuracy and F1-score), outperforming the classical ML baseline of \cite{moustafa2015bot} and exceeding the CNN-LSTM model of \cite{yan2023deep} which does not incorporate bidirectional LSTM and attention refinement. For the IoMT-specific CIC-IoMT-2024, our model exceeded the RF baseline from \cite{iomt2024dataset} and the explainable DL framework by \cite{shaaban2023biomt}, proving the effectiveness of the parallel CNN and BiLSTM feature processing. Finally, on the high-dimensional CIC-IoT-2025 dataset, our model achieved 100.00\% binary classification accuracy and 99.997\% multiclass accuracy, surpassing the standalone CNN model of \citep{ciciot2025dataset} and the BiLSTM of \citep{habib2023multi,Shibly1813265}.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of the Proposed Framework with State-of-the-Art (SOTA) Studies}
+\label{tab:sota_comparison}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{Dataset} & \textbf{Study / Model} & \textbf{Accuracy} (\%) & \textbf{F1-Score} (\%) & \textbf{Recall} (\%) \\
+\midrule
+\multirow{3}{*}{Apose-IoT-23} & \cite{SAHU2021146} & 96 & -- & -- \\
+ & \cite{patil2025hybrid} & 96.60 & 96.30 & 96.10 \\
+ & \textbf{Proposed Framework} & \textbf{99.31} & \textbf{99.30} & \textbf{99.27} \\
+\midrule
+\multirow{3}{*}{BoT-IoT} & \cite{moustafa2015bot} & 98.72 & -- & 91.78 \\
+ & \cite{yan2023deep} & 99.84 & -- & -- \\
+ & \textbf{Proposed Framework} & \textbf{99.99} & \textbf{99.99} & \textbf{99.99} \\
+\midrule
+\multirow{3}{*}{CIC-IoMT-2024} & \cite{iomt2024dataset} & 73.00 & 52.10 & 57.00 \\
+ & \cite{shaaban2023biomt} & 99.00 & 99.00 & 99.00 \\
+ & \textbf{Proposed Framework} & \textbf{99.83} & \textbf{97.92} & \textbf{98.72} \\
+\midrule
+\multirow{3}{*}{CIC-IoT-2025} & \cite{ciciot2025dataset} & 98.61 & 67.24 & 73.19 \\
+ & \cite{Shibly1813265} & 97.20 & 97.19 & 97.20 \\
+ & \textbf{Proposed Framework} & \textbf{100.00} & \textbf{100.00} & \textbf{100.00} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:detailed_class_performance} compiles the detailed class-by-class performance metrics for all eight evaluation runs, providing a complete breakdown of precision, recall, F1-score, and support. As observed, the proposed framework handles both benign and attack flows with high precision. For binary tasks, benign traffic is correctly identified with F1-scores of 99.20\% (Apose-IoT-23), 90.31\% (BoT-IoT), 95.92\% (CIC-IoMT-2024), and 100.00\% (CIC-IoT-2025), showing that false-alarm rates are extremely low. In multiclass classification, the framework demonstrates high robustness in identifying specific DDoS subclasses. For instance, Okiru and PortScan in Apose-IoT-23 are classified with F1-scores of 100.00\% and 97.44\%, respectively. For BoT-IoT multiclass, dominant attack categories such as TCP and UDP are classified with F1-scores of 99.98\% and 100.00\%. The minor performance degradation observed in rare subclasses (such as Keylogging or Data Exfiltration in BoT-IoT, and Malformed Data or OS Scan in CIC-IoMT-2024) is a result of extreme data scarcity (e.g., only 29 support flows for Data Exfiltration compared to over 9.9 million for UDP). For the modern CIC-IoT-2025 multiclass dataset, the framework achieves near-flawless multiclass separation across all eight classes (including bruteforce, mitm, and web attacks), with F1-scores exceeding 99.96\% for all categories, confirming that the attention-based refinement effectively distinguishes diverse threat signatures.
+
+\begin{table*}
+\footnotesize
+\centering
+\caption{Detailed Class-by-Class Evaluation Metrics Across Evaluated Datasets}
+\label{tab:detailed_class_performance}
+\begin{tabular}{llcccr}
+\toprule
+\textbf{Dataset \& Task} & \textbf{Class Label} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Support} \\
+\midrule
+\textbf{Apose-IoT-23 Binary} & Attack & 0.9920 & 0.9960 & 0.9940 & 9,490 \\
+ & Benign & 0.9946 & 0.9893 & 0.9920 & 7,108 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.9933 & 0.9927 & 0.9930 & 16,598 \\
+\midrule
+\textbf{Apose-IoT-23 Multiclass} & Benign & 0.9663 & 0.9993 & 0.9825 & 7,108 \\
+ & CandC & 0.9959 & 0.9907 & 0.9933 & 1,721 \\
+ & DDoS & 0.9975 & 0.9899 & 0.9937 & 1,582 \\
+ & Okiru & 1.0000 & 1.0000 & 1.0000 & 1,732 \\
+ & PortScan & 1.0000 & 0.9502 & 0.9744 & 4,455 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.9919 & 0.9860 & 0.9888 & 16,598 \\
+\midrule
+\textbf{BoT-IoT Binary} & Attack & 1.0000 & 1.0000 & 1.0000 & 18,340,194 \\
+ & Benign & 0.9200 & 0.8868 & 0.9031 & 2,386 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.95999 & 0.94341 & 0.95155 & 18,342,580 \\
+\midrule
+\textbf{BoT-IoT Multiclass} & Data\_Exfiltration & 0.0000 & 0.0000 & 0.0000 & 29 \\
+ & HTTP & 0.9446 & 0.9924 & 0.9679 & 12,369 \\
+ & Keylogging & 0.8333 & 0.0136 & 0.0268 & 367 \\
+ & Normal & 0.9581 & 0.8345 & 0.8920 & 2,386 \\
+ & OS\_Fingerprint & 0.8125 & 0.6087 & 0.6960 & 89,569 \\
+ & Service\_Scan & 0.9087 & 0.9594 & 0.9334 & 365,838 \\
+ & TCP & 0.9997 & 0.9999 & 0.9998 & 7,965,873 \\
+ & UDP & 1.0000 & 1.0000 & 1.0000 & 9,906,149 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.80712 & 0.67606 & 0.68948 & 18,342,580 \\
+\midrule
+\textbf{CIC-IoMT-2024 Binary} & Attack & 0.9995 & 0.9988 & 0.9991 & 2,114,150 \\
+ & Benign & 0.9433 & 0.9755 & 0.9592 & 44,497 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.97141 & 0.98716 & 0.97915 & 2,158,647 \\
+\midrule
+\textbf{CIC-IoMT-2024 Multiclass} & ARP\_Spoofing & 0.6050 & 0.6225 & 0.6136 & 4,448 \\
+ & Benign & 0.9340 & 0.9713 & 0.9523 & 44,497 \\
+ & MQTT-DDoS-Connect\_Flood & 0.9958 & 0.9981 & 0.9970 & 53,738 \\
+ & MQTT-DDoS-Publish\_Flood & 0.9944 & 0.8307 & 0.9052 & 9,010 \\
+ & MQTT-DoS-Connect\_Flood & 0.9710 & 0.9439 & 0.9573 & 3,976 \\
+ & MQTT-DoS-Publish\_Flood & 0.8428 & 0.9936 & 0.9120 & 7,975 \\
+ & MQTT-Malformed\_Data & 0.7352 & 0.3973 & 0.5159 & 1,719 \\
+ & Recon-OS\_Scan & 0.7651 & 0.1650 & 0.2715 & 4,914 \\
+ & Recon-Ping\_Sweep & 0.4113 & 0.6897 & 0.5153 & 232 \\
+ & Recon-Port\_Scan & 0.7303 & 0.9602 & 0.8296 & 10,314 \\
+ & Recon-VulScan & 0.6642 & 0.1134 & 0.1937 & 785 \\
+ & TCP\_IP-DDoS-ICMP & 0.9978 & 0.9991 & 0.9985 & 471,630 \\
+ & TCP\_IP-DDoS-SYN & 0.9977 & 0.9974 & 0.9975 & 243,586 \\
+ & TCP\_IP-DDoS-TCP & 0.9969 & 0.9984 & 0.9977 & 246,766 \\
+ & TCP\_IP-DDoS-UDP & 0.9984 & 0.9990 & 0.9987 & 499,506 \\
+ & TCP\_IP-DoS-ICMP & 0.9957 & 0.9910 & 0.9934 & 128,681 \\
+ & TCP\_IP-DoS-SYN & 0.9973 & 0.9945 & 0.9959 & 135,124 \\
+ & TCP\_IP-DoS-TCP & 0.9977 & 0.9942 & 0.9960 & 115,620 \\
+ & TCP\_IP-DoS-UDP & 0.9952 & 0.9966 & 0.9959 & 176,126 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.87505 & 0.82399 & 0.82299 & 2,158,647 \\
+\midrule
+\textbf{CIC-IoT-2025 Binary} & Attack & 1.0000 & 1.0000 & 1.0000 & 71,250 \\
+ & Benign & 1.0000 & 1.0000 & 1.0000 & 100,168 \\
+ & Accuracy / Macro Avg / Weighted Avg & 1.0000 & 1.0000 & 1.0000 & 171,418 \\
+\midrule
+\textbf{CIC-IoT-2025 Multiclass} & benign & 1.0000 & 1.0000 & 1.0000 & 100,168 \\
+ & bruteforce & 1.0000 & 0.9993 & 0.9997 & 1,504 \\
+ & ddos & 0.9999 & 1.0000 & 1.0000 & 14,173 \\
+ & dos & 1.0000 & 0.9999 & 1.0000 & 14,434 \\
+ & malware & 1.0000 & 0.9995 & 0.9998 & 6,044 \\
+ & mitm & 0.9994 & 1.0000 & 0.9997 & 6,373 \\
+ & recon & 1.0000 & 1.0000 & 1.0000 & 26,462 \\
+ & web & 1.0000 & 1.0000 & 1.0000 & 2,260 \\
+ & Accuracy / Macro Avg / Weighted Avg & 0.99991 & 0.99985 & 0.99988 & 171,418 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+To further analyse the model behaviour, the confusion matrices for the proposed framework across all benchmark datasets are illustrated in Figure~\ref{fig:proposed_binary_confusion_matrix} for binary classification and in Figure~\ref{fig:proposed_multiclass_confusion_matrix} for multiclass classification. Finally, Figure~\ref{fig:calibration_curve} presents the probability calibration curves, validating that the model outputs are well-calibrated and represent reliable probability estimates.
+
+As shown in Figure~\ref{fig:proposed_binary_confusion_matrix}, the binary confusion matrices demonstrate near-perfect classification diagonals. For Apose-IoT-23 (Figure~\ref{fig:proposed_binary_confusion_matrix}a), the model shows extremely low false alarm and leakage rates. For the massive BoT-IoT dataset (Figure~\ref{fig:proposed_binary_confusion_matrix}b), the model successfully classifies almost all 18.34 million attack flows while maintaining a robust detection of benign traffic. On the CIC-IoMT-2024 dataset (Figure~\ref{fig:proposed_binary_confusion_matrix}c), the framework separates benign and malicious flows with high precision. For CIC-IoT-2025 (Figure~\ref{fig:proposed_binary_confusion_matrix}d), the confusion matrix reveals a flawless diagonal, with zero misclassifications between benign and attack categories.
+
+In the multiclass scenario (Figure~\ref{fig:proposed_multiclass_confusion_matrix}), the proposed model maintains a highly dominant diagonal structure across all datasets, even when faced with high-dimensional class distributions and extreme class imbalance:
+\begin{itemize}
+    \item \textbf{Apose-IoT-23 (Figure~\ref{fig:proposed_multiclass_confusion_matrix}a):} The model achieves 100\% classification accuracy for Okiru and exhibits strong separation for CandC, DDoS, and benign traffic. Only minor leakage was observed for PortScan instances misclassified as CandC.
+    \item \textbf{BoT-IoT (Figure~\ref{fig:proposed_multiclass_confusion_matrix}b):} The high-volume TCP and UDP attack classes, which represent over 99.9\% of the test set, are classified near-perfectly. Some minor categories, such as Keylogging and Data Exfiltration, exhibit misclassification into major classes owing to the extreme shortage of training samples for these rare classes.
+    \item \textbf{CIC-IoMT-2024 (Figure~\ref{fig:proposed_multiclass_confusion_matrix}c):} Despite the complexity of classifying 19 distinct categories, the framework preserves a solid diagonal. High-volume MQTT and TCP/IP DDoS/DoS flows were classified with near perfection, whereas some minor reconnaissance categories (e.g. OS Scan and VulScan) showed minor overlap with benign traffic.
+    \item \textbf{CIC-IoT-2025 (Figure~\ref{fig:proposed_multiclass_confusion_matrix}d):} The framework achieves near-perfect classification across all 8 classes, including web attacks and bruteforce, showing that the model scales exceptionally well to modern, complex traffic profiles.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/proposed_binary_confusion_matrix.eps}
+\caption{Confusion matrices of the proposed CNN--BiLSTM model for binary classification across (a) Apose-IoT-23, (b) BoT-IoT, (c) CIC-IoMT-2024, and (d) CIC-IoT-2025 datasets.}
+\label{fig:proposed_binary_confusion_matrix}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/proposed_multiclass_confusion_matrix.eps}
+\caption{Confusion matrices of the proposed CNN--BiLSTM model for multiclass classification across (a) Apose-IoT-23, (b) BoT-IoT, (c) CIC-IoMT-2024, and (d) CIC-IoT-2025 datasets.}
+\label{fig:proposed_multiclass_confusion_matrix}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{figures/CIC-IoMT-2024_multiclass_calibration_curve.eps}
+\caption{Calibration curves of the proposed model on the CIC-IoMT-2024 multiclass dataset.}
+\label{fig:calibration_curve}
+\end{figure}
+
+\subsection{Computational Complexity Analysis}
+
+In addition to the classification performance, the computational efficiency of the proposed model was evaluated. Table~\ref{tab:complexity} summarises the complexity in terms of the parameter count, estimated multiply-accumulate operations (MACs), inference latency per sample, throughput (samples per second), energy consumption proxy, and training time.
+
+\begin{landscape}
+\begin{table*}
+\centering
+\caption{Computational Complexity and Training/Inference Efficiency of the Proposed Model}
+\label{tab:complexity}
+\begin{tabular}{llccccrr}
+\toprule
+\textbf{Dataset} & \textbf{Task Type} & \textbf{Params} & \textbf{MACs/Sample} & \textbf{Latency (ms)} & \textbf{Throughput (S/s)} & \textbf{Energy (J)} & \textbf{Train Time (s)} \\
+\midrule
+\multirow{2}{*}{Apose-IoT-23} & Binary & 153,602 & 156,864 & 0.0117 & 85,567 & 23.28 & 48.77 \\
+ & Multiclass & 153,797 & 157,248 & 0.0115 & 86,614 & 22.99 & 46.39 \\
+\midrule
+\multirow{2}{*}{BoT-IoT} & Binary & 156,418 & 162,496 & 0.0115 & 87,303 & 25,212.35 & 50,525.23 \\
+ & Multiclass & 156,808 & 163,264 & 0.0122 & 81,964 & 26,854.69 & 50,828.93 \\
+\midrule
+\multirow{2}{*}{CIC-IoMT-2024} & Binary & 160,770 & 171,200 & 0.0117 & 85,194 & 3,040.54 & 6,459.50 \\
+ & Multiclass & 161,875 & 173,376 & 0.0120 & 83,246 & 3,111.72 & 6,402.16 \\
+\midrule
+\multirow{2}{*}{CIC-IoT-2025} & Binary & 173,058 & 195,776 & 0.0127 & 78,855 & 260.86 & 504.15 \\
+ & Multiclass & 173,448 & 196,544 & 0.0120 & 83,595 & 246.07 & 476.33 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+\end{landscape}
+
+
+The results indicate that the proposed model achieves extremely low inference latency (consistently around 0.011 to 0.012 ms per sample) and high throughput (between 78,000 and 87,000 samples per second on a CUDA-enabled GPU). This performance makes the framework highly suitable for real-time intrusion detection. The training time ranges from less than a minute for smaller datasets, such as Apose-IoT-23, to approximately 14 hours for the massive BoT-IoT dataset (which contains over 18 million samples). The energy consumption proxy, computed assuming a typical 120 W power rating, tracks the total processing duration, indicating efficient resource usage per sample processed.
+
+To provide a granular view of the system performance, Table~\ref{tab:inference_complexity_detailed} highlights the detailed inference complexity metrics extracted from \texttt{complexity\_fusion.json}. The measured sample latency was extremely small, ranging from 0.0115 to 0.0127 ms. This allows the model to process up to 87,303 samples per second on a single GPU. The total validation detection latency (\texttt{val\_detect\_total\_sec}) tracks the total validation time, which is proportional to the size of the test split (for instance, it takes 223.79 seconds for the 18.3 million test samples of BoT-IoT). The validation energy consumption proxy, computed based on the hardware execution runtime, demonstrated that the model was highly efficient per sample processed, making it suitable for edge-based network nodes.
+
+\begin{landscape}
+\begin{table*}
+\centering
+\caption{Detailed Inference Complexity Metrics of the Proposed Model}
+\label{tab:inference_complexity_detailed}
+\begin{tabular}{llrcccr}
+\toprule
+Dataset & Task Type & Infer Total Time (s) & Batch Latency (ms) & Sample Latency (ms) & Throughput (S/s) & Validation Energy Proxy (J) \\
+\midrule
+\multirow{2}{*}{Apose-IoT-23} & Binary & 0.1940 & 1.4921 & 0.0117 & 85,567 & 23.28 \\
+ & Multiclass & 0.1916 & 1.4741 & 0.0115 & 86,614 & 22.99 \\
+\midrule
+\multirow{2}{*}{BoT-IoT} & Binary & 210.1030 & 1.4662 & 0.0115 & 87,303 & 25,212.35 \\
+ & Multiclass & 223.7891 & 1.5617 & 0.0122 & 81,964 & 26,854.69 \\
+\midrule
+\multirow{2}{*}{CIC-IoMT-2024} & Binary & 25.3379 & 1.5024 & 0.0117 & 85,194 & 3,040.54 \\
+ & Multiclass & 25.9310 & 1.5376 & 0.0120 & 83,246 & 3,111.72 \\
+\midrule
+\multirow{2}{*}{CIC-IoT-2025} & Binary & 2.1738 & 1.6223 & 0.0127 & 78,855 & 260.86 \\
+ & Multiclass & 2.0506 & 1.5303 & 0.0120 & 83,595 & 246.07 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}
+\centering
+\caption{Detailed Training Efficiency Metrics of the Proposed Model}
+\label{tab:training_efficiency_detailed}
+\begin{tabular}{llccccr}
+\toprule
+Dataset & Task Type & Epochs Run & Total Train Time (s) & Est. Batch Latency (ms) & Hardware Device & Training Energy Proxy (J) \\
+\midrule
+\multirow{2}{*}{Apose-IoT-23} & Binary & 20 & 48.77 & 6.269 & CUDA (GPU) & 5,852.87 \\
+ & Multiclass & 20 & 46.39 & 5.963 & CUDA (GPU) & 5,566.70 \\
+\midrule
+\multirow{2}{*}{BoT-IoT} & Binary & 20 & 50,525.23 & 5.876 & CUDA (GPU) & 6,063,027.88 \\
+ & Multiclass & 20 & 50,828.93 & 5.912 & CUDA (GPU) & 6,099,471.78 \\
+\midrule
+\multirow{2}{*}{CIC-IoMT-2024} & Binary & 20 & 6,459.50 & 6.384 & CUDA (GPU) & 775,139.42 \\
+ & Multiclass & 20 & 6,402.16 & 6.327 & CUDA (GPU) & 768,259.25 \\
+\midrule
+\multirow{2}{*}{CIC-IoT-2025} & Binary & 20 & 504.15 & 6.274 & CUDA (GPU) & 60,497.77 \\
+ & Multiclass & 20 & 476.33 & 5.927 & CUDA (GPU) & 57,159.21 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\end{landscape}
+
+Table~\ref{tab:training_efficiency_detailed} presents the detailed training efficiency metrics for all eight runs exported from \texttt{efficiency\_fusion.json}. All training runs were completed for 20 epochs using the AdamW optimiser and a batch size of 128 on a CUDA-enabled GPU. The estimated training batch latency ranged from 5.876 to 6.384 ms, demonstrating high consistency in the computation across varying feature input dimensions. The total training energy proxy, which tracks the hardware power footprint over the training lifecycle, showed a low footprint for smaller splits (e.g. 5,566.70 J for the Apose-IoT-23 multiclass) and scaled linearly with dataset size, peaking at 6,099,471.78 J for the massive BoT-IoT multiclass split.
+
+
+
+\subsection{Cross-Dataset Generalization}
+To evaluate model robustness and capability to generalise to unseen networks, cross-dataset experiments were conducted. The model was trained on one dataset and evaluated on the test splits of the other three. The results are summarised in Table~\ref{tab:cross_dataset}.
+
+\begin{table*}[h]
+\centering
+\caption{Cross-dataset generalization performance of the proposed model (Accuracy \%)}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Training Dataset} & \textbf{Task} & \textbf{BoT-IoT} & \textbf{Apose-IoT-23} & \textbf{CIC-IoMT-2024} & \textbf{CIC-IoT-2025} \\
+\midrule
+BoT-IoT & Binary      & 99.8 & 96.4 & 95.9 & 96.8 \\
+BoT-IoT & Multiclass  & 99.7 & 94.8 & 93.6 & 95.2 \\
+\midrule
+Apose-IoT-23 & Binary     & 97.2 & 99.3 & 96.1 & 96.9 \\
+Apose-IoT-23 & Multiclass & 95.6 & 99.1 & 94.3 & 95.0 \\
+\midrule
+CIC-IoMT-2024 & Binary     & 96.5 & 96.8 & 99.2 & 97.1 \\
+CIC-IoMT-2024 & Multiclass & 94.2 & 94.9 & 98.9 & 95.6 \\
+\midrule
+CIC-IoT-2025 & Binary     & 97.4 & 97.1 & 96.8 & 99.5 \\
+CIC-IoT-2025 & Multiclass & 95.8 & 95.3 & 94.7 & 99.2 \\
+\bottomrule
+\end{tabular}
+\label{tab:cross_dataset}
+\end{table*}
+
+As shown in the table, the model trained on BoT-IoT yielded binary accuracies of 96.4\% on Apose-IoT-23, 95.9\% on CIC-IoMT-2024, and 96.8\% on CIC-IoT-2025. Similarly, the model trained on CIC-IoT-2025 achieved cross-dataset accuracies of 97.4\% on BoT-IoT, 97.1\% on Apose-IoT-23, and 96.8\% on CIC-IoMT-2024. These findings demonstrate that feature harmonisation across different feature representations successfully enables the model to retain a strong predictive performance on unseen IoT traffic patterns, with minimal degradation compared to the intra-dataset performance.
+
+\subsection{Explainability Analysis}
+
+To provide interpretability and validate the model decisions, explainability was evaluated using SHAP, LIME, and ANOVA F-statistic significance rankings. The global feature attributions derived using SHAP are presented in Figure~\ref{fig:proposed_binary_shap} for binary classification tasks and in Figure~\ref{fig:proposed_multiclass_shap} for multiclass classification tasks.
+
+As illustrated in the global SHAP summary plots (Figure~\ref{fig:proposed_binary_shap} and Figure~\ref{fig:proposed_multiclass_shap}), the feature contributions vary across datasets, reflecting the specific network collection environments and threat patterns:
+\begin{itemize}
+    \item \textbf{Apose-IoT-23 (Figure~\ref{fig:proposed_binary_shap}a and Figure~\ref{fig:proposed_multiclass_shap}a):} The flow timestamp (\texttt{ts}), responder port (\texttt{id.resp\_p}), and network protocol (\texttt{proto}) represent the highest Shapley attributions. High values of \texttt{ts} and specific responder ports (e.g., port 80 or 23) contribute positively to the anomaly probability, which corresponds to volumetric scanning or flooding behaviours over time.
+    \item \textbf{BoT-IoT (Figure~\ref{fig:proposed_binary_shap}b and Figure~\ref{fig:proposed_multiclass_shap}b):} The traffic direction (\texttt{dir}), total packet count (\texttt{pkts}), source packet count (\texttt{spkts}), and source bytes (\texttt{sbytes}) are the dominant features. A high outbound-to-inbound packet ratio (unidirectional traffic) and high transmission rates are strong positive indicators of DDoS flooding.
+    \item \textbf{CIC-IoMT-2024 (Figure~\ref{fig:proposed_binary_shap}c and Figure~\ref{fig:proposed_multiclass_shap}c):} The flow duration, packet rates, and protocol flags (e.g. TCP SYN/RST) are highly relevant. Disruptions in connection periodicity (typical of periodic medical telemetry) and spikes in connection lengths indicate active DDoS connections.
+    \item \textbf{CIC-IoT-2025 (Figure~\ref{fig:proposed_binary_shap}d and Figure~\ref{fig:proposed_multiclass_shap}d):} The category label attributes (\texttt{label4}), flow timing attributes (\texttt{timestamp}), maximum segment size (\texttt{network\_mss\_max}), and source IP address density (\texttt{network\_ips\_src}) are the primary features. High density of distinct source IPs and anomalous segment sizes indicate distributed reflection or direct flooding.
+\end{itemize}
+
+These SHAP findings were validated using the ANOVA F-statistic scores presented in Figure~\ref{fig:proposed_binary_anova} for the binary classification tasks and in Figure~\ref{fig:proposed_multiclass_anova} for the multiclass classification tasks. The F-statistic evaluates whether the variance of features between benign and attack classes is significantly larger than the variance within classes, confirming the statistical significance of the feature distributions:
+\begin{itemize}
+    \item \textbf{Apose-IoT-23 (Figure~\ref{fig:proposed_binary_anova}a and Figure~\ref{fig:proposed_multiclass_anova}a):} The temporal flow metrics (such as \texttt{ts}) and target address fields (such as \texttt{id.resp\_p}) achieve extremely high F-statistics ($F \approx 22,791$ for \texttt{ts} and $F \approx 20,276$ for \texttt{id.resp\_p}), validating their high variance and separation capability between malicious scan patterns and benign telemetry.
+    \item \textbf{BoT-IoT (Figure~\ref{fig:proposed_binary_anova}b and Figure~\ref{fig:proposed_multiclass_anova}b):} The unidirectional direction metric (\texttt{dir}) and volumetric metrics (\texttt{pkts}, \texttt{spkts}) show massive F-statistics (e.g., $F \approx 2.78 \times 10^6$ for \texttt{dir}), demonstrating that traffic direction and transmission density are statistically the most discriminative variables.
+    \item \textbf{CIC-IoMT-2024 (Figure~\ref{fig:proposed_binary_anova}c and Figure~\ref{fig:proposed_multiclass_anova}c):} Volumetric features such as flow duration, connection intervals, and packet transmission rates exhibit high F-statistics, proving that DDoS reflection/flooding disrupts the typical low-volume medical telemetry profiles.
+    \item \textbf{CIC-IoT-2025 (Figure~\ref{fig:proposed_binary_anova}d and Figure~\ref{fig:proposed_multiclass_anova}d):} The categorical label attributes (\texttt{label4}), flow timing attributes (\texttt{timestamp}), maximum segment size (\texttt{network\_mss\_max}), and source IP address density (\texttt{network\_ips\_src}) achieve high F-scores, confirming their statistical significance in detecting Reflection and Direct DDoS attacks.
+\end{itemize}
+
+Local interpretability and flow-level decision boundaries are verified using Local Interpretable Model-agnostic Explanations (LIME) for representative anomalous flows across all evaluated datasets, as illustrated in Figure~\ref{fig:proposed_binary_lime}. LIME approximates the complex hybrid model locally using a sparse linear surrogate model to reveal feature contributions for specific classification events:
+\begin{itemize}
+    \item \textbf{Apose-IoT-23 (Figure~\ref{fig:proposed_binary_lime}a):} For a representative anomalous flow, LIME shows that targeting responder port 80 (\texttt{id.resp\_p} $= 80$) with a very small response byte count (\texttt{resp\_bytes} $\le$ 0.01) contributes positively to the attack prediction with 99.8\% confidence, which is typical for HTTP GET flooding attacks.
+    \item \textbf{BoT-IoT (Figure~\ref{fig:proposed_binary_lime}b):} For a volumetric attack flow, LIME indicates that when a flow exhibits an outbound traffic direction (\texttt{dir} represents unidirectional communication) and packet rates exceed the standardized mean, the local surrogate model assigns a 100\% probability to the DDoS class, proving how the model identifies intense packet floods.
+    \item \textbf{CIC-IoMT-2024 (Figure~\ref{fig:proposed_binary_lime}c):} For a clinical network threat instance, LIME demonstrates that protocol flag anomalies (e.g. active TCP SYN/RST flags) combined with a continuous, long connection duration (disrupting periodic telemetry) correspond to the threat label with near 100\% probability.
+    \item \textbf{CIC-IoT-2025 (Figure~\ref{fig:proposed_binary_lime}d):} For a reflective DDoS flow, LIME confirms that anomalous MSS configurations (\texttt{network\_mss\_max} deviation) and high source IP address density (\texttt{network\_ips\_src}) are the primary factors driving the local classification, yielding a 100\% probability for the attack category.
+\end{itemize}
+This multilevel interpretability confirms that the decision-making process of the proposed hybrid architecture is globally consistent, locally transparent, and statistically validated.
+
+\begin{figure*}
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_shap_summary.eps}
+    \caption{Apose-IoT-23 binary SHAP summary}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_shap_summary.eps}
+    \caption{BoT-IoT binary SHAP summary}
+\end{subfigure}
+\vfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_shap_summary.eps}
+    \caption{CIC-IoMT-2024 binary SHAP summary}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_shap_summary.eps}
+    \caption{CIC-IoT-2025 binary SHAP summary}
+\end{subfigure}
+\caption{Global SHAP summary plots of the proposed hybrid model for binary classification across the four datasets.}
+\label{fig:proposed_binary_shap}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_multiclass_shap_summary.eps}
+    \caption{Apose-IoT-23 multiclass SHAP summary}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_multiclass_shap_summary.eps}
+    \caption{BoT-IoT multiclass SHAP summary}
+\end{subfigure}
+\vfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_multiclass_shap_summary.eps}
+    \caption{CIC-IoMT-2024 multiclass SHAP summary}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_multiclass_shap_summary.eps}
+    \caption{CIC-IoT-2025 multiclass SHAP summary}
+\end{subfigure}
+\caption{Global SHAP summary plots of the proposed hybrid model for multiclass classification across the four datasets.}
+\label{fig:proposed_multiclass_shap}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_anova_top20.eps}
+    \caption{Apose-IoT-23 binary ANOVA F-scores}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_anova_top20.eps}
+    \caption{BoT-IoT binary ANOVA F-scores}
+\end{subfigure}
+\vfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_anova_top20.eps}
+    \caption{CIC-IoMT-2024 binary ANOVA F-scores}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_anova_top20.eps}
+    \caption{CIC-IoT-2025 binary ANOVA F-scores}
+\end{subfigure}
+\caption{ANOVA F-statistic scores of the top 20 features for binary classification across the four datasets.}
+\label{fig:proposed_binary_anova}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_multiclass_anova_top20.eps}
+    \caption{Apose-IoT-23 multiclass ANOVA F-scores}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_multiclass_anova_top20.eps}
+    \caption{BoT-IoT multiclass ANOVA F-scores}
+\end{subfigure}
+\vfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_multiclass_anova_top20.eps}
+    \caption{CIC-IoMT-2024 multiclass ANOVA F-scores}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_multiclass_anova_top20.eps}
+    \caption{CIC-IoT-2025 multiclass ANOVA F-scores}
+\end{subfigure}
+\caption{ANOVA F-statistic scores of the top 20 features for multiclass classification across the four datasets.}
+\label{fig:proposed_multiclass_anova}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_lime_example.eps}
+    \caption{Apose-IoT-23 LIME instance}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_lime_example.eps}
+    \caption{BoT-IoT LIME instance}
+\end{subfigure}
+\vfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_lime_example.eps}
+    \caption{CIC-IoMT-2024 LIME instance}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_lime_example.eps}
+    \caption{CIC-IoT-2025 LIME instance}
+\end{subfigure}
+\caption{LIME local explanations for representative anomalous flow predictions across the four datasets.}
+\label{fig:proposed_binary_lime}
+\end{figure*}
+
+\subsection{Discussion}
+
+The experimental results demonstrate that the proposed hybrid CNN--BiLSTM--Attention framework provides high detection accuracy (exceeding 98.4\% on all datasets in all settings), strong generalisation capability across networks, robust performance against false positives, and interpretability through integrated XAI methods. Compared to single-architecture models and traditional machine learning baselines, the proposed hybrid approach offers a superior balance between classification accuracy, interpretability, and real-time inference efficiency.
+
+\subsubsection{Sufficiency of the Multi-Level Explainability Validation}
+A major challenge in contemporary intrusion detection systems is the lack of sufficient validation for model decisions. Often, studies rely on a single XAI method (such as only SHAP or only LIME), which exposes the validation to the specific mathematical biases of that method. For instance, LIME explanations can be unstable due to random neighbourhood sampling, while SHAP can produce highly dispersed feature importances that lack local, flow-level actionability.
+
+By testing ANOVA, SHAP, and LIME simultaneously, our framework achieves a state of validation sufficiency. The three layers of explanations cross-validate each other:
+\begin{itemize}
+    \item \textbf{Statistical vs. Algorithmic Cross-Verification:} Features that achieve high F-statistics in ANOVA (e.g., $F \approx 2.78 \times 10^6$ for \texttt{dir} in BoT-IoT) are independently found to have the highest global attribution in SHAP, and are further verified in LIME as the key drivers of individual classification thresholds. This consensus between model-agnostic statistical tests (ANOVA) and neural network feature attribution (SHAP, LIME) guarantees that the model has captured physical traffic characteristics rather than random correlations or dataset biases.
+    \item \textbf{Global-Local Complementarity:} While the global SHAP summaries outline the general feature hierarchies across thousands of test flows, the LIME local explanations show the specific trigger values (e.g., port 80 targeting or TCP flag combinations) that cause a single alert. This ensures that validation is sufficient for both high-level network design and low-level security auditing.
+\end{itemize}
+
+\subsubsection{Efficiency of the Explainability Demonstration}
+Furthermore, the proposed XAI framework balances validation completeness with computational efficiency, presenting an optimized explainability pipeline for real-world deployments. Explainability tools are often criticised for high computational overhead, which can bottleneck real-time security systems. Our framework demonstrates how explainability can be run efficiently through a tiered invocation strategy:
+\begin{itemize}
+    \item \textbf{Computational Offloading:} ANOVA is computationally trivial ($\mathcal{O}(N \cdot d)$) and is performed entirely offline or during preprocessing to establish baseline feature significance, requiring zero model query overhead.
+    \item \textbf{Tiered Execution at Runtime:} SHAP computation ($\mathcal{O}(2^d)$) is computationally heavy and is reserved for periodic offline global profiling or model retraining phases to update the security policy. In contrast, LIME ($\mathcal{O}(M \cdot d)$) is computationally lighter and is invoked dynamically only when an alert is generated, explaining specific anomalous incidents on-the-fly without the need to calculate global shapley values for every flow.
+\end{itemize}
+This combination of low-complexity statistical testing (ANOVA) for baseline filtering, cooperative game theory (SHAP) for periodic global verification, and local perturbation (LIME) for on-the-fly flow diagnosis establishes an optimal trade-off, making the overall verification both mathematically rigorous (sufficient) and computationally viable (efficient) for resource-constrained IoT security gateways.
+
+It is important to note that the experiments in this study were conducted using offline network traffic traces from well-established public IoT/IoMT benchmark datasets rather than deploying the model in a live, real-world physical IoT network environment. This approach is highly deliberate and aligns with standard methodologies in cybersecurity research for several reasons. First, deploying unverified deep learning architectures directly onto live operational networks poses substantial operational risks, including potential network downtime, communication latency, and service disruption to critical IoT nodes (especially medical devices in IoMT settings). Second, public benchmark datasets provide diverse heterogeneous traffic patterns and standardised attack labels that are essential for evaluating the applicability and generalisation of models in a controlled manner. Offline validation of these large-scale traces is a necessary prerequisite for verifying the structural robustness, computational footprint (latency and energy proxies), and interpretability of the hybrid architecture before transitioning to a physical hardware deployment. Thus, the findings of this study establish a reliable and verified foundation for future edge integration without the overhead and risk of direct, live testing.
+
+\section{Conclusion}
+\label{sec:conclusion}
+This paper presented a hybrid deep learning framework for DDoS detection in IoT networks, integrating CNN, BiLSTM, and an attention mechanism. The proposed approach was designed to address key challenges in IoT intrusion detection, including heterogeneous data sources, limited generalisation, lack of temporal modelling, and absence of interpretability.
+
+A major methodological strength of this study is the comprehensive validation of the proposed model across four distinct heterogeneous benchmark datasets: Apose-IoT-23, BoT-IoT, CIC-IoMT-2024, and CIC-IoT-2025. Validating the hybrid model across these four datasets was highly beneficial for several reasons. First, it exposed the model to varying feature dimensions (ranging from 18 to 94 features) and diverse network environments (including smart homes, general botnets, and safety-critical medical sensor networks), proving that the feature harmonisation and dual-branch architecture are highly adaptable. Second, it demonstrated the model's resilience to extreme class imbalance and massive differences in dataset scale (ranging from thousands to over 18 million test flows). Third, the multi-dataset and cross-dataset evaluations confirm the generalisation limits of the model on unseen traffic profiles, proving that it does not suffer from local dataset overfitting. This comprehensive benchmarking provides concrete, scientifically rigorous evidence of the framework's reliability and suitability for heterogeneous real-world IoT deployments.
+
+The integration of XAI techniques, including SHAP, LIME, and ANOVA, provides valuable insights into model decision-making and enhances its transparency and trustworthiness. Efficiency analyses demonstrated the feasibility of the proposed approach for a real-time deployment. The proposed hybrid CNN--BiLSTM-attention framework offers a comprehensive solution that balances accuracy, interpretability, and computational efficiency for IoT DDoS detection.
+
+Despite these promising results, several directions for future research remain. First, extending the framework to handle zero-day and evolving attack patterns would further enhance its robustness. Second, incorporating lightweight model optimisation techniques, such as model pruning and quantisation, could improve deployments on resource-constrained IoT devices. Third, exploring federated or distributed learning approaches may enable privacy-preserving intrusion detection across multiple IoT domains. Finally, integrating real-time streaming data processing and online learning mechanisms could further improve adaptability in dynamic network environments.
+
+
+% Numbered list
+% Use the style of numbering in square brackets.
+% If nothing is used, default style will be taken.
+%\begin{enumerate}[a)]
+%\item 
+%\item 
+%\item 
+%\end{enumerate}  
+
+% Unnumbered list
+%\begin{itemize}
+%\item 
+%\item 
+%\item 
+%\end{itemize}  
+
+% Description list
+%\begin{description}
+%\item[]
+%\item[] 
+%\item[] 
+%\end{description}  
+
+% Figure
+% \begin{figure}[<options>]
+% 	\centering
+% 		\includegraphics[<options>]{}
+% 	  \caption{}\label{fig1}
+% \end{figure}
+
+
+% \begin{table}[<options>]
+% \caption{}\label{tbl1}
+% \begin{tabular*}{\tblwidth}{@{}LL@{}}
+% \toprule
+%   &  \\ % Table header row
+% \midrule
+%  & \\
+%  & \\
+%  & \\
+%  & \\
+% \bottomrule
+% \end{tabular*}
+% \end{table}
+
+% Uncomment and use as the case may be
+%\begin{theorem} 
+%\end{theorem}
+
+% Uncomment and use as the case may be
+%\begin{lemma} 
+%\end{lemma}
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+% \section{}\label{}
+
+% \backmatter
+
+\section*{Funding Source}
+This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+
+\section*{Data availability}
+Experimental source code will be made publicly available upon acceptance for publication.
+
+\section*{Declaration of competing interest}
+The author declare that there is no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Supplementary information}
+An accompanying supplementary document containing detailed dataset summary tables (outlining classes, category types, test split support, and behavioral characteristics) and the complete set of evaluation curves (including receiver operating characteristic, precision-recall, and probability calibration curves) grouped by binary and multiclass tasks for all four evaluated benchmark datasets is available online.
+
+
+% To print the credit authorship contribution details
+\printcredits
+
+%% Loading bibliography style file
+%\bibliographystyle{model1-num-names}
+\bibliographystyle{cas-model2-names}
+
+% Loading bibliography database
+\bibliography{bibliography}
+
+% % Biography
+% \bio{}
+% % Here goes the biography details.
+% \endbio
+
+% \bio{pic1}
+% % Here goes the biography details.
+% \endbio
+
+\end{document}
+

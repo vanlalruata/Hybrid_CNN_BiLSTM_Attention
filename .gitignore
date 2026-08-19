@@ -69,12 +69,12 @@ instance/
 .scrapy
 
 #TeX Related
-*.tex
-*.cls
-*.sty
-*.bib
-*.bak
-*.bst
+# *.tex
+# *.cls
+# *.sty
+# *.bib
+# *.bak
+# *.bst
 *.eps
 *.csv
 

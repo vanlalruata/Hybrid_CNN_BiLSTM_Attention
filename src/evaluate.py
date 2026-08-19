@@ -550,3 +550,47 @@ def load_model_and_predict(
     if return_proba and len(y_proba_all):
         out["y_proba"] = np.concatenate(y_proba_all)
     return out
+
+
+def aggregate_seed_stats(
+    results_list: List[Dict],
+    outdir: str,
+    model_suffix: str
+) -> Dict:
+    """
+    Given a list of result dictionaries containing file paths of evaluated runs,
+    compute the mean and standard deviation of key metrics and save to seed_stats.json.
+    """
+    keys = ["accuracy", "macro_f1", "macro_precision", "macro_recall", "eval_total_sec", "energy_j"]
+    stats = {}
+    
+    extracted = {k: [] for k in keys}
+    for res in results_list:
+        # Load metrics json
+        m_path = res["metrics_json"]
+        with open(m_path, "r") as f:
+            m_data = json.load(f)
+        
+        # Load classification report csv
+        rep_csv = res["report_csv"]
+        rep_df = pd.read_csv(rep_csv, index_col=0)
+        
+        extracted["accuracy"].append(m_data.get("accuracy", 0.0))
+        extracted["macro_f1"].append(rep_df.loc["macro avg", "f1-score"])
+        extracted["macro_precision"].append(rep_df.loc["macro avg", "precision"])
+        extracted["macro_recall"].append(rep_df.loc["macro avg", "recall"])
+        extracted["eval_total_sec"].append(m_data.get("total_infer_sec", 0.0))
+        extracted["energy_j"].append(m_data.get("energy_j_proxy", 0.0))
+        
+    for k, vals in extracted.items():
+        v_arr = np.array(vals)
+        stats[f"{k}_mean"] = float(np.mean(v_arr))
+        stats[f"{k}_std"] = float(np.std(v_arr))
+        
+    # Write to seed_stats.json
+    out_path = os.path.join(outdir, f"seed_stats_{model_suffix}.json")
+    with open(out_path, "w") as f:
+        json.dump(stats, f, indent=2)
+        
+    print(f"[STATS] Seed statistics saved to {out_path}")
+    return stats

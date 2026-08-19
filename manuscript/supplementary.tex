@@ -1,0 +1,446 @@
+\documentclass[fleqn,11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+% Elsevier CAS style colors and hyperref setup
+\definecolor{citeblue}{RGB}{0,115,185}
+\hypersetup{
+    colorlinks=true,
+    citecolor=citeblue,
+    linkcolor=citeblue,
+    urlcolor=citeblue
+}
+
+% Headers and Footers styling
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Supplementary Material}
+\fancyhead[R]{\small\itshape Hnamte}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Section title formatting to match CAS
+\usepackage{sectsty}
+\sectionfont{\sffamily\large\bfseries\color{citeblue}}
+\subsectionfont{\sffamily\normalfont\bfseries}
+\subsubsectionfont{\sffamily\itshape}
+
+\title{\sffamily\bfseries\Large Supplementary Material to: \\ Hybrid CNN--BiLSTM--Attention Framework for Cross-Dataset DDoS Detection in IoT Networks with Explainable AI}
+\author{\sffamily\textbf{Vanlalruata Hnamte} \\ 
+\sffamily\small Department of Mathematics and Computer Science, Mizoram University, Aizawl, India \\
+\sffamily\small \texttt{vanlalruata.hnamte@gmail.com}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This supplementary document provides a complete set of experimental evaluation curves and performance analyses for the proposed hybrid CNN--BiLSTM--Attention framework. The main manuscript contains representative plots for readability, whereas this document compiles all receiver operating characteristic (ROC), precision-recall (PR), and probability calibration charts for the eight distinct runs (four datasets under both binary and multi-class settings).
+
+The benchmark datasets analyzed in this study are:
+\begin{enumerate}
+    \item \textbf{Apose-IoT-23}: 18 features, 16,598 test flows.
+    \item \textbf{BoT-IoT}: 29 features, 18,342,580 test flows.
+    \item \textbf{CIC-IoMT-2024}: 46 features, 2,158,647 test flows.
+    \item \textbf{CIC-IoT-2025}: 94 features, 171,418 test flows.
+\end{enumerate}
+
+For each dataset, we present:
+\begin{itemize}
+    \item \textbf{ROC and Precision-Recall (PR) Curves}: Evaluating classification quality under different decision thresholds and addressing class imbalance.
+    \item \textbf{Calibration Curves}: Showing the probabilistic reliability of model predictions.
+\end{itemize}
+
+All figures in this document are loaded from the dedicated \texttt{figures/} subdirectory to maintain a clean repository organisation. Detailed quantitative metrics (accuracy, precision, recall, F1-scores, training latency, and energy proxies) are already presented in a tabular format within the main manuscript (Tables 3, 5, 6, 7, and 8 of the main manuscript), and training/validation accuracy histories are illustrated in the main manuscript's learning curves.
+
+\newpage
+
+\section{Apose-IoT-23 Dataset Results}
+
+The Apose-IoT-23 dataset captures network flow patterns within a realistic IoT testbed under multiple DDoS attack scenarios. Table~\ref{tab:apose_dataset_summary} lists the distribution of classes, categories, test split support, and characteristics of the Apose-IoT-23 dataset.
+
+\begin{table}[htbp]
+\centering
+\caption{Class Distribution and Characteristics of the Apose-IoT-23 Dataset}
+\label{tab:apose_dataset_summary}
+\begin{tabular}{llrp{4cm}}
+\toprule
+\textbf{Class Label} & \textbf{Category Type} & \textbf{Test Support} & \textbf{Description} \\
+\midrule
+Benign & Normal Traffic & 7,108 & Standard network telemetry and IoT device signals. \\
+CandC & Command \& Control & 1,721 & Periodic outbound signaling to remote bot master. \\
+DDoS & Malicious Flood & 1,582 & Volumetric UDP/TCP flood traffic targeting local nodes. \\
+Okiru & Malware/Botnet & 1,732 & Host-compromising shellcode transfer and bot execution. \\
+PortScan & Reconnaissance & 4,455 & Systematic sequential probing of target ports. \\
+\midrule
+\textbf{Total} & -- & \textbf{16,598} & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Binary Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:apose_bin_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:apose_bin_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_binary_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:apose_bin_cal}
+\end{subfigure}
+\caption{Binary classification performance curves for the Apose-IoT-23 dataset.}
+\label{fig:apose_binary_perf}
+\end{figure}
+
+The binary classification results for Apose-IoT-23 demonstrate high predictive capability. As shown in the ROC curve (Figure~\ref{fig:apose_binary_perf}a), the model achieved a macro-average area under the ROC curve (ROC-AUC) of 99.925\%, confirming near-perfect class separation. This matches the overall accuracy of 99.313\% and F1-score of 99.298\% presented in Table 3 of the main manuscript.
+The precision-recall (PR) curve (Figure~\ref{fig:apose_binary_perf}b) indicates a macro-average area under the PR curve (PR-AUC) of 99.920\%, showing that the model maintains near-perfect precision even when the classification threshold is varied to achieve high recall, successfully addressing class imbalances.
+Furthermore, the calibration curve (Figure~\ref{fig:apose_binary_perf}c) is closely aligned with the ideal diagonal reference line ($y=x$), yielding a very low Brier score. This confirms that the model's confidence scores correspond to true empirical probabilities, making it reliable for risk-based network policy enforcement.
+
+\subsection{Multiclass Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_multiclass_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:apose_multi_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_multiclass_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:apose_multi_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Apose-IoT-23_multiclass_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:apose_multi_cal}
+\end{subfigure}
+\caption{Multiclass classification performance curves for the Apose-IoT-23 dataset.}
+\label{fig:apose_multiclass_perf}
+\end{figure}
+
+For the more challenging multiclass task (five classes), the proposed framework retains its robust performance. The macro ROC-AUC reaches 99.968\% (Figure~\ref{fig:apose_multiclass_perf}a), and the class-specific ROC-AUCs remain consistently above 99.90\%, as summarised in Table 3 of the main manuscript.
+The multiclass PR curves (Figure~\ref{fig:apose_multiclass_perf}b) exhibit a high macro-average PR-AUC (99.278\%), proving that the attention mechanism successfully highlights the distinct features of rare traffic subclasses (e.g., CandC and PortScan).
+The multiclass calibration curves (Figure~\ref{fig:apose_multiclass_perf}c) verify the reliability of predictions across all target classes. The class-specific probabilities map closely to the diagonal baseline, indicating well-calibrated predictions.
+
+\newpage
+
+\section{BoT-IoT Dataset Results}
+
+The BoT-IoT dataset consists of massive-scale botnet network flows. Table~\ref{tab:bot_dataset_summary} summarises the distribution of classes, categories, test split support, and characteristics of the BoT-IoT dataset.
+
+\begin{table}[htbp]
+\centering
+\caption{Class Distribution and Characteristics of the BoT-IoT Dataset}
+\label{tab:bot_dataset_summary}
+\begin{tabular}{llrp{4cm}}
+\toprule
+\textbf{Class Label} & \textbf{Category Type} & \textbf{Test Support} & \textbf{Description} \\
+\midrule
+Normal & Normal Traffic & 2,386 & Non-malicious host interactions and control sequences. \\
+TCP & DDoS-TCP & 7,965,873 & High-density TCP SYN flood targeting specific services. \\
+UDP & DDoS-UDP & 9,906,149 & High-volume UDP flood packet stream targeting ports. \\
+OS\_Fingerprint & Reconnaissance & 89,569 & Host OS scanning using nmap probe packets. \\
+Service\_Scan & Reconnaissance & 365,838 & Sweep port scans to identify active services. \\
+HTTP & DDoS-HTTP & 12,369 & Application-layer HTTP GET/POST flooding. \\
+Keylogging & Data Theft & 367 & Exfiltrated keystroke logs from compromised clients. \\
+Data\_Exfiltration & Data Theft & 29 & Malicious database extraction over FTP/HTTP. \\
+\midrule
+\textbf{Total} & -- & \textbf{18,342,580} & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Binary Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:bot_bin_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:bot_bin_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_binary_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:bot_bin_cal}
+\end{subfigure}
+\caption{Binary classification performance curves for the BoT-IoT dataset.}
+\label{fig:bot_binary_perf}
+\end{figure}
+
+The binary classification results for the BoT-IoT dataset demonstrated near-perfect performance. As shown in the ROC curve (Figure~\ref{fig:bot_binary_perf}a), the macro ROC-AUC reached 99.981\%, matching the 99.998\% classification accuracy and 95.155\% F1-score in Table 3 of the main manuscript.
+The PR curve (Figure~\ref{fig:bot_binary_perf}b) confirms the robustness of the model under severe class imbalance (where normal flows represent less than 0.1\% of the dataset), achieving a macro PR-AUC of 99.999\%.
+The calibration curve (Figure~\ref{fig:bot_binary_perf}c) is highly aligned with the diagonal reference, indicating that the model confidence scores are extremely reliable for automated incident response.
+
+\subsection{Multiclass Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_multiclass_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:bot_multi_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_multiclass_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:bot_multi_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoT-IoT_multiclass_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:bot_multi_cal}
+\end{subfigure}
+\caption{Multiclass classification performance curves for the BoT-IoT dataset.}
+\label{fig:bot_multiclass_perf}
+\end{figure}
+
+Under the multiclass configuration (8 classes), the proposed framework achieves a macro ROC-AUC of 99.734\% (Figure~\ref{fig:bot_multiclass_perf}a) and a macro F1-score of 68.949\% (see Table 3 of the main manuscript). The class-specific ROC-AUCs for dominant attacks (TCP, UDP, and Service Scan) are near 100\%, while minor classes (Keylogging and Data Exfiltration) also show high separability.
+The multiclass PR curves (Figure~\ref{fig:bot_multiclass_perf}b) demonstrate high precision across all thresholds for the majority of the categories. Some minor degradation in PR-AUC is observed for rare classes owing to extreme support scarcity (as shown in Table 5 of the main manuscript), but the overall macro PR-AUC remains high.
+The calibration curves (Figure~\ref{fig:bot_multiclass_perf}c) are tightly clustered along the diagonal, confirming that predicted probabilities represent real probability distributions.
+
+\newpage
+
+\section{CIC-IoMT-2024 Dataset Results}
+
+The CIC-IoMT-2024 dataset captures healthcare-specific IoMT device flow patterns under multiple attack states. Table~\ref{tab:iomt_dataset_summary} summarises the distribution of classes, categories, test split support, and characteristics of the CIC-IoMT-2024 dataset.
+
+\begin{table}[htbp]
+\centering
+\caption{Class Distribution and Characteristics of the CIC-IoMT-2024 Dataset}
+\label{tab:iomt_dataset_summary}
+\begin{tabular}{llrp{4cm}}
+\toprule
+\textbf{Class Label} & \textbf{Category Type} & \textbf{Test Support} & \textbf{Description} \\
+\midrule
+Benign & Normal Traffic & 44,497 & Clinical IoT signals (infusion pumps, monitors). \\
+ARP\_Spoofing & Spoofing Attack & 4,448 & Man-in-the-Middle link layer spoofing probes. \\
+MQTT-DDoS-Connect\_Flood & MQTT Flood & 53,738 & Volumetric connect requests targeting broker. \\
+MQTT-DDoS-Publish\_Flood & MQTT Flood & 9,010 & Volumetric publish requests targeting broker. \\
+MQTT-DoS-Connect\_Flood & MQTT Flood & 3,976 & Volumetric connect requests targeting broker. \\
+MQTT-DoS-Publish\_Flood & MQTT Flood & 7,975 & Volumetric publish requests targeting broker. \\
+MQTT-Malformed\_Data & Packet Anomaly & 1,719 & Invalid payload format targeting parsing scripts. \\
+Recon-OS\_Scan & Reconnaissance & 4,914 & Active OS identification scan traffic. \\
+Recon-Ping\_Sweep & Reconnaissance & 232 & Active host availability checking sweep. \\
+Recon-Port\_Scan & Reconnaissance & 10,314 & Active service port identification sweeps. \\
+Recon-VulScan & Reconnaissance & 785 & Vulnerability scanning scripts targeting IoT. \\
+TCP\_IP-DDoS-ICMP & Volumetric DDoS & 471,630 & ICMP Echo Request flood stream. \\
+TCP\_IP-DDoS-SYN & Volumetric DDoS & 243,586 & Volumetric TCP SYN packet floods. \\
+TCP\_IP-DDoS-TCP & Volumetric DDoS & 246,766 & General TCP flood traffic targeting host. \\
+TCP\_IP-DDoS-UDP & Volumetric DDoS & 499,506 & Volumetric UDP packet flooding. \\
+TCP\_IP-DoS-ICMP & Anomaly DoS & 128,681 & General ICMP DoS flood. \\
+TCP\_IP-DoS-SYN & Anomaly DoS & 135,124 & General TCP SYN DoS flood. \\
+TCP\_IP-DoS-TCP & Anomaly DoS & 115,620 & General TCP session DoS flood. \\
+TCP\_IP-DoS-UDP & Anomaly DoS & 176,126 & General UDP session DoS flood. \\
+\midrule
+\textbf{Total} & -- & \textbf{2,158,647} & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Binary Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:iomt_bin_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:iomt_bin_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_binary_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:iomt_bin_cal}
+\end{subfigure}
+\caption{Binary classification performance curves for the CIC-IoMT-2024 dataset.}
+\label{fig:iomt_binary_perf}
+\end{figure}
+
+The binary classification results for CIC-IoMT-2024 were excellent. As shown in the ROC curve (Figure~\ref{fig:iomt_binary_perf}a), the model achieved a macro ROC-AUC of 99.987\%, aligning with the 99.829\% overall accuracy and 97.915\% F1-score in Table 3 of the main manuscript.
+The PR curve (Figure~\ref{fig:iomt_binary_perf}b) indicates a macro PR-AUC of 99.985\%, demonstrating that the model maintains high precision even at high recall, successfully preventing false alerts that could trigger critical responses in healthcare networks.
+The calibration curve (Figure~\ref{fig:iomt_binary_perf}c) closely maps to the ideal diagonal, indicating that the predicted risk levels are statistically sound and well-calibrated.
+
+\subsection{Multiclass Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_multiclass_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:iomt_multi_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_multiclass_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:iomt_multi_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoMT-2024_multiclass_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:iomt_multi_cal}
+\end{subfigure}
+\caption{Multiclass classification performance curves for the CIC-IoMT-2024 dataset.}
+\label{fig:iomt_multiclass_perf}
+\end{figure}
+
+Under the complex multiclass task (19 classes), the model maintains robustness. The macro ROC-AUC reaches 99.951\% (Figure~\ref{fig:iomt_multiclass_perf}a), and class-specific ROC-AUCs remain consistently above 99.50\% across all categories.
+The multiclass PR curves (Figure~\ref{fig:iomt_multiclass_perf}b) exhibit high macro-average PR-AUC (99.182\%), proving that the attention-based feature selection dynamically prioritises critical indicators for low-frequency IoMT anomalies.
+The multiclass calibration curves (Figure~\ref{fig:iomt_multiclass_perf}c) are well-calibrated across all 19 medical and attack categories, indicating that the predicted probabilities represent accurate probabilistic risks.
+
+\newpage
+
+\section{CIC-IoT-2025 Dataset Results}
+
+The CIC-IoT-2025 dataset is a modern large-scale benchmark that contains diverse attacker behaviours and standard protocols. Table~\ref{tab:iot25_dataset_summary} lists the distribution of classes, categories, test split support, and characteristics of the CIC-IoT-2025 dataset.
+
+\begin{table}[htbp]
+\centering
+\caption{Class Distribution and Characteristics of the CIC-IoT-2025 Dataset}
+\label{tab:iot25_dataset_summary}
+\begin{tabular}{llrp{4cm}}
+\toprule
+\textbf{Class Label} & \textbf{Category Type} & \textbf{Test Support} & \textbf{Description} \\
+\midrule
+benign & Normal Traffic & 100,168 & Standard multiprotocol smart home IoT interactions. \\
+bruteforce & Access Attack & 1,504 & Dictionary and password guessing targeting services. \\
+ddos & Volumetric DDoS & 14,173 & Large-scale distributed botnet flood traffic. \\
+dos & Denial of Service & 14,434 & Single-source resource exhaustion attacks. \\
+malware & Malware Payload & 6,044 & Remote access Trojan and worm communication. \\
+mitm & Session Spoofing & 6,373 & ARP/DNS poisoning interception sessions. \\
+recon & Reconnaissance & 26,462 & Scanning and mapping active smart device clusters. \\
+web & Web Exploitation & 2,260 & SQL injection and XSS queries against IoT portals. \\
+\midrule
+\textbf{Total} & -- & \textbf{171,418} & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Binary Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:iot25_bin_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:iot25_bin_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_binary_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:iot25_bin_cal}
+\end{subfigure}
+\caption{Binary classification performance curves for the CIC-IoT-2025 dataset.}
+\label{fig:iot25_binary_perf}
+\end{figure}
+
+The binary classification results for the CIC-IoT-2025 dataset demonstrated a flawless performance. As shown in the ROC curve (Figure~\ref{fig:iot25_binary_perf}a), the macro ROC-AUC reached 100.000\%, matching the flawless 100.000\% classification accuracy and F1-score in Table 3 of the main manuscript.
+The PR curve (Figure~\ref{fig:iot25_binary_perf}b) achieved a macro PR-AUC of 100.000\%, indicating that the model achieved perfect precision and recall at all classification thresholds.
+The calibration curve (Figure~\ref{fig:iot25_binary_perf}c) lies perfectly along the ideal diagonal, proving that the model confidence scores correspond exactly to the empirical probability of the DDoS attacks.
+
+\subsection{Multiclass Classification Evaluation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_multiclass_roc_curve.eps}
+    \caption{ROC curve.}
+    \label{fig:iot25_multi_roc}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_multiclass_pr_curve.eps}
+    \caption{Precision-Recall curve.}
+    \label{fig:iot25_multi_pr}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/CIC-IoT-2025_multiclass_calibration_curve.eps}
+    \caption{Calibration curve.}
+    \label{fig:iot25_multi_cal}
+\end{subfigure}
+\caption{Multiclass classification performance curves for the CIC-IoT-2025 dataset.}
+\label{fig:iot25_multiclass_perf}
+\end{figure}
+
+For the multiclass task (8 classes), the framework achieves a macro ROC-AUC of 99.997\% (Figure~\ref{fig:iot25_multiclass_perf}a), with all class-specific ROC-AUCs reaching near-perfection.
+The multiclass PR curves (Figure~\ref{fig:iot25_multiclass_perf}b) display a high macro-average PR-AUC (99.994\%), confirming that the parallel spatial-temporal branches and self-attention mechanism effectively distinguish between highly similar DDoS subclasses.
+The calibration curves (Figure~\ref{fig:iot25_multiclass_perf}c) lie close to the diagonal baseline across all categories, validating that the predicted probability scores are statistically calibrated and reliable for automated incident triage.
+
+\newpage
+
+\section{Summary of Cross-Dataset Generalization}
+
+Cross-dataset testing was performed to evaluate the robustness of the model. The performance remained high when tested on unseen networks, demonstrating that feature harmonisation across different feature representations successfully enabled the model to retain a strong predictive capability.
+
+The minimal performance drop (typically within 1.5--4\%) is attributed to:
+\begin{itemize}
+    \item \textbf{Label Unification}: Standardizes heterogeneous threat classifications into a single binary or multiclass representation.
+    \item \textbf{Z-Score Normalization}: Standardizes disparate feature scaling and ranges across different networks.
+    \item \textbf{Attention Mechanism}: Dynamically weights features based on their relative importance in the current flow sequence, allowing the model to adapt to different network environments.
+\end{itemize}
+
+Overall, these supplementary results confirm the reliability, robustness, and generalisability of the proposed framework in heterogeneous IoT environments.
+
+\end{document}
