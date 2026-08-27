@@ -1,0 +1,17 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\checks\\best_ep20_fusion_seed43.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 2,
+  "class_names": [
+    "Attack",
+    "Benign"
+  ],
+  "accuracy": 0.9930491195551436,
+  "roc_auc_macro": 0.9975543385223866,
+  "samples": 4316,
+  "batches": 9,
+  "total_infer_sec": 0.03578199999174103,
+  "ms_per_batch": 3.9757777768601144,
+  "samples_per_sec": 120619.30582405096,
+  "energy_j_proxy": 4.293839999008924
+}

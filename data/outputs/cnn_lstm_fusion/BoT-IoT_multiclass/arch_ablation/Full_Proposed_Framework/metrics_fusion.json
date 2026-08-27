@@ -1,0 +1,23 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_multiclass\\arch_ablation\\cnn_lstm_fusion\\BoT-IoT_multiclass\\checks\\best_ep18_fusion_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 8,
+  "class_names": [
+    "Data_Exfiltration",
+    "HTTP",
+    "Keylogging",
+    "Normal",
+    "OS_Fingerprint",
+    "Service_Scan",
+    "TCP",
+    "UDP"
+  ],
+  "accuracy": 0.9977433333333333,
+  "roc_auc_macro": 0.9555016329776045,
+  "samples": 1500000,
+  "batches": 2930,
+  "total_infer_sec": 13.183541200007312,
+  "ms_per_batch": 4.499502116043452,
+  "samples_per_sec": 113778.23129943023,
+  "energy_j_proxy": 1582.0249440008774
+}

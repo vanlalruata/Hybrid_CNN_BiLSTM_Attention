@@ -1,0 +1,14 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\checks\\best_ep2_fusion_seed13.pt",
+  "model_name": "cnn_lstm_fusion",
+  "param_count": 172930,
+  "device": "cuda",
+  "power_watts_assumed": 120.0,
+  "eval_infer_total_sec": 12.870037300046533,
+  "eval_ms_per_batch": 4.3925041979681,
+  "eval_ms_per_sample": 0.00858002486669769,
+  "eval_samples_per_sec": 116549.77876362305,
+  "eval_energy_j_proxy": 1544.404476005584,
+  "batches": 2930,
+  "samples": 1500000
+}

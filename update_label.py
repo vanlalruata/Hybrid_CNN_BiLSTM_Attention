@@ -24,7 +24,7 @@ def update_labels_in_csv(directory_path):
 
                 # Check if 'Label' column exists
                 if 'Label' not in df.columns:
-                    print(f"⚠️ Skipping {filename}: No 'Label' column found.")
+                    print(f"Skipping {filename}: No 'Label' column found.")
                     continue
 
                 # Replace 'NeedManualLabel' with derived label
@@ -34,12 +34,12 @@ def update_labels_in_csv(directory_path):
                 df.to_csv(file_path, index=False)
 
                 processed_files.append(filename)
-                print(f"✅ Updated: {filename} → Label set to '{label_name}'")
+                print(f"Updated: {filename} → Label set to '{label_name}'")
 
             except Exception as e:
-                print(f"X Error processing {filename}: {e}")
+                print(f"Error processing {filename}: {e}")
 
-    print(f"\n🎯 Done! {len(processed_files)} files updated.")
+    print(f"\nDone! {len(processed_files)} files updated.")
     return processed_files
 
 
@@ -49,6 +49,6 @@ if __name__ == "__main__":
 
     updated_files = update_labels_in_csv(directory)
 
-    print("\n📄 Files processed:")
+    print("\nFiles processed:")
     for f in updated_files:
         print(" -", f)

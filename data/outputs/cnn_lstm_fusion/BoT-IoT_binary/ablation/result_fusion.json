@@ -1,0 +1,32 @@
+{
+  "dataset_key": "BoT-IoT_binary",
+  "subset": "user_selected",
+  "n_features": 12,
+  "kept_features": [
+    "dir",
+    "spkts",
+    "sbytes",
+    "pkts",
+    "bytes",
+    "dpkts",
+    "dbytes",
+    "sum",
+    "dur",
+    "dport",
+    "state",
+    "seq"
+  ],
+  "ckpt_path": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\ablation\\best_user_selected_12f.pt",
+  "history_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\ablation\\hist_user_selected_12f.csv",
+  "metrics": {
+    "task_type": "classification",
+    "train_time_s": 2562.981448400067,
+    "precision_macro": 0.9941433791288464,
+    "recall_macro": 0.9333326665799888,
+    "f1_macro": 0.961743966643712,
+    "accuracy": 0.9999813333333334,
+    "roc_auc_ovr_macro": 0.9999522262680474
+  },
+  "params": 168834,
+  "estimated_macs_per_forward": 68736
+}

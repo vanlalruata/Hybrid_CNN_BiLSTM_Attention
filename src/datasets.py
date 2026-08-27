@@ -27,7 +27,7 @@ LABEL_COLS = [
 ]
 
 
-def _read_csv_auto(path: str) -> pd.DataFrame:
+def _read_csv_auto(path: str, nrows: int = None) -> pd.DataFrame:
     """Read CSV with auto-detected delimiter (supports ',' and ';')."""
     with open(path, "r", encoding="utf-8", errors="ignore") as fh:
         sample = fh.read(8192)
@@ -37,7 +37,7 @@ def _read_csv_auto(path: str) -> pd.DataFrame:
         except Exception:
             # Fallback heuristic
             sep = ";" if sample.count(";") > sample.count(",") else ","
-    return pd.read_csv(path, sep=sep, low_memory=False)
+    return pd.read_csv(path, sep=sep, low_memory=False, nrows=nrows)
 
 
 def _find_label_column(df: pd.DataFrame, dataset_name: str = None):
@@ -82,7 +82,9 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
     common_features = None
     for f in files:
         try:
-            df = _read_csv_auto(f)
+            # If the file is extremely large (> 1 GB), load only a subset of rows to avoid memory overhead and long load times
+            nrows = 1000000 if os.path.getsize(f) > 1024 * 1024 * 1024 * 10 else None
+            df = _read_csv_auto(f, nrows=nrows)
 
             # Normalize/rename label column to 'Label' per file
             try:
@@ -195,6 +197,25 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
 
     # Drop exact duplicate rows in features
     df = df.drop_duplicates()
+
+    # Stratified downsampling if the dataset is too large to prevent extremely long training times
+    max_samples = 10000000
+    if len(df) > max_samples:
+        print(f"[INFO] Dataset has {len(df)} rows after removing duplicates. Downsampling to {max_samples} for efficiency.")
+        y_temp = y_raw.loc[df.index] if hasattr(y_raw, "loc") else np.array(y_raw)[:len(df)]
+        y_temp = pd.Series(y_temp).astype(str)
+        unique_labels, label_counts = np.unique(y_temp, return_counts=True)
+        if len(unique_labels) > 1 and np.min(label_counts) >= 2:
+            try:
+                _, df = train_test_split(
+                    df, test_size=max_samples, stratify=y_temp, random_state=42
+                )
+            except Exception as e:
+                print(f"[WARN] Stratified downsampling failed: {e}. Falling back to random sampling.")
+                df = df.sample(n=max_samples, random_state=42)
+        else:
+            df = df.sample(n=max_samples, random_state=42)
+
     features = df.columns.tolist()
     X = df.values
 
@@ -228,7 +249,7 @@ def load_and_prepare_dataset(dataset_name: str, class_type="binary"):
 
 def split_and_persist(
     dataset_name: str,
-    X, y, feature_names, y_encoder, scaler_placeholder,
+    X, y, feature_names, y_encoder, scaler,
     test_size=0.15, random_state=42,
     processed_root="data/processed",
     class_type: str = None

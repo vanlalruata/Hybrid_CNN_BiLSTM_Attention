@@ -1,0 +1,14 @@
+{
+  "accuracy_mean": 0.9761302770703095,
+  "accuracy_std": 0.00041791636101164246,
+  "macro_f1_mean": 0.9629195445791705,
+  "macro_f1_std": 0.0014021336255878427,
+  "macro_precision_mean": 0.9675954971866275,
+  "macro_precision_std": 0.0017853886777162065,
+  "macro_recall_mean": 0.9585603185495462,
+  "macro_recall_std": 0.0030062608365518345,
+  "eval_total_sec_mean": 0.6919709400041029,
+  "eval_total_sec_std": 0.08372083805401666,
+  "energy_j_mean": 83.03651280049235,
+  "energy_j_std": 10.046500566481999
+}

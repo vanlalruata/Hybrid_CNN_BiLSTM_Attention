@@ -1,0 +1,40 @@
+{
+  "dataset_key": "CIC-IoMT-2024_binary",
+  "subset": "user_selected",
+  "n_features": 20,
+  "kept_features": [
+    "rst_count",
+    "psh_flag_number",
+    "Variance",
+    "ack_flag_number",
+    "Max",
+    "Magnitue",
+    "Header_Length",
+    "HTTPS",
+    "Tot size",
+    "AVG",
+    "Std",
+    "Radius",
+    "Tot sum",
+    "Min",
+    "HTTP",
+    "ARP",
+    "IPv",
+    "LLC",
+    "Duration",
+    "TCP"
+  ],
+  "ckpt_path": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\ablation\\best_user_selected_20f.pt",
+  "history_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\ablation\\hist_user_selected_20f.csv",
+  "metrics": {
+    "task_type": "classification",
+    "train_time_s": 3797.1511388999643,
+    "precision_macro": 0.9745986722411693,
+    "recall_macro": 0.985226318215342,
+    "f1_macro": 0.9798509875855099,
+    "accuracy": 0.9983546802821828,
+    "roc_auc_ovr_macro": 0.9998798838657124
+  },
+  "params": 170882,
+  "estimated_macs_per_forward": 70784
+}

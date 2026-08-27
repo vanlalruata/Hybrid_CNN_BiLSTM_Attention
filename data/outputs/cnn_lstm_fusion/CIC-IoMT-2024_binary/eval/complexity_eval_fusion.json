@@ -1,14 +1,14 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\checks\\best_ep6_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
-  "param_count": 160770,
+  "param_count": 177282,
   "device": "cuda",
   "power_watts_assumed": 120.0,
-  "eval_infer_total_sec": 19.25384219999978,
-  "eval_ms_per_batch": 4.5657676547307995,
-  "eval_ms_per_sample": 0.008919402848172851,
-  "eval_samples_per_sec": 112115.12889619634,
-  "eval_energy_j_proxy": 2310.4610639999737,
-  "batches": 4217,
-  "samples": 2158647
+  "eval_infer_total_sec": 11.41887310007587,
+  "eval_ms_per_batch": 4.513388577105087,
+  "eval_ms_per_sample": 0.008816375911219034,
+  "eval_samples_per_sec": 113425.29062621725,
+  "eval_energy_j_proxy": 1370.2647720091045,
+  "batches": 2530,
+  "samples": 1295189
 }

@@ -1,0 +1,23 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\checks\\best_ep18_fusion_seed13.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 8,
+  "class_names": [
+    "benign",
+    "bruteforce",
+    "ddos",
+    "dos",
+    "malware",
+    "mitm",
+    "recon",
+    "web"
+  ],
+  "accuracy": 0.9760747086516941,
+  "roc_auc_macro": 0.9988856258354353,
+  "samples": 64785,
+  "batches": 127,
+  "total_infer_sec": 0.8391818000236526,
+  "ms_per_batch": 6.607730708847659,
+  "samples_per_sec": 77200.19666557832,
+  "energy_j_proxy": 100.70181600283831
+}

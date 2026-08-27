@@ -135,21 +135,28 @@ def _tight_eps(path: str):
 
 
 def plot_confusion(cm: np.ndarray, class_names: List[str], outdir: str, title: str = "Confusion Matrix", model_suffix: str = "model"):
-    plt.figure()
-    im = plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
-    plt.title(title)
-    plt.colorbar(im, fraction=0.046, pad=0.04)
-    ticks = np.arange(len(class_names))
-    plt.xticks(ticks, class_names, rotation=45, ha="right")
-    plt.yticks(ticks, class_names)
+    n = len(class_names)
+    # Scale figure: at least 7×6, grow by 0.6 inches per extra class beyond 5
+    fig_w = max(7, 4 + n * 0.8)
+    fig_h = max(6, 3.5 + n * 0.75)
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h))
+    im = ax.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
+    cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    cbar.ax.tick_params(labelsize=12)
+    ticks = np.arange(n)
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(class_names, rotation=45, ha="right", fontsize=13)
+    ax.set_yticks(ticks)
+    ax.set_yticklabels(class_names, fontsize=13)
+    ax.set_title(title, fontsize=15, fontweight="bold", pad=12)
+    ax.set_ylabel("True label", fontsize=14, labelpad=10)
+    ax.set_xlabel("Predicted label", fontsize=14, labelpad=10)
     thresh = cm.max() / 2.0 if cm.max() > 0 else 0.5
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
-            plt.text(j, i, format(cm[i, j], "d"),
-                     ha="center", va="center",
-                     color="white" if cm[i, j] > thresh else "black")
-    plt.ylabel("True label")
-    plt.xlabel("Predicted label")
+            ax.text(j, i, format(cm[i, j], "d"),
+                    ha="center", va="center", fontsize=13, fontweight="bold",
+                    color="white" if cm[i, j] > thresh else "black")
     _tight_eps(os.path.join(outdir, "plots", f"confusion_matrix_{model_suffix}.eps"))
 
 

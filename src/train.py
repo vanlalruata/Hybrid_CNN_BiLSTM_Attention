@@ -32,7 +32,7 @@ def train_experiment(
     model_name: str, dataset_key: str,
     out_root="outputs", epochs=50, batch_size=256,
     lr=1e-3, early_stop_patience=8, class_names=None,
-    seed=42
+    seed=42, cnn_only=False, lstm_only=False, no_gating=False
 ):
     """Train CNN+LSTM Fusion (or MLP) model on train split, validate on validation split, and save artifacts."""
 
@@ -45,9 +45,16 @@ def train_experiment(
     ensure_dir(ckpt_dir)
 
     if model_name.lower() in ["cnn_lstm_fusion", "fusion"]:
-        model = CNN_LSTM_Fusion(input_dim, num_classes)
+        model = CNN_LSTM_Fusion(input_dim, num_classes, cnn_only=cnn_only, lstm_only=lstm_only, no_gating=no_gating)
         model_readable = "Fusion (CNN+LSTM)"
-        model_suffix = "fusion"
+        if cnn_only:
+            model_suffix = "fusion_cnn_only"
+        elif lstm_only:
+            model_suffix = "fusion_lstm_only"
+        elif no_gating:
+            model_suffix = "fusion_no_gating"
+        else:
+            model_suffix = "fusion"
     else:
         model = SimpleMLP(input_dim, num_classes)
         model_readable = "DNN (baseline)"
@@ -154,7 +161,7 @@ def train_experiment(
                 "seed": seed
             }, ckpt_path)
             saved_ckpt_path = ckpt_path
-            print(f"[CHECKPOINT] Saved best model at epoch {ep} → {ckpt_path}", flush=True)
+            print(f"[CHECKPOINT] Saved best model at epoch {ep} -> {ckpt_path}", flush=True)
         else:
             patience -= 1
             if patience == 0:
@@ -166,12 +173,19 @@ def train_experiment(
     total_time = t1 - t0
 
     # Save learning curve
-    plt.figure()
-    plt.plot([h["epoch"] for h in hist], [h["train_loss"] for h in hist], label="Train")
-    plt.plot([h["epoch"] for h in hist], [h["val_loss"] for h in hist], label="Val")
-    plt.xlabel("Epochs"); plt.ylabel("Loss")
-    plt.title("Learning Curve")
-    plt.legend(); plt.tight_layout()
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot([h["epoch"] for h in hist], [h["train_loss"] for h in hist],
+            label="Train Loss", color="#1f77b4", linewidth=2.0)
+    ax.plot([h["epoch"] for h in hist], [h["val_loss"] for h in hist],
+            label="Validation Loss", color="#d62728", linewidth=2.0, linestyle="--")
+    ax.set_xlabel("Epoch", fontsize=14, labelpad=8)
+    ax.set_ylabel("Loss", fontsize=14, labelpad=8)
+    ax.set_title("Training and Validation Loss", fontsize=15, fontweight="bold", pad=12)
+    ax.tick_params(axis="both", labelsize=13)
+    ax.legend(fontsize=13, framealpha=0.85)
+    ax.grid(True, linestyle="--", alpha=0.6, linewidth=0.8)
+    ax.spines[["top", "right"]].set_visible(False)
+    plt.tight_layout()
     plt.savefig(os.path.join(outdir, f"learning_curve_{model_suffix}_seed{seed}.eps"), format="eps", dpi=200, transparent=False)
     plt.close()
 

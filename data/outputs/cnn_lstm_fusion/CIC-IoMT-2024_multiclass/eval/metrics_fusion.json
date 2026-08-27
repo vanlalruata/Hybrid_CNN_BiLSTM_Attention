@@ -1,5 +1,5 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\checks\\best_ep8_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
   "num_classes": 19,
   "class_names": [
@@ -23,12 +23,12 @@
     "TCP_IP-DoS-TCP",
     "TCP_IP-DoS-UDP"
   ],
-  "accuracy": 0.9924443412934121,
-  "roc_auc_macro": 0.9995106643853378,
-  "samples": 2158647,
-  "batches": 4217,
-  "total_infer_sec": 19.195587800000794,
-  "ms_per_batch": 4.551953474033862,
-  "samples_per_sec": 112455.37372916033,
-  "energy_j_proxy": 2303.4705360000953
+  "accuracy": 0.9922675377879213,
+  "roc_auc_macro": 0.9995411251184276,
+  "samples": 1295189,
+  "batches": 2530,
+  "total_infer_sec": 11.498113000066951,
+  "ms_per_batch": 4.5447086956786364,
+  "samples_per_sec": 112643.61378188389,
+  "energy_j_proxy": 1379.773560008034
 }

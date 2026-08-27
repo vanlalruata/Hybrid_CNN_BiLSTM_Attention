@@ -1,0 +1,11 @@
+{
+  "epochs_run": 15,
+  "train_total_sec": 2697.686526900041,
+  "ms_per_batch_est": 7.6170330972852796,
+  "power_watts_assumed": 120.0,
+  "energy_j_proxy": 323722.3832280049,
+  "device": "cuda",
+  "batch_size": 256,
+  "lr": 0.001,
+  "seed": 42
+}

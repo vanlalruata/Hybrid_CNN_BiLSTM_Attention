@@ -1,5 +1,5 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\checks\\best_ep9_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
   "num_classes": 5,
   "class_names": [
@@ -9,12 +9,12 @@
     "Okiru",
     "PortScan"
   ],
-  "accuracy": 0.9843957103265454,
-  "roc_auc_macro": 0.9996769583225259,
-  "samples": 16598,
-  "batches": 33,
-  "total_infer_sec": 0.339380399993388,
-  "ms_per_batch": 10.284254545254182,
-  "samples_per_sec": 48906.7724604113,
-  "energy_j_proxy": 40.72564799920656
+  "accuracy": 0.992354031510658,
+  "roc_auc_macro": 0.9935742582023327,
+  "samples": 4316,
+  "batches": 9,
+  "total_infer_sec": 0.1004692999413237,
+  "ms_per_batch": 11.163255549035966,
+  "samples_per_sec": 42958.39627150423,
+  "energy_j_proxy": 12.056315992958844
 }

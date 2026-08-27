@@ -1,17 +1,17 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\checks\\best_ep9_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
   "num_classes": 2,
   "class_names": [
     "Attack",
     "Benign"
   ],
-  "accuracy": 0.9931317026147729,
-  "roc_auc_macro": 0.9992549839211136,
-  "samples": 16598,
-  "batches": 33,
-  "total_infer_sec": 0.3405346999934409,
-  "ms_per_batch": 10.319233333134573,
-  "samples_per_sec": 48740.99467783958,
-  "energy_j_proxy": 40.864163999212906
+  "accuracy": 0.9951343836886005,
+  "roc_auc_macro": 0.998012574792075,
+  "samples": 4316,
+  "batches": 9,
+  "total_infer_sec": 0.10351469996385276,
+  "ms_per_batch": 11.501633329316974,
+  "samples_per_sec": 41694.56127011085,
+  "energy_j_proxy": 12.421763995662332
 }

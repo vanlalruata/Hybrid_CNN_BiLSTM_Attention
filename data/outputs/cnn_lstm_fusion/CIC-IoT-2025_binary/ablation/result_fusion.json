@@ -1,0 +1,40 @@
+{
+  "dataset_key": "CIC-IoT-2025_binary",
+  "subset": "user_selected",
+  "n_features": 20,
+  "kept_features": [
+    "network_mss_max",
+    "network_mss_avg",
+    "network_mss_min",
+    "network_time-delta_std_deviation",
+    "network_time-delta_avg",
+    "network_protocols_src",
+    "network_tcp-flags_min",
+    "network_ttl_avg",
+    "network_window-size_avg",
+    "log_data-types",
+    "network_window-size_std_deviation",
+    "log_data-types_count",
+    "network_interval-packets",
+    "network_ports_all_count",
+    "network_macs_src",
+    "network_ips_src",
+    "log_interval-messages",
+    "network_ip-flags_std_deviation",
+    "network_ports_src_count",
+    "network_time-delta_max"
+  ],
+  "ckpt_path": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\ablation\\best_user_selected_20f.pt",
+  "history_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\ablation\\hist_user_selected_20f.csv",
+  "metrics": {
+    "task_type": "classification",
+    "train_time_s": 274.201559200068,
+    "precision_macro": 0.9704144859593598,
+    "recall_macro": 0.9765736715628566,
+    "f1_macro": 0.9730074333832007,
+    "accuracy": 0.9735895654858377,
+    "roc_auc_ovr_macro": 0.9930870940965509
+  },
+  "params": 170882,
+  "estimated_macs_per_forward": 70784
+}

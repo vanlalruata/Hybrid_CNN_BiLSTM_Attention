@@ -15,8 +15,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import hsv_to_rgb
 
-from HLC.src.utils import ensure_dir
-from HLC.src.config import DIR_OUTPUTS
+try:
+    from HLC.src.utils import ensure_dir
+    from HLC.src.config import DIR_OUTPUTS
+except Exception:
+    from src.utils import ensure_dir
+    from src.config import DIR_OUTPUTS
 
 
 def _random_dark_colors(n: int):
@@ -151,3 +155,95 @@ def plot_dataset_overview(X, y, feature_names, outdir=None, max_features=20, cla
     }
     with open(os.path.join(outdir, "viz_guide.json"), "w") as f:
         json.dump(guide, f, indent=2)
+
+
+def plot_multiseed_learning_curves(split_key: str, metric_choice: str = "loss", outroot: str = None, model_folder: str = "cnn_lstm_fusion"):
+    """
+    Load history CSV files for seeds [13, 23, 33, 43, 53] for a given split_key.
+    Generate a multi-seed line chart (loss or accuracy curve) saved in EPS format.
+
+    - Distinct color per seed.
+    - Same color for train and val curves of the same seed.
+    - Solid line (-) for train, dashed line (--) for validation.
+    """
+    outroot = outroot or DIR_OUTPUTS
+    metric_choice = metric_choice.lower().strip()
+    if metric_choice not in ["loss", "accuracy", "acc"]:
+        raise ValueError(f"Invalid metric choice '{metric_choice}'. Must be 'loss' or 'accuracy'.")
+
+    is_acc = metric_choice in ["accuracy", "acc"]
+    metric_name = "Accuracy" if is_acc else "Loss"
+    train_col = "train_acc" if is_acc else "train_loss"
+    val_col = "val_acc" if is_acc else "val_loss"
+
+    # Search paths for history files
+    base_dir = os.path.join(outroot, model_folder, split_key)
+    if not os.path.exists(base_dir):
+        base_dir = os.path.join(outroot, split_key)
+
+    seeds = [13, 23, 33, 43, 53]
+    # Distinct curated color palette for seeds
+    seed_colors = {
+        13: "#1f77b4",  # Blue
+        23: "#ff7f0e",  # Orange
+        33: "#2ca02c",  # Green
+        43: "#d62728",  # Red
+        53: "#9467bd"   # Purple
+    }
+
+    found_data = False
+    plt.figure(figsize=(9, 6))
+
+    for s in seeds:
+        csv_candidates = [
+            os.path.join(base_dir, f"history_{model_folder}_seed{s}.csv"),
+            os.path.join(base_dir, f"history_fusion_seed{s}.csv"),
+            os.path.join(base_dir, f"history_seed{s}.csv"),
+            os.path.join(outroot, model_folder, split_key, f"history_fusion_seed{s}.csv")
+        ]
+        csv_path = None
+        for cand in csv_candidates:
+            if os.path.exists(cand):
+                csv_path = cand
+                break
+
+        if not csv_path or not os.path.exists(csv_path):
+            print(f"[WARN] History CSV for Seed {s} not found at {base_dir}")
+            continue
+
+        df_hist = pd.read_csv(csv_path)
+        if train_col not in df_hist.columns or val_col not in df_hist.columns:
+            print(f"[WARN] Columns {train_col}/{val_col} missing in {csv_path}")
+            continue
+
+        epochs = df_hist["epoch"].values if "epoch" in df_hist.columns else np.arange(1, len(df_hist) + 1)
+        train_vals = df_hist[train_col].values
+        val_vals = df_hist[val_col].values
+
+        color = seed_colors.get(s, "#333333")
+        plt.plot(epochs, train_vals, label=f"Seed {s} (Train)", color=color, linestyle="-", linewidth=1.0)
+        plt.plot(epochs, val_vals, label=f"Seed {s} (Val)", color=color, linestyle="--", linewidth=1.0)
+        found_data = True
+
+    if not found_data:
+        print(f"[ERROR] No seed history CSV data found for split '{split_key}'.")
+        plt.close()
+        return None
+
+    plt.xlabel("Epoch", fontsize=12, fontweight="bold")
+    plt.ylabel(f"Cross-Entropy {metric_name}" if not is_acc else "Accuracy", fontsize=14, fontweight="bold")
+    plt.title(f"Training & Validation {metric_name} Curves", fontsize=14, fontweight="bold")
+    # plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left", fontsize=12)
+    plt.legend(loc="upper right" if not is_acc else "lower right", fontsize=12)
+    plt.grid(True, linestyle=":", alpha=0.6)
+    plt.tight_layout()
+
+    outdir = os.path.join(base_dir, "plots")
+    ensure_dir(outdir)
+    out_eps = os.path.join(outdir, f"multi_seed_{'accuracy' if is_acc else 'loss'}_curve.eps")
+    plt.savefig(out_eps, format="eps", dpi=300, bbox_inches="tight")
+    plt.close()
+
+    print(f"[DONE] Multi-seed {metric_name} curve saved to: {out_eps}")
+    return out_eps
+

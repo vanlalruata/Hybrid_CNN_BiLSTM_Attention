@@ -1,5 +1,5 @@
 """
-Main Orchestrator CLI for IoT/IIoT IDS Experiments
+Main CLI for IoT/IIoT IDS Experiments
 Author: Dr. Vanlalruata Hnamte
 Version: 1.0
 
@@ -13,9 +13,11 @@ Features
    - Logs timing & estimated complexity proxies
 5) Evaluate (Confusion matrix, ROC-AUC, PR curves, metrics tables)
 6) XAI (SHAP, LIME, ANOVA)
-7) Ablation (user-selected feature subsets)
-8) Inference (load saved model & run on new/live data)
-9) Non-interactive subcommands with argparse (automation-friendly)
+7) Feature Ablation (user-selected feature subset)
+8) Architectural Ablation (CNN, BiLSTM, Fusion w/o Gating, Full)
+9) Evaluate (explicit)
+10) Inference (load_model → predict live CSV)
+q) Quit
 
 Notes
 -----
@@ -27,6 +29,11 @@ Notes
 
 import os
 import sys
+
+# Ensure parent of workspace root is in sys.path for HLC package imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import json
 import glob
 import argparse
@@ -55,13 +62,30 @@ try:
     from HLC.src.evaluate import evaluate_on_test                     # classification/regression entrypoint
     from HLC.src.inference import load_model, predict_live
     from HLC.src.xai import run_xai                                   # shap/lime/anova
-    from HLC.src.ablation import run_ablation_user_selected           # ablation on a given feature subset
-    from HLC.src.viz import plot_dataset_overview                     # saves EPS figs for distributions/heatmaps
+    from HLC.src.ablation import run_ablation_user_selected, run_architectural_ablation  # ablation functions
+    from HLC.src.viz import plot_dataset_overview, plot_multiseed_learning_curves # saves EPS figs for distributions/heatmaps / multiseed curves
     from HLC.src.utils import set_all_seeds, ensure_dir
     from HLC.src.config import DIR_OUTPUTS as CFG_OUTPUTS, DIR_PROCESSED as CFG_PROCESSED
 except Exception as e:
-    print("[ERROR] Ensure you have all required src modules. Import failed:", e)
-    sys.exit(1)
+    try:
+        from src.datasets import (
+            AVAILABLE_DATASETS,
+            load_and_prepare_dataset,
+            split_and_persist,
+            load_processed_split
+        )
+        from src.models import CNN_LSTM_Fusion, SimpleMLP
+        from src.train import train_experiment
+        from src.evaluate import evaluate_on_test
+        from src.inference import load_model, predict_live
+        from src.xai import run_xai
+        from src.ablation import run_ablation_user_selected, run_architectural_ablation
+        from src.viz import plot_dataset_overview, plot_multiseed_learning_curves
+        from src.utils import set_all_seeds, ensure_dir
+        from src.config import DIR_OUTPUTS as CFG_OUTPUTS, DIR_PROCESSED as CFG_PROCESSED
+    except Exception as e2:
+        print("[ERROR] Ensure you have all required src modules. Import failed:", e2)
+        sys.exit(1)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 POWER_WATTS = float(os.environ.get("POWER_WATTS", "120"))
@@ -506,11 +530,34 @@ def opt_ablation():
     return 0
 
 # ---------------------------------------------------------------------
-# Option 8: Evaluate (explicit)
+# Option 8: Architectural Ablation (CNN, BiLSTM, Fusion w/o Gating, Full)
+# ---------------------------------------------------------------------
+
+def opt_arch_ablation():
+    print("\n[8] Architectural Ablation Study (CNN, BiLSTM, Fusion w/o Gating, Full Proposed Model)")
+    splits = list_processed_splits()
+    if not splits:
+        print("[WARN] No processed splits found. Please run Option 1 first.")
+        return 0
+    print("Available splits:", splits)
+    key = _prompt("Split key:")
+    bundle = load_processed_split(key, processed_root=f"{DEFAULT_DATAROOT}/processed")
+    Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+
+    outdir = os.path.join(DEFAULT_OUTROOT, "cnn_lstm_fusion", key, "arch_ablation")
+    run_architectural_ablation(
+        X_train=Xtr, y_train=ytr, X_val=Xval, y_val=yval, X_test=Xte, y_test=yte,
+        dataset_key=key, outdir=outdir, class_names=meta.get("class_names")
+    )
+    print(f"[DONE] Architectural ablation results saved to {outdir}")
+    return 0
+
+# ---------------------------------------------------------------------
+# Option 9: Evaluate (explicit)
 # ---------------------------------------------------------------------
 
 def opt_evaluate():
-    print("\n[8] Evaluate (explicit)")
+    print("\n[9] Evaluate (explicit)")
     splits = list_processed_splits()
     if not splits:
         print("[WARN] No processed splits found.")
@@ -538,11 +585,11 @@ def opt_evaluate():
     return 0
 
 # ---------------------------------------------------------------------
-# Option 9: Inference (live/new data)
+# Option 10: Inference (live/new data)
 # ---------------------------------------------------------------------
 
 def opt_inference():
-    print("\n[9] Inference on new/live data")
+    print("\n[10] Inference on new/live data")
     splits = list_processed_splits()
     if not splits:
         print("[WARN] No processed splits found.")
@@ -597,6 +644,25 @@ def opt_inference():
     return 0
 
 # ---------------------------------------------------------------------
+# Option 11: Generate Multi-Seed Learning Curves (Loss / Accuracy)
+# ---------------------------------------------------------------------
+
+def opt_generate_visual_chart():
+    print("\n[11] Generate Multi-Seed Learning Curves (Loss / Accuracy)")
+    splits = list_processed_splits()
+    if not splits:
+        print("[WARN] No processed splits found. Please run Option 1 first.")
+        return 0
+    print("Available splits:", splits)
+    key = _prompt("Split key:")
+    metric_choice = _prompt("Which curve? (loss / accuracy)", default="loss", choices=["loss", "accuracy", "acc"])
+    
+    out_eps = plot_multiseed_learning_curves(key, metric_choice=metric_choice)
+    if out_eps:
+        print(f"[DONE] Multi-seed {metric_choice} curve generated: {out_eps}")
+    return 0
+
+# ---------------------------------------------------------------------
 # Interactive menu
 # ---------------------------------------------------------------------
 
@@ -608,9 +674,11 @@ MENU = """
 (4) Train model (save ckpt + curves + history CSV)
 (5) Evaluate & plot performance (EPS + CSV/JSON)
 (6) XAI (SHAP/LIME/ANOVA)
-(7) Ablation (user-selected feature subset)
-(8) Evaluate (explicit)
-(9) Inference (load_model → predict live CSV)
+(7) Feature Ablation (user-selected feature subset)
+(8) Architectural Ablation (CNN, BiLSTM, Fusion w/o Gating, Full)
+(9) Evaluate (explicit)
+(10) Inference (load_model → predict live CSV)
+(11) Generate multi-seed learning curves (Loss / Accuracy)
 (q) Quit
 ============================================================
 """
@@ -626,11 +694,13 @@ def interactive_menu():
         elif choice == "5": opt_plot_performance()
         elif choice == "6": opt_xai()
         elif choice == "7": opt_ablation()
-        elif choice == "8": opt_evaluate()
-        elif choice == "9": opt_inference()
+        elif choice == "8": opt_arch_ablation()
+        elif choice == "9": opt_evaluate()
+        elif choice == "10": opt_inference()
+        elif choice == "11": opt_generate_visual_chart()
         elif choice in ["q","quit","exit"]: break
         else:
-            print("Unknown option. Please choose 1-9 or q.")
+            print("Unknown option. Please choose 1-11 or q.")
 
 # ---------------------------------------------------------------------
 # Argparse subcommands (automation)
@@ -677,12 +747,22 @@ def build_argparser():
     pa.add_argument("--split_key", required=True)
     pa.add_argument("--keep_feats", required=True, help="Comma-separated feature names to keep")
 
+    # architectural ablation
+    paa = sub.add_parser("arch-ablate", help="Architectural component ablation (CNN, BiLSTM, Fusion w/o Gating, Full)")
+    paa.add_argument("--split_key", required=True)
+
     # inference
     pi = sub.add_parser("infer", help="Run inference on new/live CSV")
     pi.add_argument("--split_key", required=True)
     pi.add_argument("--csv", required=True)
 
+    # multi-seed curves
+    pc = sub.add_parser("curves", help="Generate multi-seed learning curves (Loss / Accuracy)")
+    pc.add_argument("--split_key", required=True)
+    pc.add_argument("--metric", default="loss", choices=["loss", "accuracy", "acc"])
+
     return p
+
 
 
 def main():
@@ -792,6 +872,16 @@ def main():
         )
         print(f"[DONE] {outdir}")
 
+    elif args.cmd == "arch-ablate":
+        bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
+        Xtr, ytr, Xval, yval, Xte, yte, meta = bundle["X_train"], bundle["y_train"], bundle["X_val"], bundle["y_val"], bundle["X_test"], bundle["y_test"], bundle["meta"]
+        outdir = os.path.join(DEFAULT_OUTROOT, "cnn_lstm_fusion", args.split_key, "arch_ablation")
+        run_architectural_ablation(
+            X_train=Xtr, y_train=ytr, X_val=Xval, y_val=yval, X_test=Xte, y_test=yte,
+            dataset_key=args.split_key, outdir=outdir, class_names=meta.get("class_names")
+        )
+        print(f"[DONE] {outdir}")
+
     elif args.cmd == "infer":
         bundle = load_processed_split(args.split_key, processed_root=f"{DEFAULT_DATAROOT}/processed")
         meta = bundle["meta"]
@@ -812,6 +902,11 @@ def main():
         with open(os.path.join(outdir, "inference_meta.json"), "w") as f:
             json.dump({"infer_time_s": result["infer_time_s"], "energy_j_proxy": result["energy_j_proxy"]}, f, indent=2)
         print(f"[DONE] {outdir}")
+
+    elif args.cmd == "curves":
+        out_eps = plot_multiseed_learning_curves(args.split_key, metric_choice=args.metric)
+        if out_eps:
+            print(f"[DONE] {out_eps}")
 
     else:
         parser.print_help()

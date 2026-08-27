@@ -1,0 +1,25 @@
+{
+  "dataset_key": "Apose-IoT-23_binary",
+  "subset": "user_selected",
+  "n_features": 5,
+  "kept_features": [
+    "id.resp_p",
+    "history",
+    "proto",
+    "service",
+    "id.orig_p"
+  ],
+  "ckpt_path": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\ablation\\best_user_selected_5f.pt",
+  "history_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\ablation\\hist_user_selected_5f.csv",
+  "metrics": {
+    "task_type": "classification",
+    "train_time_s": 22.713995900005102,
+    "precision_macro": 0.9946290264801676,
+    "recall_macro": 0.9935397724704906,
+    "f1_macro": 0.9940827088141589,
+    "accuracy": 0.995366079703429,
+    "roc_auc_ovr_macro": 0.997895482140974
+  },
+  "params": 167042,
+  "estimated_macs_per_forward": 66944
+}

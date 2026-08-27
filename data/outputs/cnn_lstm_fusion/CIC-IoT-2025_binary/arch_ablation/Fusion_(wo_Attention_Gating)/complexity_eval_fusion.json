@@ -1,0 +1,14 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\arch_ablation\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\checks\\best_ep18_fusion_no_gating_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "param_count": 187266,
+  "device": "cuda",
+  "power_watts_assumed": 120.0,
+  "eval_infer_total_sec": 0.8350963999982923,
+  "eval_ms_per_batch": 6.575562204710963,
+  "eval_ms_per_sample": 0.01289027398314876,
+  "eval_samples_per_sec": 77577.87005204726,
+  "eval_energy_j_proxy": 100.21156799979508,
+  "batches": 127,
+  "samples": 64785
+}

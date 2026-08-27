@@ -1,13 +1,13 @@
 {
-  "params": 161875,
-  "est_macs_per_sample": 173376,
-  "measured_infer_total_sec": 25.930987799998547,
-  "measured_ms_per_batch": 1.5375622769047463,
-  "measured_ms_per_sample": 0.012012611510820689,
-  "measured_samples_per_sec": 83245.84534338953,
-  "measured_energy_j_proxy": 3111.7185359998257,
-  "measured_batches": 16865,
-  "measured_samples": 2158647,
-  "val_detect_total_sec": 25.930987799998547,
-  "val_detect_ms_per_sample": 0.012012611510820689
+  "params": 178387,
+  "est_macs_per_sample": 206144,
+  "measured_infer_total_sec": 15.91648419998819,
+  "measured_ms_per_batch": 1.5729305464955223,
+  "measured_ms_per_sample": 0.012288927870749512,
+  "measured_samples_per_sec": 81374.06375215457,
+  "measured_energy_j_proxy": 1909.9781039985828,
+  "measured_batches": 10119,
+  "measured_samples": 1295189,
+  "val_detect_total_sec": 15.91648419998819,
+  "val_detect_ms_per_sample": 0.012288927870749512
 }

@@ -1,0 +1,14 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_binary\\arch_ablation\\cnn_lstm_fusion\\Apose-IoT-23_binary\\checks\\best_ep20_fusion_no_gating_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "param_count": 169858,
+  "device": "cuda",
+  "power_watts_assumed": 120.0,
+  "eval_infer_total_sec": 0.03650240006390959,
+  "eval_ms_per_batch": 4.0558222293232875,
+  "eval_ms_per_sample": 0.008457460626485077,
+  "eval_samples_per_sec": 118238.80052937359,
+  "eval_energy_j_proxy": 4.380288007669151,
+  "batches": 9,
+  "samples": 4316
+}

@@ -191,8 +191,16 @@ def run_xai(
         else:
             te_plot = te
 
-        shap.summary_plot(vals_2d, features=te_plot, feature_names=feature_names_plot, show=False)
+        # Boost font size before SHAP draws into the current figure
+        plt.rcParams.update({"font.size": 14, "axes.titlesize": 15, "axes.labelsize": 14, "xtick.labelsize": 13, "ytick.labelsize": 13})
+        shap.summary_plot(vals_2d, features=te_plot, feature_names=feature_names_plot,
+                          show=False, plot_size=(12, 7))
+        # Ensure the active figure has the enlarged size
+        fig = plt.gcf()
+        fig.set_size_inches(12, 7)
         _safe_save_plot(os.path.join(outdir, f"shap_summary_{model_suffix}.eps"))
+        # Reset rcParams to defaults so subsequent plots are not affected
+        plt.rcParams.update(plt.rcParamsDefault)
 
         shap_mean = np.abs(vals_2d).mean(axis=0)
         shap_scores = pd.DataFrame({"feature": feature_names_plot, "importance": shap_mean}).sort_values("importance", ascending=False)
@@ -212,6 +220,16 @@ def run_xai(
         instance = _coerce_feature_dim_np(np.asarray(X_test[0], dtype=np.float32), expected_dim)
         lime_exp = lime_explainer.explain_instance(instance, predict_fn, num_features=min(10, len(feature_names)))
         fig = lime_exp.as_pyplot_figure()
+        # Resize and increase all font sizes on the returned LIME figure
+        fig.set_size_inches(12, 7)
+        for ax in fig.get_axes():
+            ax.title.set_fontsize(15)
+            ax.xaxis.label.set_fontsize(14)
+            ax.yaxis.label.set_fontsize(14)
+            ax.tick_params(axis="both", labelsize=13)
+            for item in ax.get_xticklabels() + ax.get_yticklabels():
+                item.set_fontsize(13)
+        fig.subplots_adjust(left=0.35, bottom=0.12, right=0.95, top=0.92)
         _safe_save_plot(os.path.join(outdir, f"lime_example_{model_suffix}.eps"))
         lime_scores = pd.DataFrame(lime_exp.as_list(), columns=["feature", "weight"])
         lime_scores.to_csv(os.path.join(outdir, f"lime_feature_importance_{model_suffix}.csv"), index=False)
@@ -244,10 +262,21 @@ def run_xai(
         anova_scores = pd.DataFrame({"feature": feature_names_anova, "f_score": f_vals}).sort_values("f_score", ascending=False)
         anova_scores.to_csv(os.path.join(outdir, f"anova_feature_importance_{model_suffix}.csv"), index=False)
 
-        plt.figure(figsize=(8, 5))
-        plt.barh(anova_scores["feature"].head(20), anova_scores["f_score"].head(20))
-        plt.title("Top 20 Features by ANOVA F-score")
-        plt.gca().invert_yaxis()
+        top20 = anova_scores.head(20).reset_index(drop=True)
+        n_bars = len(top20)
+        # Dark-to-light green gradient: index 0 (highest F-score) = darkest, last = lightest
+        # Greens colormap: 0.95 = very dark green, 0.35 = light green
+        bar_colors = [plt.cm.Greens(0.95 - 0.60 * (i / max(n_bars - 1, 1))) for i in range(n_bars)]
+        fig, ax = plt.subplots(figsize=(11, 8))
+        bars = ax.barh(top20["feature"], top20["f_score"], color=bar_colors, edgecolor="white", linewidth=0.4)
+        ax.set_title("Top 20 Features by ANOVA F-statistic", fontsize=15, fontweight="bold", pad=12)
+        ax.set_xlabel("F-statistic Score", fontsize=14, labelpad=8)
+        ax.set_ylabel("Feature", fontsize=14, labelpad=8)
+        ax.tick_params(axis="both", labelsize=13)
+        ax.invert_yaxis()  # highest score at top
+        ax.grid(axis="x", linestyle="--", alpha=0.5, linewidth=0.8)
+        ax.spines[["top", "right"]].set_visible(False)
+        plt.tight_layout()
         _safe_save_plot(os.path.join(outdir, f"anova_top20_{model_suffix}.eps"))
 
     # -------------------------

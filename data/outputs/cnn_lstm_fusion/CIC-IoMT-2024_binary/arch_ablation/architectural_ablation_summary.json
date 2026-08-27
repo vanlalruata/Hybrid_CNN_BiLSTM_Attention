@@ -1,0 +1,66 @@
+{
+  "CNN Branch Only": {
+    "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\CNN_Branch_Only\\metrics_fusion.json",
+    "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\CNN_Branch_Only\\complexity_eval_fusion.json",
+    "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\CNN_Branch_Only\\predictions_fusion.csv",
+    "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\CNN_Branch_Only\\classification_report_fusion.csv",
+    "confusion_matrix": [
+      [
+        1267000,
+        1491
+      ],
+      [
+        612,
+        26086
+      ]
+    ]
+  },
+  "BiLSTM Branch Only": {
+    "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\BiLSTM_Branch_Only\\metrics_fusion.json",
+    "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\BiLSTM_Branch_Only\\complexity_eval_fusion.json",
+    "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\BiLSTM_Branch_Only\\predictions_fusion.csv",
+    "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\BiLSTM_Branch_Only\\classification_report_fusion.csv",
+    "confusion_matrix": [
+      [
+        1267107,
+        1384
+      ],
+      [
+        740,
+        25958
+      ]
+    ]
+  },
+  "Fusion (w/o Attention Gating)": {
+    "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Fusion_(w/o_Attention_Gating)\\metrics_fusion.json",
+    "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Fusion_(w/o_Attention_Gating)\\complexity_eval_fusion.json",
+    "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Fusion_(w/o_Attention_Gating)\\predictions_fusion.csv",
+    "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Fusion_(w/o_Attention_Gating)\\classification_report_fusion.csv",
+    "confusion_matrix": [
+      [
+        17,
+        1268474
+      ],
+      [
+        0,
+        26698
+      ]
+    ]
+  },
+  "Full Proposed Framework": {
+    "metrics_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Full_Proposed_Framework\\metrics_fusion.json",
+    "complexity_eval_json": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Full_Proposed_Framework\\complexity_eval_fusion.json",
+    "predictions_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Full_Proposed_Framework\\predictions_fusion.csv",
+    "report_csv": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\arch_ablation\\Full_Proposed_Framework\\classification_report_fusion.csv",
+    "confusion_matrix": [
+      [
+        1267201,
+        1290
+      ],
+      [
+        866,
+        25832
+      ]
+    ]
+  }
+}

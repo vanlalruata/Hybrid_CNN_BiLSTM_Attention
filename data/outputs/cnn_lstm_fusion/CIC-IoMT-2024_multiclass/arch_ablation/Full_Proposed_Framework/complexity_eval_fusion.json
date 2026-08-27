@@ -1,0 +1,14 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\arch_ablation\\cnn_lstm_fusion\\CIC-IoMT-2024_multiclass\\checks\\best_ep7_fusion_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "param_count": 178387,
+  "device": "cuda",
+  "power_watts_assumed": 120.0,
+  "eval_infer_total_sec": 11.387486599967815,
+  "eval_ms_per_batch": 4.500982845837081,
+  "eval_ms_per_sample": 0.008792142768327878,
+  "eval_samples_per_sec": 113737.91649543286,
+  "eval_energy_j_proxy": 1366.4983919961378,
+  "batches": 2530,
+  "samples": 1295189
+}

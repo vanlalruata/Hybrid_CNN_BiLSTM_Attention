@@ -77,6 +77,7 @@ instance/
 # *.bst
 *.eps
 *.csv
+*.pdf
 
 # Sphinx documentation
 docs/_build/

@@ -1,0 +1,17 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\arch_ablation\\cnn_lstm_fusion\\BoT-IoT_binary\\checks\\best_ep11_fusion_lstm_only_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 2,
+  "class_names": [
+    "Attack",
+    "Benign"
+  ],
+  "accuracy": 0.9999813333333334,
+  "roc_auc_macro": 0.9998373395379007,
+  "samples": 1500000,
+  "batches": 2930,
+  "total_infer_sec": 13.147479900042526,
+  "ms_per_batch": 4.487194505133968,
+  "samples_per_sec": 114090.30562542622,
+  "energy_j_proxy": 1577.6975880051032
+}

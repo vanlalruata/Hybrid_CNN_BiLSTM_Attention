@@ -1,0 +1,20 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\arch_ablation\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\checks\\best_ep17_fusion_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 5,
+  "class_names": [
+    "Benign",
+    "CandC",
+    "DDoS",
+    "Okiru",
+    "PortScan"
+  ],
+  "accuracy": 0.9863299351251158,
+  "roc_auc_macro": 0.9918030266900686,
+  "samples": 4316,
+  "batches": 9,
+  "total_infer_sec": 0.04420829995069653,
+  "ms_per_batch": 4.91203332785517,
+  "samples_per_sec": 97628.72593638378,
+  "energy_j_proxy": 5.304995994083583
+}

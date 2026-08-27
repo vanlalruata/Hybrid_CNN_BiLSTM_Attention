@@ -1,14 +1,14 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\checks\\best_ep6_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
-  "param_count": 173448,
+  "param_count": 187656,
   "device": "cuda",
   "power_watts_assumed": 120.0,
-  "eval_infer_total_sec": 1.9235673999999108,
-  "eval_ms_per_batch": 5.741992238805704,
-  "eval_ms_per_sample": 0.011221501825945413,
-  "eval_samples_per_sec": 89114.6314914715,
-  "eval_energy_j_proxy": 230.8280879999893,
-  "batches": 335,
-  "samples": 171418
+  "eval_infer_total_sec": 0.9901330000720918,
+  "eval_ms_per_batch": 7.796322835213322,
+  "eval_ms_per_sample": 0.015283368064707753,
+  "eval_samples_per_sec": 65430.60376260865,
+  "eval_energy_j_proxy": 118.81596000865102,
+  "batches": 127,
+  "samples": 64785
 }

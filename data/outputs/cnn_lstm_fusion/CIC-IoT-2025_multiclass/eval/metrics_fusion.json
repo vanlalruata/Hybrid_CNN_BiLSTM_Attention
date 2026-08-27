@@ -1,5 +1,5 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\checks\\best_ep6_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_multiclass\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
   "num_classes": 8,
   "class_names": [
@@ -12,12 +12,12 @@
     "recon",
     "web"
   ],
-  "accuracy": 0.9999708315346113,
-  "roc_auc_macro": 0.9999999970926674,
-  "samples": 171418,
-  "batches": 335,
-  "total_infer_sec": 1.9235673999999108,
-  "ms_per_batch": 5.741992238805704,
-  "samples_per_sec": 89114.6314914715,
-  "energy_j_proxy": 230.8280879999893
+  "accuracy": 0.9757351238712665,
+  "roc_auc_macro": 0.9988667593137617,
+  "samples": 64785,
+  "batches": 127,
+  "total_infer_sec": 0.9901330000720918,
+  "ms_per_batch": 7.796322835213322,
+  "samples_per_sec": 65430.60376260865,
+  "energy_j_proxy": 118.81596000865102
 }

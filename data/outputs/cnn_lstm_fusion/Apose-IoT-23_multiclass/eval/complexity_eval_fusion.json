@@ -1,14 +1,14 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\checks\\best_ep9_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\Apose-IoT-23_multiclass\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
-  "param_count": 153797,
+  "param_count": 170053,
   "device": "cuda",
   "power_watts_assumed": 120.0,
-  "eval_infer_total_sec": 0.339380399993388,
-  "eval_ms_per_batch": 10.284254545254182,
-  "eval_ms_per_sample": 0.020447065911157247,
-  "eval_samples_per_sec": 48906.7724604113,
-  "eval_energy_j_proxy": 40.72564799920656,
-  "batches": 33,
-  "samples": 16598
+  "eval_infer_total_sec": 0.1004692999413237,
+  "eval_ms_per_batch": 11.163255549035966,
+  "eval_ms_per_sample": 0.023278336409018465,
+  "eval_samples_per_sec": 42958.39627150423,
+  "eval_energy_j_proxy": 12.056315992958844,
+  "batches": 9,
+  "samples": 4316
 }

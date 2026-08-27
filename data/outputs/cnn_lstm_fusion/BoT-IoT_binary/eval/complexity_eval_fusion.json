@@ -1,14 +1,14 @@
 {
-  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\checks\\best_ep6_fusion.pt",
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\BoT-IoT_binary\\checks\\best_fusion.pt",
   "model_name": "cnn_lstm_fusion",
-  "param_count": 156418,
+  "param_count": 172930,
   "device": "cuda",
   "power_watts_assumed": 120.0,
-  "eval_infer_total_sec": 169.14643710000382,
-  "eval_ms_per_batch": 4.721331912577565,
-  "eval_ms_per_sample": 0.009221518297862342,
-  "eval_samples_per_sec": 108442.01222610078,
-  "eval_energy_j_proxy": 20297.57245200046,
-  "batches": 35826,
-  "samples": 18342580
+  "eval_infer_total_sec": 13.571458699996583,
+  "eval_ms_per_batch": 4.631897167234329,
+  "eval_ms_per_sample": 0.009047639133331056,
+  "eval_samples_per_sec": 110526.07042162518,
+  "eval_energy_j_proxy": 1628.57504399959,
+  "batches": 2930,
+  "samples": 1500000
 }

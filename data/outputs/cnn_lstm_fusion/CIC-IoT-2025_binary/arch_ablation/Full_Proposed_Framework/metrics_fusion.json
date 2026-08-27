@@ -1,0 +1,17 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\arch_ablation\\cnn_lstm_fusion\\CIC-IoT-2025_binary\\checks\\best_ep17_fusion_seed42.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 2,
+  "class_names": [
+    "Attack",
+    "Benign"
+  ],
+  "accuracy": 0.9866327081886239,
+  "roc_auc_macro": 0.9983435889557664,
+  "samples": 64785,
+  "batches": 127,
+  "total_infer_sec": 0.8181711999932304,
+  "ms_per_batch": 6.442292913332523,
+  "samples_per_sec": 79182.69428273207,
+  "energy_j_proxy": 98.18054399918765
+}

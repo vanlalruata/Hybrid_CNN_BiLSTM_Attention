@@ -558,3 +558,70 @@ def run_ablation_user_selected(
     df.to_csv(os.path.join(outdir, f"ablation_user_selected_{model_suffix}.csv"), index=False)
 
     return summary
+
+
+# -----------------------------------------------------------------------------
+# Architectural Ablation Function: CNN vs BiLSTM vs Gating vs Full Fusion
+# -----------------------------------------------------------------------------
+def run_architectural_ablation(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    dataset_key: str,
+    outdir: str,
+    class_names: Optional[List[str]] = None,
+    epochs: int = 20,
+    batch_size: int = 256,
+    lr: float = 1e-3,
+    seed: int = 42
+) -> Dict:
+    """
+    Evaluates the 4 core architectural components:
+    1. CNN Branch Only (cnn_only=True)
+    2. BiLSTM Branch Only (lstm_only=True)
+    3. Fusion w/o Attention Gating (no_gating=True)
+    4. Full Proposed Model (CNN-BiLSTM + Attention Gating)
+    Saves comparative JSON metrics and CSV tables under 'outdir'.
+    """
+    from .train import train_experiment
+    from .evaluate import evaluate_on_test
+
+    ensure_dir(outdir)
+    set_all_seeds(seed)
+
+    variants = [
+        ("CNN Branch Only", {"cnn_only": True, "lstm_only": False, "no_gating": False}),
+        ("BiLSTM Branch Only", {"cnn_only": False, "lstm_only": True, "no_gating": False}),
+        ("Fusion (w/o Attention Gating)", {"cnn_only": False, "lstm_only": False, "no_gating": True}),
+        ("Full Proposed Framework", {"cnn_only": False, "lstm_only": False, "no_gating": False}),
+    ]
+
+    task_type = "binary" if len(np.unique(y_train)) == 2 else "multiclass"
+    results = {}
+
+    for name, kwargs in variants:
+        print(f"\n[ARCH ABLATION] Evaluating Variant: {name}")
+        ckpt_path, hist_csv, art_dir, model = train_experiment(
+            X_train, y_train, X_val, y_val, X_test, y_test,
+            model_name="cnn_lstm_fusion",
+            dataset_key=dataset_key,
+            out_root=outdir,
+            epochs=epochs, batch_size=batch_size, lr=lr,
+            class_names=class_names, seed=seed,
+            **kwargs
+        )
+
+        var_outdir = os.path.join(outdir, name.replace(" ", "_"))
+        eval_metrics = evaluate_on_test(X_test, y_test, ckpt_path, var_outdir, task_type=task_type)
+        results[name] = eval_metrics
+
+    res_path = os.path.join(outdir, "architectural_ablation_summary.json")
+    with open(res_path, "w") as f:
+        json.dump(results, f, indent=2)
+
+    print(f"[ARCH ABLATION COMPLETE] Summary saved to {res_path}")
+    return results
+

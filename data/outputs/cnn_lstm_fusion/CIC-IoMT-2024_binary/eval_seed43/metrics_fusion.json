@@ -1,0 +1,17 @@
+{
+  "checkpoint": "E:\\HLC\\data\\outputs\\cnn_lstm_fusion\\CIC-IoMT-2024_binary\\checks\\best_ep7_fusion_seed43.pt",
+  "model_name": "cnn_lstm_fusion",
+  "num_classes": 2,
+  "class_names": [
+    "Attack",
+    "Benign"
+  ],
+  "accuracy": 0.9983384664323122,
+  "roc_auc_macro": 0.9998736677588098,
+  "samples": 1295189,
+  "batches": 2530,
+  "total_infer_sec": 11.336976599995978,
+  "ms_per_batch": 4.481018418970742,
+  "samples_per_sec": 114244.65672800802,
+  "energy_j_proxy": 1360.4371919995174
+}
