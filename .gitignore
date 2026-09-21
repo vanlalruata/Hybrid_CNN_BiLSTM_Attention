@@ -16,13 +16,8 @@ __pycache__/
 *.idx
 *.ilg
 *.spl
-*.tex
-*.bib
-*.sty
-*.cls
-manuscript/*
-*.pyc
-*.tex
+# Manuscript folder
+manuscript/
 
 # Distribution / packaging
 .Python
