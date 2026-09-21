@@ -231,7 +231,7 @@ The motivation for this work stems from several key challenges in IoT intrusion 
 
 \begin{itemize}
     \item \textbf{Heterogeneous Data Sources:} IoT datasets vary significantly in feature space, traffic patterns, and labeling schemes, making cross-dataset learning difficult.
-    \item \textbf{Limited Generalization:} Existing models often perform well on a single dataset but fail when applied to unseen environments.
+    \item \textbf{Limited Generalisation:} Existing models often perform well on a single dataset but fail when applied to unseen environments.
     \item \textbf{Limited Recurrent Feature Transformation:} Many approaches rely on purely static feature extraction and do not exploit complementary recurrent feature transformations for heterogeneous traffic representations.
     \item \textbf{Black-Box Models:} The absence of interpretability limits the adoption of deep learning-based IDS in real-world systems.
     \item \textbf{Resource Constraints in Edge/Cloud Computing Models:} Real-time deployment in modern computing models (such as edge-computing smart gateways or cloud-based IoT controllers) requires lightweight and efficient security components with minimal latency and low energy footprints.
@@ -263,7 +263,7 @@ The main contributions of this study are summarised as follows.
     \item \textbf{Deployment Feasibility and Efficiency Analysis:} The framework is evaluated in terms of GPU inference throughput and energy proxies, establishing a solid empirical foundation for future edge-device hardware validation and low-overhead security integrations.
 \end{itemize}
 
-\subsection{Organization of the Paper}
+\subsection{Organisation of the Paper}
 
 The remainder of this paper is organised as follows.  Section~\ref{sec:related} reviews the contemporary literature and state-of-the-art intrusion detection methods. Section~\ref{sec:method} details the mathematical formulation and architectural design of the proposed hybrid CNN--BiLSTM attention-gated framework. Section~\ref{sec:datasets} presents the target IoT datasets, preprocessing protocols and feature representation strategies. Section~\ref{sec:setup} outlines the experimental setup, hardware specifications, and evaluation parameters. Section~\ref{sec:results} discusses the classification performance, cross-dataset transferability, ablation studies, efficiency metrics, and multi-level XAI findings. Finally, Section~\ref{sec:conclusion} concludes the paper and highlights potential avenues for future research. 
 
@@ -312,7 +312,7 @@ Although these methods provide valuable insights into feature importance and dec
 The following key limitations were identified based on the above review.
 
 \begin{itemize}
-    \item \textbf{Limited Generalization:} Most existing approaches are evaluated on single datasets, limiting their applicability to diverse IoT environments.
+    \item \textbf{Limited Generalisation:} Most existing approaches are evaluated on single datasets, limiting their applicability to diverse IoT environments.
     
     \item \textbf{Inadequate Feature Integration:} Traditional and deep learning models often fail to effectively combine spatial feature maps and channel-wise recurrent representations.
     
@@ -426,7 +426,7 @@ Study &
   Deep neural network DDoS detection &
   High accuracy (99.99\%) with XAI validation of predictions &
   Evaluated primarily under static SDN network topologies &
-  Gaps in generalizing across highly heterogeneous IoT networks \\
+  Gaps in generalising across highly heterogeneous IoT networks \\
 \cite{sgouras2022detecting} &
   ML DDoS impact analysis in smart grids &
   Quantified cyberattack impact on smart grid infrastructure stability &
@@ -469,7 +469,7 @@ Study &
   Lacks deep sequential modelling and multi-dataset benchmarks \\
 \cite{churcher2021machine} &
   Experimental evaluation of ML NIDS &
-  Analyzed classifier sensitivity to feature noise and hardware constraints &
+  Analysed classifier sensitivity to feature noise and hardware constraints &
   Decision trees display low generalizability under traffic fluctuations &
   No deep learning or spatial-temporal feature fusion explored \\
 \cite{soe2020machine} &
@@ -485,11 +485,11 @@ Study &
 \cite{alomari2021hybrid} &
   Parallel hybrid DL DDoS detection &
   Parallel architectures capture features faster and with higher accuracy &
-  Lacks standardised preprocessing, leading to poor generalization &
+  Lacks standardised preprocessing, leading to poor generalisation &
   Gaps in transparency; no local or global XAI models \\
 \cite{habib2023multi} &
-  Multi-dataset standardization &
-  Standardizing NetFlow features improves cross-dataset NIDS stability &
+  Multi-dataset standardisation &
+  Standardising NetFlow features improves cross-dataset NIDS stability &
   Tested only on shallow classifiers; lacks deep sequence extraction &
   Gaps in attention refinement and deep learning integration \\
 \cite{sanyal2026litmus} &
@@ -623,9 +623,9 @@ x_i'^{(k)} = \phi_k(x_i^{(k)}) \in \mathbb{R}^{d_k}
 
 The dataset-specific preprocessing operator $\phi_k(\cdot)$ executes three core operations:
 \begin{enumerate}
-    \item \textbf{Feature Alignment and Imputation:} Cleaning raw packet headers and flow statistics, handling missing or infinite values via localized mean imputation.
-    \item \textbf{Categorical Encoding:} Converting nominal protocol and service identifiers (e.g., TCP, UDP, ICMP, HTTP) into numerical representations using ordinal label factorization. Categorical encoders were fitted exclusively on the training partition ($D_{train}$), and the resulting category-to-integer mappings were applied unchanged to the validation and test partitions. Subsequent 1D-CNN spatial filtering and BiLSTM feature-channel embedding learn continuous non-linear representations from these encoded feature channels.
-    \item \textbf{Statistical Z-Score Normalization:} Standardizing feature magnitudes to prevent large-scale attributes from dominating gradient updates.
+    \item \textbf{Feature Alignment and Imputation:} Cleaning raw packet headers and flow statistics, handling missing or infinite values via localised mean imputation.
+    \item \textbf{Categorical Encoding:} Converting nominal protocol and service identifiers (e.g., TCP, UDP, ICMP, HTTP) into numerical representations using ordinal label factorisation. Categorical encoders were fitted exclusively on the training partition ($D_{train}$), and the resulting category-to-integer mappings were applied unchanged to the validation and test partitions. Subsequent 1D-CNN spatial filtering and BiLSTM feature-channel embedding learn continuous non-linear representations from these encoded feature channels.
+    \item \textbf{Statistical Z-Score Normalisation:} Standardising feature magnitudes to prevent large-scale attributes from dominating gradient updates.
 \end{enumerate}
 
 Crucially, all feature selection and ranking operations (including ANOVA F-statistic rankings and XAI importance scoring) were performed exclusively on the training partition ($D_{train}$); the selected feature subsets were then fixed prior to validation and test evaluation, ensuring that all feature-ablation experiments remained strictly leak-free.
@@ -652,7 +652,7 @@ When performing zero-shot cross-dataset evaluation across heterogeneous IoT envi
 \label{eq:cross_dataset_alignment}
 \end{equation}
 
-where $\mathbf{x} \in \mathbb{R}^{d_{\text{tgt}}}$ is the target feature vector standardised via Z-score normalization $\mathbf{x} = (\mathbf{x}_{\text{raw}} - \mu_{\text{tgt}}) / \sigma_{\text{tgt}}$. Here, the normalisation parameters $\mu_{\text{tgt}} \in \mathbb{R}^{d_{\text{tgt}}}$ and $\sigma_{\text{tgt}} \in \mathbb{R}^{d_{\text{tgt}}}$ are calculated strictly from the training split of the target dataset ($D_{\text{train}}^{(\text{tgt})}$), representing an unsupervised target domain normalisation setup. For cross-dataset transfer, categorical encoding mappings and numerical preprocessing parameters were obtained independently from the target training partition and applied unchanged to the target validation/test data before the dimensional adaptation operator was applied. Crucially, no statistics or label information are computed from the target test partition ($D_{\text{test}}^{(\text{tgt})}$), guaranteeing no data leakage from the test set. The operator $[\mathbf{a} \,\|\, \mathbf{b}]$ denotes vector concatenation, $\mathbf{0}_{k} \in \mathbb{R}^k$ represents a zero-padding vector of dimension $k = d_{\text{src}} - d_{\text{tgt}}$, and $\mathbf{x}_{1:d_{\text{src}}} = [x_1, x_2, \dots, x_{d_{\text{src}}}]^T$ selects the leading $d_{\text{src}}$ attribute channels. This operator performs positional dimensional adaptation to conform target feature vectors to the input dimensionality of the source model checkpoint ($d_{\text{src}}$) without modifying trained weight matrices. Because attribute ordering is determined by each collector's native feature layout rather than semantic feature matching, this operator provides a lightweight dimensional interface rather than a guaranteed semantic feature harmonisation.
+where $\mathbf{x} \in \mathbb{R}^{d_{\text{tgt}}}$ is the target feature vector standardised via Z-score normalisation $\mathbf{x} = (\mathbf{x}_{\text{raw}} - \mu_{\text{tgt}}) / \sigma_{\text{tgt}}$. Here, the normalisation parameters $\mu_{\text{tgt}} \in \mathbb{R}^{d_{\text{tgt}}}$ and $\sigma_{\text{tgt}} \in \mathbb{R}^{d_{\text{tgt}}}$ are calculated strictly from the training split of the target dataset ($D_{\text{train}}^{(\text{tgt})}$), representing an unsupervised target domain normalisation setup. For cross-dataset transfer, categorical encoding mappings and numerical preprocessing parameters were obtained independently from the target training partition and applied unchanged to the target validation/test data before the dimensional adaptation operator was applied. Crucially, no statistics or label information were computed from the target test partition ($D_{\text{test}}^{(\text{tgt})}$), guaranteeing no data leakage from the test set. The operator $[\mathbf{a} \,\|\, \mathbf{b}]$ denotes vector concatenation, $\mathbf{0}_{k} \in \mathbb{R}^k$ represents a zero-padding vector of dimension $k = d_{\text{src}} - d_{\text{tgt}}$, and $\mathbf{x}_{1:d_{\text{src}}} = [x_1, x_2, \dots, x_{d_{\text{src}}}]^T$ selects the leading $d_{\text{src}}$ attribute channels. This operator performs positional dimensional adaptation to conform target feature vectors to the input dimensionality of the source model checkpoint ($d_{\text{src}}$) without modifying trained weight matrices. Because attribute ordering is determined by each collector's native feature layout rather than semantic feature matching, this operator provides a lightweight dimensional interface rather than a guaranteed semantic feature harmonisation.
 
 \subsection{Sequence Framing and Partitioning Hygiene}
 
@@ -798,7 +798,7 @@ The proposed framework is executed in two primary algorithmic procedures. Algori
     \STATE Normalize feature vectors: $\mathbf{x}_i^{norm} = (\mathbf{x}_i'^{(k)} - \mu^{(k)}) / \sigma^{(k)}$ across all partitions using training statistics
     \STATE Initialize partition sequence sets $\mathcal{T}_{train}^{(k)}, \mathcal{T}_{val}^{(k)}, \mathcal{T}_{test}^{(k)} \leftarrow \emptyset$
     \FOR{each partition $\mathcal{P} \in \{\mathcal{D}_{train}^{(k)}, \mathcal{D}_{val}^{(k)}, \mathcal{D}_{test}^{(k)}\}$}
-        \FOR{each normalized instance vector $\mathbf{x}_i^{norm} \in \mathcal{P}$}
+        \FOR{each normalised instance vector $\mathbf{x}_i^{norm} \in \mathcal{P}$}
             \STATE Construct singleton sequence matrix ($T=1$): $\mathbf{X}_i = [\mathbf{x}_i^{norm}]^T \in \mathbb{R}^{1 \times d_k}$
             \STATE Append sequence-label pair $(\mathbf{X}_i, y_i^{(k)})$ to corresponding sequence partition $\mathcal{T}_{\mathcal{P}}^{(k)}$
         \ENDFOR
@@ -812,8 +812,8 @@ The proposed framework is executed in two primary algorithmic procedures. Algori
 \caption{End-to-End Training and Explainable Verification of the Hybrid Framework}
 \label{alg:training}
 \begin{algorithmic}[1]
-\REQUIRE Preprocessed sequence datasets $\{\mathcal{T}^{(k)}\}_{k=1}^{K}$, epoch count $E$, batch size $B$, learning rate $\eta$, regularization coefficient $\lambda$
-\ENSURE Optimized network parameters $\theta$, joint explainability profile $\mathcal{I}(x)$
+\REQUIRE Preprocessed sequence datasets $\{\mathcal{T}^{(k)}\}_{k=1}^{K}$, epoch count $E$, batch size $B$, learning rate $\eta$, regularisation coefficient $\lambda$
+\ENSURE Optimised network parameters $\theta$, joint explainability profile $\mathcal{I}(x)$
 \STATE Initialize model parameters $\theta = \{W_c, b_c, W_{x\cdot}, W_{h\cdot}, b_{\cdot}, W_a, b_a, W_o, b_o\}$ randomly
 \FOR{each epoch $e \in [1, E]$}
     \FOR{each batch $\mathcal{B} \subset \mathcal{T}^{(k)}$ of size $B$}
@@ -829,8 +829,8 @@ The proposed framework is executed in two primary algorithmic procedures. Algori
             \STATE Predict class probabilities: $\hat{y}_i = \text{softmax}(z_i)$
         \ENDFOR
         \STATE \textbf{Loss Computation:}
-        \STATE Compute CCE loss with L2 regularization: $\mathcal{L}(\theta) = - \frac{1}{B} \sum_{i=1}^B \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c}) + \lambda \|\theta\|_2^2$
-        \STATE \textbf{Backward Pass and Optimization:}
+        \STATE Compute CCE loss with L2 regularisation: $\mathcal{L}(\theta) = - \frac{1}{B} \sum_{i=1}^B \sum_{c=1}^C y_{i,c} \log(\hat{y}_{i,c}) + \lambda \|\theta\|_2^2$
+        \STATE \textbf{Backward Pass and Optimisation:}
         \STATE Compute gradients $\nabla_\theta \mathcal{L}(\theta)$ using backpropagation
         \STATE Update network parameters $\theta$ using AdamW: $\theta \leftarrow \text{AdamW}(\theta, \nabla_\theta \mathcal{L}(\theta), \eta)$
     \ENDFOR
@@ -840,17 +840,17 @@ The proposed framework is executed in two primary algorithmic procedures. Algori
 \STATE Fit local LIME explainer for selected instances $x$ to obtain local surrogate weights $\phi^{LIME}$
 \STATE Perform ANOVA F-statistic test on features to obtain statistical significance values $F^{ANOVA}$
 \STATE Construct joint explanation profile: $\mathcal{I}(x) = \{\phi^{SHAP}, \phi^{LIME}, F^{ANOVA}\}$
-\RETURN Optimized parameters $\theta$, Joint Explanations $\mathcal{I}(x)$
+\RETURN Optimised parameters $\theta$, Joint Explanations $\mathcal{I}(x)$
 \end{algorithmic}
 \end{algorithm}
 
 \subsection{Computational Complexity}
 
-The computational complexity of the proposed framework is analyzed component-by-component below, where $N$ represents the number of training samples, $T$ is the sequence lookback length, and $d$ is the feature dimension:
+The computational complexity of the proposed framework is analysed component-by-component below, where $N$ represents the number of training samples, $T$ is the sequence lookback length, and $d$ is the feature dimension:
 \begin{itemize}
-    \item \textbf{CNN Branch:} The complexity of convolving $M$ filters of size $K_{conv}$ over sequences is $\mathcal{O}(N \cdot T \cdot d \cdot M \cdot K_{conv})$. Since the kernel size and filters are fixed hyperparameters, this simplifies to $\mathcal{O}(N \cdot T \cdot d)$.
-    \item \textbf{BiLSTM Branch:} The computational complexity of updating the input, forget, and output gates for both forward and backward cells is $\mathcal{O}(N \cdot T \cdot (d \cdot d_{lstm} + d_{lstm}^2))$. Assuming the hidden dimension $d_{lstm}$ is proportional to the feature dimension $d$, this yields $\mathcal{O}(N \cdot T \cdot d^2)$.
-    \item \textbf{Attention and Classification Layers:} The matrix products and softmax computations require $\mathcal{O}(N \cdot D_{fused}^2)$ and $\mathcal{O}(N \cdot C \cdot D_{fused})$ operations, respectively. Since $D_{fused}$ scales linearly with $d$, this simplifies to $\mathcal{O}(N \cdot d^2)$.
+    \item \textbf{CNN Branch:} The complexity of convolving $M$ filters of size $K_{conv}$ over sequences is $\mathcal{O}(N \cdot T \cdot d \cdot M \cdot K_{conv})$. Because the kernel size and filters are fixed hyperparameters, this simplifies to $\mathcal{O}(N \cdot T \cdot d)$.
+    \item \textbf{BiLSTM Branch:} The computational complexity of updating the input, forget, and output gates for both forward and backward cells is $\mathcal{O}(N \cdot T \cdot (d \cdot d_{lstm} + d_{lstm}^2))$. Assuming that the hidden dimension $d_{lstm}$ is proportional to the feature dimension $d$, this yields $\mathcal{O}(N \cdot T \cdot d^2)$.
+    \item \textbf{Attention and Classification Layers:} The matrix products and softmax computations require $\mathcal{O}(N \cdot D_{fused}^2)$ and $\mathcal{O}(N \cdot C \cdot D_{fused})$ operations, respectively. Because $D_{fused}$ scales linearly with $d$, this simplifies to $\mathcal{O}(N \cdot d^2)$.
 \end{itemize}
 
 By combining these components, the overall training complexity per epoch is dominated by the temporal recurrences of the BiLSTM cells:
@@ -976,7 +976,7 @@ To evaluate the proposed framework across heterogeneous IoT environments, four b
 \begin{itemize}
     \item \textbf{Apose-IoT-23}: Captures realistic IoT network flows with labeled scanning and botnet attack traffic.
     \item \textbf{BoT-IoT}: A large-scale benchmark comprising volumetric DDoS, DoS, and reconnaissance flows.
-    \item \textbf{CIC-IoMT-2024}: Focuses on medical IoT (IoMT) telemetry with 19 specialized attack categories.
+    \item \textbf{CIC-IoMT-2024}: Focuses on medical IoT (IoMT) telemetry with 19 specialised attack categories.
     \item \textbf{CIC-IoT-2025}: A modern smart home IoT dataset incorporating multi-vector attack patterns across heterogeneous protocols.
 \end{itemize}
 Full details regarding raw sample supports, attack categories, and behavioral characteristics are provided in Tables~S2--S5 of the Supplementary Material.
@@ -1009,7 +1009,7 @@ To rigorously evaluate classification performance while guaranteeing zero data l
 \end{equation}
 where 70\% of the raw network flows were allocated for training ($\mathcal{D}^{(k)}_{train}$), 15\% for validation ($\mathcal{D}^{(k)}_{val}$), and 15\% for an untouched test set ($\mathcal{D}^{(k)}_{test}$). Prior to feature processing, a complete feature cleaning audit was conducted across all datasets to remove non-feature identifier metadata and target annotation columns (detailed in Supplementary Table~S1). Imputation statistics (numerical column means and categorical modes), label encoders, and feature scalers were fitted strictly on $\mathcal{D}^{(k)}_{train}$ and applied unchanged to $\mathcal{D}^{(k)}_{val}$ and $\mathcal{D}^{(k)}_{test}$. As detailed in Section~3.3, singleton sequence framing ($T = 1$) was applied to prevent overlapping window leakage across splits. All experiments were conducted on full datasets without downsampling or artificial oversampling, preserving natural class proportions.
 
-To guarantee statistical reliability, all experiments were repeated across five independent random seeds ($S = \{13, 23, 33, 43, 53\}$). For cross-dataset evaluation, the model parameterised by weights $\theta$ was trained on a source dataset training split ($\mathcal{D}^{(src)}_{train}$) and evaluated in a zero-shot manner on target dataset test splits ($\mathcal{D}^{(tgt)}_{test}$).
+To guarantee the statistical reliability of the primary model evaluation, the primary experiments were repeated across five independent random seeds ($S = \{13, 23, 33, 43, 53\}$). For cross-dataset evaluation, the model parameterised by weights $\theta$ was trained on a source dataset training split ($\mathcal{D}^{(src)}_{train}$) and evaluated in a zero-shot manner on target dataset test splits ($\mathcal{D}^{(tgt)}_{test}$).
 
 \section{Experimental Setup}
 \label{sec:setup}
@@ -1018,7 +1018,7 @@ This section describes the implementation details, training configuration, evalu
 
 \subsection{Implementation Environment}
 
-All experiments were performed using Python 3.14 and the PyTorch 2.10 deep learning framework in a 64-bit Windows 11 Pro environment. Model training, feature extraction, and evaluation were accelerated using a CUDA-enabled NVIDIA GeForce RTX 3060 with 8~GB of dedicated VRAM and CUDA 13.3 toolkit support, backed by an Intel i9-10900K CPU processor and 32~GB of system RAM. The core computational, statistical, and explainability workflows relied on NumPy 2.3.5, Scikit-learn 1.8.0, SciPy 1.16.3, SHAP 0.51.0, LIME 0.2.0.1, and Matplotlib 3.10.8. Automatic device selection (CUDA, when available; otherwise, CPU) was used across the pipeline. The reported training and batch inference benchmarks were conducted on an NVIDIA GeForce RTX 3060 using CUDA. 
+All experiments were conducted on a workstation equipped with an Intel Core i9-10900K CPU @ 3.80 GHz and an NVIDIA GeForce RTX 3060 Ti GPU with 8 GB VRAM. The software environment was configured on 64-bit Windows 11 Pro using Python 3.14, PyTorch 2.10, and CUDA 13.3 toolkit support, backed by 32~GB of system RAM. Core computational, statistical, and explainability workflows relied on NumPy 2.3.5, Scikit-learn 1.8.0, SciPy 1.16.3, SHAP 0.51.0, LIME 0.2.0.1, and Matplotlib 3.10.8. Automatic device selection (CUDA, when available; otherwise, CPU) was used across the pipeline. 
 
 \subsection{Datasets and Experimental Configuration}
 
@@ -1046,7 +1046,7 @@ Batch Size & 128 \\
 Epochs & 20 \\
 Early Stopping Patience & 0 (Disabled) \\
 Loss Function & CrossEntropy \\
-Hardware & CUDA-enabled GPU \\
+Hardware & NVIDIA GeForce RTX 3060 Ti (8 GB VRAM) \\
 Train-Test Split & 70\%:15\%:15\% (Train:Val:Test) \\
 \bottomrule
 \end{tabular}
@@ -1287,10 +1287,10 @@ The training and validation accuracy curves for binary and multiclass tasks acro
 \label{fig:proposed_multiclass_loss}
 \end{figure}
 
-As demonstrated in Figures~\ref{fig:proposed_binary_accuracy}--\ref{fig:proposed_multiclass_loss}, the proposed framework exhibits smooth, monotonic optimization trajectories with rapid loss decay and steady accuracy gains:
+As demonstrated in Figures~\ref{fig:proposed_binary_accuracy}--\ref{fig:proposed_multiclass_loss}, the proposed framework exhibits smooth, monotonic optimisation trajectories with rapid loss decay and steady accuracy gains:
 \begin{itemize}
     \item \textbf{Apose-IoT-23:} For the binary task, the model converges rapidly, with validation accuracy exceeding 99.0\% by Epoch~5 and achieving a mean final training loss of $0.0299 \pm 0.0080$ and validation loss of $0.0328 \pm 0.0084$. In the multiclass task, the validation accuracy increased steadily to $98.86\%$, with a mean training loss of $0.0525 \pm 0.0135$ and a validation loss of $0.0622 \pm 0.0126$.
-    \item \textbf{BoT-IoT:} On the massive BoT-IoT dataset (7.0 million training samples per epoch), the model exhibits exceptional training stability. Binary classification achieved a near-zero validation loss ($0.000088 \pm 0.000008$) and a validation accuracy of $99.997\%$. Multiclass classification reached a validation loss of $0.005759 \pm 0.000125$ and an accuracy of $99.744\%$.
+    \item \textbf{BoT-IoT:} On the massive BoT-IoT dataset (7.0 million training samples per epoch), the model exhibits exceptional training stability. The binary classification achieved a near-zero validation loss ($0.000088 \pm 0.000008$) and a validation accuracy of $99.997\%$. Multiclass classification achieved a validation loss of $0.005759 \pm 0.000125$ and an accuracy of $99.744\%$.
     \item \textbf{CIC-IoMT-2024:} For the IoMT-specific dataset, binary classification converges to a validation loss of $0.004016 \pm 0.000053$ (accuracy $99.828\%$), while multiclass classification achieves a validation loss of $0.021388 \pm 0.001123$ (accuracy $99.212\%$).
     \item \textbf{CIC-IoT-2025:} On this high-dimensional dataset, binary classification reaches a validation loss of $0.038627 \pm 0.000741$ (accuracy $98.728\%$), while multiclass classification yields a validation loss of $0.082544 \pm 0.001079$ (accuracy $97.613\%$).
 \end{itemize}
@@ -1399,7 +1399,7 @@ As demonstrated in Table~\ref{tab:detailed_class_performance}, the proposed fram
     \begin{itemize}
         \item \textit{Apose-IoT-23 Multiclass:} Okiru and CandC botnet categories are classified with F1-scores of 97.67\% and 99.61\%, respectively, yielding an overall multiclass accuracy of 99.24\% and macro F1 of 92.73\%.
         \item \textit{BoT-IoT Multiclass:} High-volume TCP and UDP flood vectors (comprising over 99.9\% of test support) achieve F1-scores of 99.98\% and 100.00\%, yielding an overall test accuracy of 99.74\%. The lower macro F1-score (70.97\%) stems strictly from extreme data scarcity in minority subclasses (Data Exfiltration with only 2 support samples and Keylogging with 30 samples).
-        \item \textit{CIC-IoMT-2024 Multiclass:} Across 19 specialized medical IoT attack types, high-volume MQTT and TCP/IP DDoS/DoS flows are classified with F1-scores exceeding 99.3\%, achieving an overall multiclass test accuracy of 99.23\% and weighted F1 of 99.15\%. Minor performance variance in reconnaissance subclasses (Recon-OS\_Scan and Recon-VulScan) reflects subtle packet header similarities with benign scanning telemetry.
+        \item \textit{CIC-IoMT-2024 Multiclass:} Across 19 specialised medical IoT attack types, high-volume MQTT and TCP/IP DDoS/DoS flows are classified with F1-scores exceeding 99.3\%, achieving an overall multiclass test accuracy of 99.23\% and weighted F1 of 99.15\%. Minor performance variance in reconnaissance subclasses (Recon-OS\_Scan and Recon-VulScan) reflects subtle packet header similarities with benign scanning telemetry.
         \item \textit{CIC-IoT-2025 Multiclass:} The model achieves strong multiclass discrimination across all eight smart home threat categories (including web attacks at 99.48\% F1, DoS at 98.41\% F1, and bruteforce at 89.02\% F1), yielding an overall test accuracy of 97.57\% and macro F1 of 96.45\%.
     \end{itemize}
 \end{enumerate}
@@ -1726,7 +1726,7 @@ Dataset & Task Type & Epochs Run & Total Train Time (s) & Training Batch Latency
 Table~\ref{tab:training_efficiency_detailed} presents the detailed training efficiency metrics for all eight model configurations, reported as the mean value per seed across five independent random seeds ($S=\{13, 23, 33, 43, 53\}$). All training runs were completed for 20 epochs using the AdamW optimiser and a batch size of 128 on a CUDA-enabled GPU, applied to the full datasets without any downsampling or sampling cap. The mean training time per seed ranged from approximately 19.7~s for the compact Apose-IoT-23 dataset to 298--317~s for CIC-IoT-2025, and reached approximately 1.67 to 1.97~hours per seed for the massive full datasets BoT-IoT and CIC-IoMT-2024 (which contain approximately 7.0 million and 6.04 million training samples per epoch, respectively). The total GPU runtime-derived training energy proxy ($\text{Energy Proxy} = \text{Train Time} \times 120\text{W}$) tracks the hardware execution duration under an assumed 120~W peak GPU load; no direct power-meter measurement was performed.
 
 \subsubsection{Seeding Protocol and Representative Checkpoint Selection}
-To guarantee mathematical reproducibility and mitigate random initialization bias, all primary evaluation experiments were trained across five independent random seeds ($S = \{13, 23, 33, 43, 53\}$). For each seed, the model checkpoint corresponding to the minimum validation cross-entropy loss on the 15\% validation split was selected. Test data were not used for checkpoint selection. Macro-F1 was evaluated on the resulting held-out test set and was not used during model training or checkpoint selection. The summary metrics reported in Table~\ref{tab:classification_results} reflect the mean $\pm$ standard deviation across all five seed runs. To provide concrete, non-averaged qualitative and quantitative analyses without implying single-seed universality, representative validation-selected checkpoints across the five evaluated seeds are presented in Table~\ref{tab:detailed_class_performance}, Table~\ref{tab:cross_dataset}, representative confusion matrices, and XAI visualisations. The selected seed may therefore differ across datasets and task settings based strictly on validation performance.
+To guarantee mathematical reproducibility and mitigate random initialisation bias, all primary evaluation experiments were trained across five independent random seeds ($S = \{13, 23, 33, 43, 53\}$). For each seed, the model checkpoint corresponding to the minimum validation cross-entropy loss on the 15\% validation split was selected. Test data were not used for checkpoint selection. Macro-F1 was evaluated on the resulting held-out test set and was not used during model training or checkpoint selection. The summary metrics reported in Table~\ref{tab:classification_results} reflect the mean $\pm$ standard deviation across all five seed runs. To provide concrete, non-averaged qualitative and quantitative analyses without implying single-seed universality, representative validation-selected checkpoints across the five evaluated seeds are presented in Table~\ref{tab:detailed_class_performance}, Table~\ref{tab:cross_dataset}, representative confusion matrices, and XAI visualisations. The selected seed may therefore differ across datasets and task settings based strictly on validation performance.
 
 
 \subsection{Architectural and Feature Ablation Studies}
@@ -1735,7 +1735,7 @@ To guarantee mathematical reproducibility and mitigate random initialization bia
 To systematically isolate the individual contributions of the core model components and quantify feature space redundancy, two ablation studies were conducted: Architectural Component Ablation and User-Selected Feature Subset Ablation.
 
 
-\textbf{Ablation Hyperparameter Configuration:} For both the architectural component ablation and user-selected feature ablation experiments, the hyperparameters were standardised as $\text{Seed} = 42$, $\text{Batch Size} = 256$, $\text{Epochs} = 20$ (with early stopping patience $= 8$), $\text{AdamW}$ optimiser ($\text{lr} = 10^{-3}$), and $\text{Cross-Entropy}$ loss. This fixed single-seed configuration is explicitly distinguished from the multi-seed ($S=\{13, 23, 33, 43, 53\}$, batch size $128$) evaluation protocol utilised for the main model performance benchmarking. For single-seed ablation runs, reported training and validation loss metrics represent mean $\pm$ standard deviation calculated over the recorded epoch-wise loss trajectory across training epochs.
+\textbf{Ablation Hyperparameter Configuration:} For both the architectural component ablation and user-selected feature ablation experiments, the hyperparameters were standardised with a single seed ($\text{Seed} = 42$, $\text{Batch Size} = 256$, $\text{Epochs} = 20$ with early stopping patience $= 8$, $\text{AdamW}$ optimiser $\text{lr} = 10^{-3}$, and $\text{Cross-Entropy}$ loss) to isolate architectural dynamic changes under strictly identical weight initialisations, optimiser trajectories, and split partitions. This fixed single-seed setup is explicitly distinguished from the multi-seed ($S=\{13, 23, 33, 43, 53\}$, batch size $128$) evaluation protocol utilised for the primary model performance benchmarking.
 
 \subsubsection{Architectural Component Ablation}
 Four distinct architectural variants were constructed within the framework:
@@ -1746,7 +1746,7 @@ Four distinct architectural variants were constructed within the framework:
     \item \textbf{Full Proposed Framework:} Integrates parallel CNN spatial filtering, BiLSTM singleton-sequence recurrent encoding, and the attention-based feature-gating layer.
 \end{enumerate}
 
-Table~\ref{tab:detailed_arch_ablation} presents a complete multi-metric breakdown (accuracy, training loss, and validation loss) for all four model variants across the evaluated datasets. For a full breakdown incorporating classification error rates, macro metrics, per-sample inference latencies, runtime-derived energy proxies, and detailed class-level confusion matrices across all architectural variants, the reader is referred to Section~7 of the accompanying supplementary document (Tables~S5--S7).
+Table~\ref{tab:detailed_arch_ablation} presents a complete multi-metric breakdown (accuracy, training loss, and validation loss) for all four model variants across the evaluated datasets. For a full breakdown incorporating classification error rates, macro metrics, per-sample inference latencies, runtime-derived energy proxies, and detailed class-level confusion matrices across all architectural variants, the reader is referred to Section~8 of the accompanying supplementary document (Tables~S8--S10).
 
 \begin{table*}
 \centering
@@ -1799,19 +1799,24 @@ Table~\ref{tab:detailed_arch_ablation} presents a complete multi-metric breakdow
 \multirow{4}{*}{\textbf{CIC-IoT-2025 Multiclass}} & CNN Branch Only & 97.427 & $0.1359 \pm 0.0931$ & $0.1178 \pm 0.0348$ \\
  & BiLSTM Branch Only & 97.621 & $0.1315 \pm 0.1168$ & $0.1111 \pm 0.0369$ \\
  & Fusion (w/o Attention Gating) & 43.488 & $0.1010 \pm 0.0486$ & $0.0937 \pm 0.0193$ \\
- & \textbf{Full Proposed Framework} & \textbf{97.635} & $0.1264 \pm 0.0854$ & $0.1118 \pm 0.0357$ \\
+ & \textbf{Full Proposed Framework} & \textbf{97.635} & $0.1264 \pm 0.0854$ & $0.1118 \pm 0.0357$ \\ 
+ \midrule
+\multicolumn{5}{p{.95\linewidth}}{\footnotesize
+\textit{Note:} For the single-seed ablation experiments, the reported mean $\pm$ standard deviation for training and validation loss represents the distribution of loss values across the recorded training epochs and does not denote cross-seed variability.
+}\\
+
 \bottomrule
 \end{tabular}
 \end{table*}
 
-As demonstrated in Table~\ref{tab:detailed_arch_ablation}, the empirical accuracy and cross-entropy loss trajectories vary distinctly across architectural variants, confirming the structural necessity of dual-branch dynamic fusion.
+As demonstrated in Table~\ref{tab:detailed_arch_ablation}, the empirical accuracy and cross-entropy loss trajectories vary distinctly across architectural variants, demonstrating that the benefit of dual-branch dynamic fusion is task-dependent, whereas unweighted fusion can lead to severe performance degradation.
 
 \begin{enumerate}
     \item \textbf{Standalone Feature Extraction Performance:} The standalone \textit{CNN Branch Only} and \textit{BiLSTM Branch Only} models establish strong single-architecture baselines across all benchmark datasets. Spatial convolutions capture localised packet header correlations (achieving 99.444\% accuracy on Apose-IoT-23 binary and 99.999\% on BoT-IoT binary with a validation loss of $0.00009 \pm 0.00002$), while bidirectional recurrent layers perform singleton-sequence feature encoding across projected channels (achieving 99.143\% accuracy on Apose-IoT-23 multiclass and 99.218\% on CIC-IoMT-2024 multiclass with a validation loss of $0.1044 \pm 0.1487$).
     
-    \item \textbf{Feature Scale Imbalance in Unweighted Fusion:} Concatenating spatial and recurrent representations directly without gating (\textit{Fusion w/o Attention Gating}) induces severe performance degradation and loss divergence across complex tasks (e.g., accuracy dropping to 73.262\% on Apose-IoT-23 binary, 0.489\% on BoT-IoT multiclass, 2.063\% on CIC-IoMT-2024 binary, and 43.488\% on CIC-IoT-2025 multiclass). This structural collapse stems from magnitude scale mismatches between unnormalized 1D-CNN feature maps and BiLSTM hidden state vectors. In the absence of feature gating, uncalibrated representation scales create ill-conditioned loss gradients during backpropagation, causing the classifier head to overfit to unweighted spatial channels or stall in sub-optimal local minima.
+    \item \textbf{Feature Scale Imbalance in Unweighted Fusion:} Concatenating spatial and recurrent representations directly without gating (\textit{Fusion w/o Attention Gating}) induces severe performance degradation and loss divergence across complex tasks (e.g., accuracy dropping to 73.262\% on Apose-IoT-23 binary, 0.489\% on BoT-IoT multiclass, 2.063\% on CIC-IoMT-2024 binary, and 43.488\% on CIC-IoT-2025 multiclass). This structural collapse stems from magnitude scale mismatches between unnormalised 1D-CNN feature maps and BiLSTM hidden state vectors. In the absence of feature gating, uncalibrated representation scales create ill-conditioned loss gradients during backpropagation, causing the classifier head to overfit to unweighted spatial channels or stall in sub-optimal local minima.
     
-    \item \textbf{Loss Stabilization via Attention-Based Feature Gating:} The integration of the attention-based feature-gating layer in the \textit{Full Proposed Framework} addresses this scale disparity by learning dynamic, instance-level softmax weight vectors $\alpha = \text{softmax}(e)$. The gating mechanism rescales and balances spatial and recurrent feature sub-vectors prior to the dense classifier. This restores optimisation stability and eliminates the severe numerical collapse observed under unweighted fusion. While standalone single branches achieve top accuracy on specific datasets (e.g., the BiLSTM branch on CIC-IoMT-2024 multiclass and Apose-IoT-23 multiclass, or the CNN branch on CIC-IoT-2025 binary), the full attention-gated framework provides a balanced, robust architecture that stabilises dual-branch fusion across diverse multi-domain threat environments without catastrophic degradation. For an extended class-by-class evaluation detailing exact True Positive distributions and primary misclassification targets across all variants, the reader is referred to Section~8.3 and Table~S10 of the supplementary material.
+    \item \textbf{Dynamic Feature Integration via Attention-Based Feature Gating:} The integration of the attention-based feature-gating layer in the \textit{Full Proposed Framework} addresses this scale disparity by learning dynamic, instance-level softmax weight vectors $\alpha = \text{softmax}(e)$. The gating mechanism rescales and balances spatial (CNN) and recurrent (BiLSTM) feature sub-vectors prior to the dense classifier, restoring optimisation stability and eliminating the severe numerical collapse observed under unweighted fusion. The ablation results suggest that attention-based feature gating contributes primarily through selective integration of the complementary representations learned by the CNN and BiLSTM branches. Although the complete framework does not yield the highest accuracy in every dataset/task configuration, the ablation patterns indicate that feature gating can improve the utilisation of complementary spatial and sequential information under several experimental conditions. These results therefore support the role of attention-based gating as a task-dependent integration mechanism rather than as a universally dominant component. For an extended class-by-class evaluation detailing exact True Positive distributions and primary misclassification targets across all variants, the reader is referred to Section~8 of the accompanying supplementary document.
 \end{enumerate}
 
 \subsubsection{User-Selected Feature Subset Ablation} \label{sec:feature_ablation}
@@ -2148,7 +2153,7 @@ By testing ANOVA, SHAP, and LIME simultaneously, our framework provides a compre
 \end{itemize}
 
 \subsubsection{Efficiency of the Explainability Demonstration}
-Furthermore, the proposed XAI framework balances analytical completeness with computational efficiency, presenting an optimized explainability pipeline for real-world deployments. Explainability tools are often criticised for high computational overhead, which can bottleneck real-time security systems. Our framework demonstrates how explainability can be run efficiently through a tiered invocation strategy:
+Furthermore, the proposed XAI framework balances analytical completeness with computational efficiency, presenting an optimised explainability pipeline for real-world deployments. Explainability tools are often criticised for high computational overhead, which can bottleneck real-time security systems. Our framework demonstrates how explainability can be run efficiently through a tiered invocation strategy:
 \begin{itemize}
     \item \textbf{Computational Offloading:} ANOVA is computationally trivial ($\mathcal{O}(N \cdot d)$) and is performed entirely offline or during preprocessing to establish baseline feature significance, requiring zero model query overhead.
     \item \textbf{Tiered Execution at Runtime:} SHAP computation ($\mathcal{O}(2^d)$) is computationally heavy and is reserved for periodic offline global profiling or model retraining phases to update the security policy. In contrast, LIME ($\mathcal{O}(M \cdot d)$) is computationally lighter and is invoked dynamically only when an alert is generated, explaining specific anomalous incidents on-the-fly without the need to calculate global shapley values for every flow.

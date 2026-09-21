@@ -9,11 +9,11 @@
 \definecolor{primaryblue}{HTML}{005580}
 \definecolor{boxbg}{HTML}{F8F9FA}
 
-\title{\textbf{Online Submission System Text Templates}\\
+\title{\textbf{Online Submission System Text Templates (Revision 2)}\\
 \large Manuscript Number: MEADIG-D-26-00146\\
 \small \textit{Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI}}
 \author{Vanlalruata Hnamte et al.}
-\date{\today}
+\date{September 2026}
 
 \begin{document}
 
@@ -32,18 +32,18 @@
 \begin{tcolorbox}[colback=boxbg,colframe=primaryblue,title=\textbf{Text for Main Submission System Response Box}]
 Dear Editors and Reviewers,
 
-We would like to express our sincere gratitude and appreciation to the Editors and Reviewers for their thorough, highly insightful, and constructive evaluations of our manuscript titled "Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI" (Manuscript Number: MEADIG-D-26-00146).
+We express our sincere gratitude to the Editors and Reviewers for their evaluation of our manuscript titled "Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI" (Manuscript Number: MEADIG-D-26-00146).
 
-With the reviewers' valuable feedback, comments, and rigorous suggestions, we have significantly improved the manuscript to its current state. Specifically, we have:
-1. Re-run all primary intra-dataset evaluation experiments from scratch across 5 independent random seeds ($S=\{13, 23, 33, 43, 53\}$) without downsampling, reporting all performance metrics as mean $\pm$ standard deviation.
-2. Expanded Section 5.1 (Implementation Environment) with complete hardware specifications (NVIDIA GeForce RTX 3060 8GB VRAM GPU, Intel i9-10900K CPU, 32GB RAM), exact software versions (Python 3.14, PyTorch 2.10, CUDA 13.3, NumPy 2.3.5, Scikit-learn 1.8.0, SciPy 1.16.3, SHAP 0.51.0, LIME 0.2.0.1), and reproducible execution settings.
-3. Refined terminology and architectural descriptions to maintain consistent naming ("CNN--BiLSTM + Attention framework") across all titles, headings, tables, and text.
-4. Softened and strengthened cross-dataset zero-shot transferability and minority class performance claims to align strictly with empirical evidence and positional dimensional-interface adaptation limits.
-5. Clarified target-domain categorical encoding and Z-score standardisation procedures to eliminate any ambiguity regarding partitioning hygiene and leak-free zero-shot transfer.
+We are deeply encouraged by Reviewer 2's positive evaluation and explicit recommendation for acceptance ("I agree with the current version of the paper. The paper can be accepted now."). We are also very grateful to Reviewer 1 for recognizing that our previous revisions satisfactorily addressed the major concerns, and for providing three minor points to refine our manuscript.
 
-We have attached the comprehensive, point-by-point Response Document ("response.pdf"), the highlighted revised manuscript ("manuscript_highlight.pdf"), and the clean revised manuscript ("manuscript.pdf") to the submission system.
+In this minor revision (Revision 2), we have fully addressed all remaining points:
+1. **Hardware Specification Consistency:** Unified the experimental hardware description across all sections of the manuscript (Section 5.1 and Table 4), supplementary material (Section 7), and response letter to state the exact configuration: Intel Core i9-10900K CPU @ 3.80 GHz and NVIDIA GeForce RTX 3060 Ti GPU with 8 GB VRAM.
+2. **Ablation Setup Justification:** Documented the methodological justification for the single-seed ablation setup ($\text{Seed} = 42$, $\text{Batch Size} = 256$) to isolate structural dynamic changes under identical initialisations, clearly distinguishing it from the 5-seed primary evaluation protocol ($S=\{13, 23, 33, 43, 53\}$).
+3. **Cautious Representation Integration Interpretation:** Reframed the discussion of attention-based feature gating in Section 6.5 to emphasize its role as a dynamic, task-dependent representation integration mechanism combining spatial (CNN) and sequential (BiLSTM) features, rather than claiming universal accuracy dominance across every dataset.
 
-Thank you once again for your valuable guidance, which has greatly enhanced the quality, scientific rigor, and presentation of our work.
+We have attached the complete Response Document ("response.pdf"), the highlighted revised manuscript ("manuscript_highlight.pdf"), and the clean revised manuscript ("manuscript.pdf") to the submission system.
+
+Thank you once again for your guidance and support.
 
 Sincerely,  
 Vanlalruata Hnamte et al.
@@ -59,17 +59,16 @@ Vanlalruata Hnamte et al.
 \begin{tcolorbox}[colback=boxbg,colframe=primaryblue,title=\textbf{Text for Reviewer 1 Box}]
 Dear Reviewer 1,
 
-We sincerely thank you for your time, effort, and highly valuable feedback. Your constructive comments, thoughtful critique, and insightful suggestions have been instrumental in improving the quality, statistical rigor, and scientific clarity of our manuscript to this point.
+We express our sincere gratitude for your thorough examination of our revised manuscript and for noting that the majority of your previous concerns have been satisfactorily addressed.
 
-In accordance with your feedback, we have thoroughly revised the manuscript and addressed every comment:
-- We implemented a 5-seed repeated experimental protocol ($S=\{13, 23, 33, 43, 53\}$) on full datasets without downsampling, reporting all intra-dataset metrics as mean $\pm$ standard deviation.
-- We comprehensively documented all hardware configurations, system RAM, GPU specs, software dependency versions, and execution environments in Section 5.1.
-- We clarified the zero-shot cross-dataset transferability protocol, detailing target-domain Z-score standardisation, categorical encoding mappings, and positional dimensional adaptation.
-- We expanded the explainable AI (XAI) analysis and efficiency discussions.
+We have addressed your three minor points in full:
+1. **Hardware Consistency:** We updated Section 5.1, Table 4, Section 7 of the supplementary material, and the response letter to specify the exact authoritative hardware: Intel Core i9-10900K CPU @ 3.80 GHz and NVIDIA GeForce RTX 3060 Ti GPU with 8 GB VRAM.
+2. **Ablation Setup Justification:** We provided a methodological justification for the single-seed ablation setup ($\text{Seed} = 42$), explaining how controlled initialisations isolate structural architectural dynamics without confounding stochastic variance.
+3. **Cautious Interpretation:** We revised Section 6.5 to state cautiously that attention-based feature gating serves as a task-dependent representation integration mechanism for spatial (CNN) and sequential (BiLSTM) features, avoiding any claim of universal accuracy dominance across every task configuration.
 
-A detailed, point-by-point response addressing each of your comments in full, along with exact manuscript diffs and supplementary figures, is provided in the attached Response File ("response.pdf").
+A point-by-point response with exact manuscript text quotes is provided in the attached Response File ("response.pdf").
 
-We are deeply grateful for your guidance, which has significantly enhanced our work.
+Thank you very much for your valuable feedback.
 
 Sincerely,  
 The Authors
@@ -85,17 +84,9 @@ The Authors
 \begin{tcolorbox}[colback=boxbg,colframe=primaryblue,title=\textbf{Text for Reviewer 2 Box}]
 Dear Reviewer 2,
 
-We express our sincere gratitude for your thorough review and constructive comments on our manuscript. Your valuable feedback, recommendations, and insightful suggestions have helped us elevate the manuscript to its present level of quality, clarity, and precision.
+We express our sincere gratitude for your review of our revised manuscript and for your recommendation that the paper can be accepted now ("I agree with the current version of the paper. The paper can be accepted now.").
 
-Following your recommendations, we have carefully revised the manuscript:
-- We updated all baseline comparison tables (Table 5) with 5-seed Mean $\pm$ SD metrics and clarified cross-study comparison nuances.
-- We refined Table 12 diagonal baseline descriptions to accurately reflect intra-dataset reference checkpoints.
-- We softened performance claims regarding minority class handling in Table 6 to ensure complete alignment with empirical recall metrics.
-- We ensured consistent terminology ("CNN--BiLSTM + Attention framework") across all sections.
-
-All of your points have been addressed in detail in the attached Response File ("response.pdf"), which includes comprehensive explanations, statistical tables, and exact text revisions.
-
-Thank you very much for your invaluable contributions to improving our paper.
+Thank you very much for your time, effort, and support throughout the review process.
 
 Sincerely,  
 The Authors
@@ -109,9 +100,9 @@ The Authors
 \textit{(If the submission system requires an inline text response for each individual comment field)}
 
 \begin{tcolorbox}[colback=boxbg,colframe=primaryblue,title=\textbf{Inline Comment Response Template}]
-We sincerely thank the reviewer for this valuable comment and suggestion. We have fully addressed this point in the revised manuscript by updating the text, experimental protocols, and tables accordingly. 
+We sincerely thank the reviewer for this valuable comment. We have fully addressed this point in the revised manuscript by updating the text and tables accordingly. 
 
-Please refer to Comment [X] in the attached Response Document ("response.pdf") for our complete point-by-point response, detailed statistical analysis, and exact manuscript revisions.
+Please refer to Comment [X] in the attached Response Document ("response.pdf") for our complete point-by-point response and exact manuscript revisions.
 \end{tcolorbox}
 
 \end{document}

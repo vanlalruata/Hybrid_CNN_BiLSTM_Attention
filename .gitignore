@@ -6,6 +6,23 @@ __pycache__/
 # C extensions
 *.so
 
+# Latex Extensions
+*.log
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg
+*.idx
+*.ilg
+*.spl
+*.tex
+*.bib
+*.sty
+*.cls
+manuscript/*
+*.pyc
+
 # Distribution / packaging
 .Python
 build/

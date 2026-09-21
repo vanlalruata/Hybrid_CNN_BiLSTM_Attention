@@ -6,8 +6,8 @@
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{array}
- \usepackage{amsmath}
- \usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \definecolor{lightgray}{HTML}{F2F2F2}
 \definecolor{darkgreen}{HTML}{1B5E20}
@@ -34,9 +34,10 @@
   \vspace{1.5em}
 }
 
-\title{Response to Reviewer Comments\\
-\large Manuscript Number: MEADIG-D-26-00146}
-% \author{Dr. Vanlalruata Hnamte et al.}
+\title{\textbf{Response to Reviewer Comments (Revision 2)}\\
+\large Manuscript Number: MEADIG-D-26-00146\\
+\small \textit{Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI}}
+\author{~}
 \date{~}
 
 \begin{document}
@@ -45,156 +46,90 @@
 
 Dear Editors and Reviewers,\\
 
-We sincerely thank the reviewers for their thorough and constructive evaluation of our manuscript titled \textit{Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI} (Manuscript Number: MEADIG-D-26-00146).\\
+We sincerely thank the Editors and Reviewers for their thoughtful evaluation of our manuscript titled \textit{Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI} (Manuscript Number: MEADIG-D-26-00146).\\
 
-We have carefully and comprehensively addressed all the comments made by the reviewers. The code implementation, experimental pipeline, and manuscript text were revised as necessary. Importantly, all primary intra-dataset evaluation experiments were \textbf{re-run from scratch on the full datasets} (without any downsampling) using a strict three-way 70:15:15 (training/validation/testing) split and five independent random seeds $\{13, 23, 33, 43, 53\}$. To avoid implying that all representative results originate from a single seed, we now report the representative validation-selected results across the five evaluated seeds ($S=\{13, 23, 33, 43, 53\}$). The selected seeds may differ across datasets and task settings. The test data were not used for checkpoint selection. Below, we provide a point-by-point response to all the reviewers’ comments.
+We are encouraged by your positive assessment of our work. We are particularly grateful to \textbf{Reviewer 2} for reviewing our major revisions and recommending acceptance (\textit{``I agree with the current version of the paper. The paper can be accepted now.''}). We also express our sincere gratitude to \textbf{Reviewer 1} for recognising that the majority of previous concerns have been satisfactorily addressed and for providing three minor points to ensure technical consistency, reproducibility and cautious interpretation.\\
 
-\section*{Response to Reviewer 1}
+In this minor revision, we have addressed all the remaining points in full. Below, we provide a point-by-point response to the comments from Reviewer 1 and Reviewer 2.
+
+\section*{Response to Reviewer 1 (Revision 1 / Minor Revision)}
 \setcounter{commentcnt}{0}
 
-\question{Although the proposed model reports excellent accuracy, the manuscript should provide stronger statistical validation (e.g., repeated runs with standard deviation, confidence intervals, or statistical significance tests) to demonstrate the robustness of the reported results.}
+\question{Hardware specification consistency: The response to Reviewer 1 reports an NVIDIA GeForce RTX 3060 Ti and Intel i7-10700K, whereas Section 5.1 of the revised manuscript reports an NVIDIA GeForce RTX 3060 and Intel i9-10900K. The authors should verify the actual experimental hardware and make the response letter, manuscript, and supplementary material fully consistent.}
 
-\response{We sincerely thank the reviewer for this important and constructive suggestion, which has significantly strengthened the rigour of our evaluation. To demonstrate the statistical robustness of our model, we have implemented a repeated evaluation protocol in which all experiments are re-run across 5 independent random seeds ($S = \{13, 23, 33, 43, 53\}$) for all 4 datasets under both binary and multiclass configurations (8 total configurations). All results are now reported as mean~$\pm$~standard deviation. Concretely, the mean accuracy ranges from 98.728\% (CIC-IoT-2025 binary) to 99.997\% (BoT-IoT binary), with standard deviations below 0.30\% across all configurations. Macro-averaged F1-score standard deviations are below 4.22\% in the most challenging imbalanced multiclass scenario and below 1.30\% in all binary tasks. These results are compiled for each dataset and are now reported in Table~4 of the revised manuscript.}
+\response{We sincerely thank the reviewer for identifying this discrepancy. We apologise for the typographical mistake in our previous response letter draft where the CPU was listed as an Intel i7-10700K and the GPU model in Section 5.1 was listed as an RTX 3060 without the ``Ti'' suffix.
 
-\question{The cross-dataset evaluation is one of the claimed contributions. However, the experimental protocol should be explained more clearly, including the exact training/testing combinations, dataset splits, and whether any data leakage was prevented during feature harmonization.}
-
-\response{We thank the reviewer for this constructive remark, which prompted us to substantially clarify our experimental methodology. We have expanded Section~4.3 (Experimental Partitioning and Hygiene Protocol) to fully describe the training/testing protocol and the splitting strategy. To prevent any form of data leakage:
-\begin{enumerate}
-    \item All datasets are divided using a strict three-way split of 70\% training, 15\% validation, and 15\% test on the raw network flows.
-    \item Mean/mode imputation statistics, categorical encoders, and statistical feature scalers (StandardScaler) are fitted exclusively on the training partition ($D_{\text{train}}$), and the resulting imputation parameters, category mappings, and scale parameters are applied unchanged to the validation and test partitions.
-    \item Primary model training retains native dataset feature spaces ($d_k$) without forcing a lossy feature intersection; zero-shot cross-dataset transfer uses an unsupervised target-domain normalization setup ($\mu_{\text{tgt}}, \sigma_{\text{tgt}}$ derived strictly from the target dataset's training split $D_{\text{train}}^{(\text{tgt})}$ with no statistics or labels computed from $D_{\text{test}}^{(\text{tgt})}$) alongside a deterministic pairwise feature dimensional adaptation operator $\psi_{\text{src} \leftarrow \text{tgt}}(\mathbf{x})$ applied strictly at inference time. Because dimensional adaptation is positional rather than semantic, the cross-dataset results are explicitly interpreted as evidence of dimensional-interface transferability rather than direct semantic feature correspondence.
-\end{enumerate}
-
-We have added detailed text to Section~4.3 describing these steps.}
-
-\question{The computational complexity of the proposed CNN--BiLSTM-attention architecture should be discussed in greater detail. Although latency and energy proxies are reported, comparisons with existing lightweight state-of-the-art methods would strengthen the practical contribution.}
-
-\response{We are grateful to the reviewer for raising this important concern regarding the practical complexity of our framework. We have expanded Section~6.4 (Computational Complexity Analysis) to provide a comprehensive analysis, including parameter counts (ranging from 169,858 to 187,656 parameters depending on output classes), estimated multiply-accumulate operations (MACs) per sample (ranging from 189,120 to 224,704~MACs), and measured inference latencies (0.0123--0.0160~ms per sample, amortised over a batch size of 128) on a CUDA-enabled GPU. 
-
-Furthermore, we explicitly documented our \textbf{5-seed evaluation protocol} ($S = \{13, 23, 33, 43, 53\}$). For each seed, the model checkpoint corresponding to the minimum validation cross-entropy loss on the 15\% validation split was selected. Macro-F1 was evaluated on the resulting held-out test set and was not used for checkpoint selection. The selected seed may differ across datasets and task settings. The test data were not used for checkpoint selection. Recent lightweight and efficiency-oriented SOTA methods are discussed in Section~2, while Section~6.4 and Tables~7--8 quantify the proposed framework's parameter count, MACs, inference latency, throughput, and runtime-derived energy proxy. Because the cited studies use different hardware and measurement protocols, direct numerical latency comparisons were not considered methodologically reliable.}
-
-\question{The manuscript would benefit from a detailed ablation study showing the individual contributions of the CNN branch, BiLSTM branch, attention mechanism, and XAI module.}
-
-\response{We thank the reviewer for this valuable suggestion, which has substantially strengthened the completeness and rigor of our work. In response, we have added a dedicated section (\textbf{Section~6.5: Architectural and Feature Ablation Studies}) covering two primary dimensions of ablation and clarifying the role of the XAI module:
-
-\begin{enumerate}
-    \item \textbf{Architectural Component Ablation:} We constructed and evaluated four core model variants: (1)~\textit{CNN Branch Only}, (2)~\textit{BiLSTM Branch Only}, (3)~\textit{Fusion without Attention Gating}, and (4)~\textit{Full Proposed Framework}. The results are compiled in Table~10. While stand-alone CNN and BiLSTM branches perform well independently, concatenating them without gating causes severe performance degradation due to feature scale imbalances. The attention-gated fusion restores performance after the severe degradation observed in the ungated fusion variant and provides competitive performance across the evaluated benchmarks.
-    \item \textbf{User-Selected Feature Subset Ablation:} We evaluated model performance under reduced feature spaces using the top XAI-ranked features (ranging from 5 to 20 features per dataset). The results in Table~11 demonstrate that the reduced-feature variants retain high binary classification accuracy under the standardised ablation configuration.
-    \item \textbf{Clarification on XAI Module Ablation:} We clarify that SHAP, LIME, and ANOVA are post-hoc interpretability procedures and are not predictive components within the model's forward path. Therefore, removing them does not alter model predictions or classification metrics, rendering an accuracy-based predictive ablation inapplicable. Instead, in Section~6.7, we provide a complementary synthesis detailing how these three techniques offer complementary evidence: ANOVA provides an independent statistical assessment of feature-group variance, SHAP characterizes model-level feature attributions, and LIME provides instance-level local explanations for security auditing.
-\end{enumerate}
-
-\textbf{Hyperparameter Distinction Notice for Ablation Experiments:} We explicitly highlight in Section~6.5 and in the manuscript that for all architectural component and feature subset ablation experiments, the hyperparameters were standardized as $\text{Seed} = 42$, $\text{Batch Size} = 256$, $\text{Epochs} = 20$ (with early stopping patience $= 8$), $\text{AdamW}$ optimizer ($\text{lr} = 10^{-3}$), and $\text{Cross-Entropy}$ loss. This fixed single-seed configuration is explicitly distinguished from the multi-seed protocol ($S=\{13, 23, 33, 43, 53\}$, batch size $128$) utilized for main model benchmarking.}
-
-\question{The reproducibility of the work should be improved by providing complete implementation details, including hyperparameter settings, random seeds, hardware configuration, software versions, and training time.}
-
-\response{We thank the reviewer for highlighting this important aspect of scientific reproducibility. We have updated Section~5 (Experimental Setup) to provide complete implementation details, including:
-\begin{enumerate}
-    \item Hardware specifications: NVIDIA GeForce RTX 3060 Ti GPU (8 GB VRAM), Intel Core i7-10700K CPU @ 3.80GHz, 32 GB RAM.
-    \item Software environment: Python 3.14, PyTorch 2.10, CUDA 13.3, scikit-learn 1.8.0, SHAP 0.51.0, LIME 0.2.0.1, and Matplotlib 3.10.8.
-    \item Training configuration: AdamW optimizer ($\text{lr} = 10^{-3}$, weight decay $= 10^{-4}$), batch size 128, cross-entropy loss, 20 maximum epochs.
-\end{enumerate}
-Training duration and per-sample latency details across all four datasets are provided in Section~6.4 and Table~7.}
-
-\question{The explainability section should include a more comprehensive discussion of how SHAP, LIME, and ANOVA complement one another and how these explanations can assist cybersecurity analysts in real-world deployments.}
-
-\response{We thank the reviewer for this insightful comment that has enriched our explainability discussion. We have updated Section~6.7 to discuss the complementary nature of our multi-level explainability framework:
+All experiments were performed on a single dedicated workstation equipped with:
 \begin{itemize}
-    \item \textbf{ANOVA} serves as a global, model-agnostic statistical filter ranking feature significance based on between-group to within-group variance ratios within each dataset's training partition.
-    \item \textbf{SHAP} captures both global model-level and local instance-level feature attributions based on cooperative game-theoretic principles, enabling analysts to understand overall model behaviour and audit individual predictions.
-    \item \textbf{LIME} provides local, instance-specific surrogate explanations that are model-agnostic, explaining why a specific network flow was classified as malicious or benign.
+    \item \textbf{CPU:} Intel Core i9-10900K CPU @ 3.80 GHz
+    \item \textbf{GPU:} NVIDIA GeForce RTX 3060 Ti GPU
+    \item \textbf{VRAM:} 8 GB dedicated VRAM
+    \item \textbf{System RAM:} 32 GB RAM
 \end{itemize}
 
-Together, they enable cybersecurity analysts to validate feature relevance statistically (ANOVA), understand overall model behaviour (SHAP), and inspect individual alerts for incident response (LIME).}
+We have updated all occurrences across the manuscript (Section 5.1 and Table 4), the supplementary material (Section 8), and this response letter to ensure 100\% consistency using exact, unified wording.
 
-\question{The manuscript primarily evaluates offline datasets. The limitations regarding deployment in real-time operational IoT environments should be discussed more explicitly.}
+\vspace{0.5em}
+\noindent\textbf{Exact Updated Text in Section 5.1 of Manuscript:}
+\begin{quote}
+\textit{``All experiments were conducted on a workstation equipped with an Intel Core i9-10900K CPU @ 3.80 GHz and an NVIDIA GeForce RTX 3060 Ti GPU with 8 GB VRAM. The software environment was configured on 64-bit Windows 11 Pro using Python 3.14, PyTorch 2.10, and CUDA 13.3 toolkit support, backed by 32 GB of system RAM. Core computational, statistical, and explainability workflows relied on NumPy 2.3.5, Scikit-learn 1.8.0, SciPy 1.16.3, SHAP 0.51.0, LIME 0.2.0.1, and Matplotlib 3.10.8. Automatic device selection (CUDA, when available; otherwise, CPU) was used across the pipeline.''}
+\end{quote}
 
-\response{We thank the reviewer for drawing our attention to this important practical consideration. We have added a dedicated subsection within Section~7 (Limitations and Future Work) explicitly discussing real-time deployment constraints, including: (1) edge processing bottlenecks arising from limited computational resources on embedded IoT gateways, (2) concept drift under continuously evolving attack traffic, which may degrade offline-trained models over time, and (3) the fundamental differences between offline batch processing (as evaluated here) and real-time streaming classification of live network traffic.}
+\noindent\textbf{Exact Updated Hardware Entry in Table 4 of Manuscript:}
+\begin{quote}
+\textit{Hardware: NVIDIA GeForce RTX 3060 Ti (8 GB VRAM)}
+\end{quote}
 
-\question{Carefully proofread the manuscript to eliminate minor grammatical and typographical errors.}
-
-\response{We thank the reviewer for this meticulous observation. We have thoroughly proofread the entire manuscript and corrected all identified grammatical, punctuation, and typographical issues. We have also normalised the formatting of mathematical notation, abbreviations, and citation styles throughout the document.}
-
-\question{Some figures contain relatively small text that may reduce readability in the published version. Increasing the font size would improve clarity.}
-
-\response{We thank the reviewer for this practical and important suggestion. We have regenerated all experimental performance plots---including confusion matrices, training/validation loss curves, calibration curves, and all explainability visualisations (SHAP summary, ANOVA F-statistic bar charts, and LIME local explanation plots)---with substantially increased font sizes for axis labels, tick marks, legends, and titles. The ANOVA bar charts additionally feature a dark-to-light green gradient (darkest bar corresponding to the highest F-statistic) to improve visual hierarchy and readability.}
-
-\question{Several recent references from 2025--2026 are included; however, the literature review could better compare the proposed approach against the latest transformer-based and foundation-model-based intrusion detection methods.}
-
-\response{We thank the reviewer for this important recommendation that has substantially improved the depth of our literature review. We have updated Section~2 (Related Work) and Table~1 to include and discuss recent transformer-based and large-scale pretrained approaches (e.g., Fraihat et al. (2026); Gupta et al. (2026); Zhang et al. (2023)). We contrast their high computational overhead against our resource-efficient hybrid architecture, providing a nuanced comparison of performance-efficiency trade-offs.}
-
-\question{Please ensure consistent formatting of equations, symbols, abbreviations, and references throughout the manuscript.}
-
-\response{We thank the reviewer for this careful review of our manuscript's formatting. We have conducted a systematic audit of the entire document and normalised the formatting of all mathematical equations, variable definitions, dataset abbreviations, and bibliography keys to maintain consistent and high publishing standards throughout.}
-
-\question{Include a short discussion on future work, particularly addressing adversarial robustness, continual learning, and deployment on resource-constrained edge devices.}
-
-\response{We thank the reviewer for these forward-looking suggestions, which have enriched the scope of our conclusions. We have updated Section~7 (Conclusion and Future Work) to outline three concrete research directions: 
-\begin{enumerate}
-    \item investigating adversarial threat modelling to improve model robustness against crafted evasion attacks, 
-    \item implementing continual learning mechanisms to enable the model to adapt to evolving traffic distributions and concept drift, and
-    \item compiling the PyTorch model via TensorRT/ONNX for efficient deployment on physical microcontroller-class edge devices.
-\end{enumerate}
+\noindent\textbf{Exact Updated Text in Supplementary Material:}
+\begin{quote}
+\textit{``All experiments were conducted on a workstation equipped with an Intel Core i9-10900K CPU @ 3.80 GHz and an NVIDIA GeForce RTX 3060 Ti GPU with 8 GB VRAM.''}
+\end{quote}
 }
 
+\question{Ablation reproducibility: The architectural and feature-subset ablation experiments are reported using a single seed (Seed = 42), whereas the primary evaluation uses five independent seeds. The authors should briefly justify this choice or indicate whether the principal ablation conclusions are stable across multiple seeds.}
 
-\section*{Response to Reviewer 2}
-\setcounter{commentcnt}{0}
+\response{We thank the reviewer for raising this important methodological question regarding experimental reproducibility.
 
-\question{Figure 8(d), Figure 9(d), Figure 10(d) and Figure 12(d) all show that the highest-ranked input features for CIC-IoT-2025 are label1, label3, label4 and label\_full. Section 6.5 states this explicitly... These are the dataset's own annotation columns... All CIC-IoT-2025 results... must be discarded and recomputed after the label columns are removed. The same audit must be applied to the other datasets. A complete list of retained and removed columns for each dataset should be published.}
+\textbf{Methodological Justification for Single-Seed Ablation Setup:}
+The architectural component ablation and user-selected feature ablation experiments were deliberately conducted under a standardised single-seed hyperparameter configuration ($\text{Seed} = 42$, $\text{Batch Size} = 256$) to isolate the direct dynamic impact of structural modifications (e.g. disabling individual feature branches, omitting attention gating, or constraining input feature subsets) under strictly identical random weight initialisations, optimiser trajectories, and dataset split partitions across all model variants.
 
-\response{We sincerely thank the reviewer for identifying this critical data leakage issue, which prompted a thorough and systematic feature audit across all datasets. The results of this audit are now fully documented. Specifically:
-\begin{enumerate}
-    \item For \textbf{CIC-IoT-2025}, we dropped all metadata and annotation columns: \texttt{device\_name}, \texttt{device\_mac}, \texttt{timestamp}, \texttt{timestamp\_start}, \texttt{timestamp\_end}, \texttt{label\_full}, \texttt{label1}, \texttt{label2}, \texttt{label3}, and \texttt{label4}.
-    \item For \textbf{BoT-IoT}, we dropped non-feature identifiers and target labels: \texttt{stime}, \texttt{saddr}, \texttt{daddr}, \texttt{srcid}, \texttt{ltime}, \texttt{record}, \texttt{attack}, \texttt{category}, and \texttt{subcategory}.
-    \item For \textbf{Apose-IoT-23}, we dropped non-feature identifiers and target labels: \texttt{ts}, \texttt{uid}, \texttt{id.orig\_h}, \texttt{id.resp\_h}, and \texttt{label}.
-    \item For \textbf{CIC-IoMT-2024}, all non-flow-statistic columns were verified; no additional leaky features were found beyond the target label column.
-\end{enumerate}
+This controlled single-seed setup provides a consistent comparative baseline by holding the random initialisation, optimiser trajectory, and split partition fixed across model variants, thereby reducing the variation attributable to stochastic initialisation when assessing the direct effect of the structural modifications. In contrast, the five-seed evaluation protocol ($S=\{13, 23, 33, 43, 53\}$, batch size $128$) is reserved for evaluating the primary full proposed framework to demonstrate statistical robustness and multi-seed generalisation.
 
-All experiments were completely re-run on these clean, leakage-free datasets using the full data without any downsampling. The complete retained/removed-column feature audit is published in Supplementary Table~S1 and summarized in Section~4.3 of the revised manuscript.}
+The empirical single-seed ablation results clearly demonstrate the fundamental structural interactions—most notably, that unweighted feature concatenation (\textit{Fusion w/o Attention Gating}) induces severe numerical collapse across multiple dataset tasks due to scale mismatches between CNN and BiLSTM representations (e.g., accuracy dropping to 73.262\% on Apose-IoT-23 binary, 0.489\% on BoT-IoT multiclass, and 2.063\% on CIC-IoMT-2024 binary), whereas attention-based feature gating consistently resolves this degradation and restores optimisation stability.
 
-\question{Section 4.8 defines the partition as D = D\_train $\cup$ D\_test only... Since no third partition exists, the validation set is the test set... A three-way split (train, validation, test) is required, with the checkpoint chosen on the validation partition and all reported metrics computed on an untouched test partition.}
+We have updated Section 6.5 of the main manuscript and Section 8 of the Supplementary Material to explicitly document this methodological justification and clearly distinguish the single-seed ablation protocol from the multi-seed primary evaluation.
 
-\response{We thank the reviewer for this rigorous methodological observation, which is entirely correct. We have corrected the experimental partitioning configuration. All datasets are now divided into Train (70\%), Validation (15\%), and Test (15\%) subsets. During training, the model checkpoint corresponding to the minimum validation cross-entropy loss was selected. Once training is complete, all final classification metrics (including macro F1-score and accuracy) reported in the tables are evaluated exclusively on the completely untouched Test partition. Sections~4.3 and~5.3 have been updated to explicitly document this leakage-free three-way split strategy.}
-
-\question{Equations (3) and (39) construct one sequence per flow index using a look-back window of size T, so consecutive sequences share T - 1 of their T rows. Section 4.8 then applies a random 75:25 split and asserts that this `prevented data leakage'. This is incorrect.}
-
-\response{We thank the reviewer for this precise technical analysis. The reviewer is absolutely correct: a lookback window of $T > 1$ combined with a random flow-level split introduces overlapping row leakage between training and test sets, since consecutive sequences share $T-1$ identical rows. 
-
-To completely eliminate this threat, our implementation sets the lookback window length to $T = 1$. Each network flow is thus framed as an independent feature vector ($\mathbf{X}_i \in \mathbb{R}^{1 \times d_k}$), and consecutive sequence samples share no overlapping rows. Therefore, a random partition at the flow level is mathematically leak-free. 
-
-We explicitly clarify in Sections~3.4 and~4.3 of the revised manuscript that setting $T = 1$ configures the BiLSTM branch as a singleton-sequence encoder (processing a sequence length of 1 across projected feature channels), serving as a bidirectional non-linear feature transformation layer while preserving strict leakage-free evaluation hygiene.}
-
-\question{Section 3.2 states that the mapping operator performs ``zero-padding missing dimensions that are not present in dataset k'', which produces a union of the feature sets, whereas Equation~(34) defines the unified space as the intersection over the four datasets. These two constructions are mutually exclusive. It is important to compare work with the following: PAACGAN: Protocol-Aware Generative Augmentation for Robust Imbalanced Network Intrusion Detection; TIDE-Net: A Two-Stage Temporal Deep Learning Framework for Multi-Granular IoT Intrusion Detection; Enhancing Intrusion Detection Systems with Synthetic Attack Data and Advanced Classification Models; and Enhanced network intrusion detection system for internet of things security using multimodal big data representation with transfer learning and game theory.}
-
-\response{We thank the reviewer for identifying this important methodological clarification regarding feature space construction. We have revised the methodology in Section~3.2 and Section~4.3 to explicitly eliminate the mutually exclusive definitions and clarify the dual-phase feature handling strategy:
-\begin{enumerate}
-    \item \textbf{Primary Model Training:} Each dataset undergoes dataset-specific feature preprocessing and retains its full, native feature representation ($d_k$) for maximum feature utilisation during individual dataset training. Rather than forcing a lossy intersection across datasets during individual training, models are trained natively on their dataset-specific feature spaces.
-    \item \textbf{Cross-Dataset Binary Transfer:} To evaluate zero-shot domain transfer across datasets with unequal feature dimensions ($d_{\text{src}} \neq d_{\text{tgt}}$), a deterministic pairwise source-to-target feature mapping operator $\psi_{\text{src} \leftarrow \text{tgt}}(\mathbf{x})$ (Equation~3) is applied strictly at zero-shot inference time. This operator adapts the target feature vector to the source model checkpoint's expected input dimension $d_{\text{src}}$ via zero-padding (when $d_{\text{tgt}} < d_{\text{src}}$) or feature truncation (when $d_{\text{tgt}} > d_{\text{src}}$), preserving model weight compatibility without retraining.
-\end{enumerate}
-Furthermore, we have expanded Section~2 (Related Work) and Table~1 to include discussions and citations for all four recommended studies: \textit{PAACGAN} (Islam et al., 2026), \textit{TIDE-Net} (Baig et al., 2026), Fraihat et al. (2026), and LITMUS (Sanyal et al., 2026), contextualising our hybrid approach within the latest state of the art.}
-
-\question{From the supports in Table 6, a constant classifier that always predicts `Attack' achieves 99.987 percent accuracy on BoT-IoT and 97.939 percent on CIC-IoMT-2024. Every cross-dataset entry in Table 10... is therefore worse than doing nothing... These discrepancies must be resolved.}
-
-\response{We are grateful to the reviewer for this incisive statistical observation. The reviewer is entirely correct that raw accuracy is a deeply misleading metric in highly imbalanced datasets. In BoT-IoT, where attack traffic constitutes over 99.9\% of all samples, a na\"{i}ve constant-``Attack'' classifier achieves $\approx$99.99\% accuracy while yielding a macro-averaged Recall of 0\% for benign traffic and a macro-averaged F1-score of only 50.0\%---rendering it operationally useless. Similarly, on CIC-IoMT-2024, a constant-attack classifier yields 97.939\% accuracy but only 49.48\% Macro-F1 (0\% benign recall). To resolve this discrepancy directly, we have updated the cross-dataset evaluation (Table~12) to explicitly report \textbf{Accuracy \%}, \textbf{Macro F1 \%}, and \textbf{Macro Recall \%} alongside non-informative target \textbf{Majority-Class Baselines} (which correspond to a constant classifier that always predicts the dominant class in the respective target dataset). In intra-dataset evaluation, our proposed model achieves a macro-averaged F1-score of \textbf{94.68\% $\pm$ 1.19\%} on BoT-IoT binary (preserving high precision and recall across both benign and attack classes) and \textbf{70.45\% $\pm$ 0.69\%} on BoT-IoT multiclass, with all eight classes explicitly evaluated and the low-support classes showing substantially lower recall. We have added a dedicated discussion of class imbalance, the limitations of raw accuracy, and the necessity of unweighted macro-averaged metrics in Section~6.3 and Section~6.6 of the revised manuscript.}
-
-\question{Table 5 reports the proposed framework on BoT-IoT as 99.99 percent accuracy, 99.99 percent F1-score and 99.99 percent recall. Recomputing from the confusion matrix in Figure 5(b) gives accuracy 99.998 percent but macro-F1 95.155 percent... The values in Table 5 correspond neither to the binary nor to the multiclass setting of Table 4 and appear to be the positive-class... Comparing a positive-class F1 against the macro F1-scores of other studies is not a valid comparison.}
-
-\response{We sincerely thank the reviewer for this careful numerical audit. The reviewer is entirely correct. We have audited the SOTA comparison table (Table~5) and updated all reported metrics for the proposed framework to the \textbf{aggregate five-seed mean $\pm$ standard deviation} results drawn directly from Table~4 (reporting unweighted macro-averaged F1-scores and macro recall), ensuring complete methodological consistency, statistical defensibility, and valid comparability with SOTA baselines. All previously reported single-run positive-class F1-scores have been replaced with the correct five-seed macro-averaged values.}
-
-\question{Equations (16) to (18) compute a single energy vector... normalise it with a softmax... and multiply element-wise. There is no query, key or value, and no pairwise interaction between positions, so describing this as a `self-attention mechanism' in the abstract, in contribution (ii) and in Section 2.4 is not accurate; it is a feature-gating layer.}
-
-\response{We thank the reviewer for this precise and technically accurate architectural critique. The reviewer is entirely correct: the block described in Equations(16)--(18) computes a learned, softmax-normalised energy weight vector and applies it element-wise to gate the fused feature representation. This lacks the query-key-value structure and pairwise positional interactions that characterise canonical self-attention mechanisms. We have corrected the terminology throughout the manuscript, replacing all instances of ``self-attention mechanism'' with the more accurate term ``attention-based feature gating'' or ``feature-gating layer'' in the abstract, list of contributions (ii), Section~3.7 (Methodology), and experimental discussions. This correction does not affect any experimental results, as the architecture itself is unchanged.}
-
-\question{All timing and energy figures in Tables 7 to 9 were obtained on a CUDA-enabled GPU, and Equation (51) defines energy as latency multiplied by an assumed 120 W, so the energy column carries no information beyond the latency column. The quoted per-sample latency of about 0.012 ms is the batch latency of 1.47 ms divided by the batch size of 128... not the per-flow detection latency... No edge device was used, so the conclusion that the framework is `suitable for real-time edge-based IoT deployment' is not demonstrated.}
-
-\response{We thank the reviewer for this rigorous efficiency analysis, which has substantially improved the accuracy and honesty of our complexity claims. We have revised Section~6.4 to clearly address each point:
-\begin{enumerate}
-    \item All timing and energy figures are explicitly labelled as \textbf{GPU benchmark results} obtained on an NVIDIA GeForce RTX 3060 Ti. The energy proxy (latency $\times$ 120\,W assumed peak load) is acknowledged as a proxy proportional to latency rather than an independently informative energy measurement.
-    \item We explicitly clarify that the reported per-sample latency of approximately 0.0123--0.0160\,ms represents the \textbf{amortised batch throughput} (total batch inference time divided by batch size 128), and is not the single-packet propagation delay in a streaming deployment.
-    \item The original strong claim of demonstrated edge suitability has been softened and moved to the future work section, where we note that validation on resource-constrained physical devices (e.g., NVIDIA Jetson, Raspberry Pi with ONNX runtime) remains an important direction for future investigation.
-\end{enumerate}
+\vspace{0.5em}
+\noindent\textbf{Exact Updated Text in Section 6.5 of the Manuscript:}
+\begin{quote}
+\textit{``\textbf{Ablation Hyperparameter Configuration:} For both the architectural component ablation and user-selected feature ablation experiments, the hyperparameters were standardised with a single seed ($\text{Seed} = 42$, $\text{Batch Size} = 256$, $\text{Epochs} = 20$ with early stopping patience $= 8$, $\text{AdamW}$ optimiser $\text{lr} = 10^{-3}$, and $\text{Cross-Entropy}$ loss) to isolate architectural dynamic changes under strictly identical weight initialisations, optimiser trajectories, and split partitions. This fixed single-seed setup is explicitly distinguished from the multi-seed ($S=\{13, 23, 33, 43, 53\}$, batch size $128$) evaluation protocol utilised for the primary model performance benchmarking.''}
+\end{quote}
 }
 
+\question{Interpretation of ablation results: The conclusions drawn from the ablation results should be stated cautiously. The full attention-gated framework does not achieve the highest accuracy in every individual dataset/task configuration. Therefore, the manuscript should avoid implying that the complete architecture universally outperforms every individual branch and should instead explain the contribution of attention-based gating in the context of the combined CNN–BiLSTM representation.}
 
+\response{We completely agree with the reviewer's insightful assessment. 
+
+As the empirical data in Table 10 show, standalone single branches achieve top accuracy on specific dataset/task configurations; for instance, the BiLSTM branch alone achieves top accuracy on the CIC-IoMT-2024 multiclass (99.218\%) and Apose-IoT-23 multiclass (99.143\%) datasets, whereas the CNN branch alone achieves top accuracy on the CIC-IoT-2025 binary (98.694\%) dataset. 
+
+We have thoroughly revised Section 6.5 of the manuscript and Section 8 of the Supplementary Material to eliminate any implications of the universal accuracy dominance. Instead, we reframe the contribution of attention-based feature gating as dynamic representation integration:
+\begin{itemize}
+    \item \textbf{CNN Branch:} Captures spatial / local feature representations.
+    \item \textbf{BiLSTM Branch:} Captures sequential / temporal feature representations.
+    \item \textbf{Attention-Based Feature Gating:} Dynamically rescales and balances spatial and sequential representations per sample, preventing the scale-mismatch collapse observed in unweighted fusion and enabling effective representation fusion.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent\textbf{Exact Updated Text in Section 6.5 of Manuscript:}
+\begin{quote}
+\textit{``\textbf{Dynamic Feature Integration via Attention-Based Feature Gating:} The integration of the attention-based feature-gating layer in the \textit{Full Proposed Framework} addresses this scale disparity by learning dynamic, instance-level softmax weight vectors $\alpha = \text{softmax}(e)$. The gating mechanism rescales and balances spatial (CNN) and recurrent (BiLSTM) feature sub-vectors prior to the dense classifier, restoring optimisation stability and eliminating the severe numerical collapse observed under unweighted fusion. The ablation results suggest that attention-based feature gating contributes primarily through selective integration of the complementary representations learned by the CNN and BiLSTM branches. Although the complete framework does not yield the highest accuracy in every dataset/task configuration, the ablation patterns indicate that feature gating can improve the utilisation of complementary spatial and sequential information under several experimental conditions. These results therefore support the role of attention-based gating as a task-dependent integration mechanism rather than as a universally dominant component.''}
+\end{quote}
+}
+
+\section*{Response to Reviewer 2 (Revision 1 / Minor Revision)}
+
+\question{The authors have revised their work according to the comments. I agree with the current version of the paper. The paper can be accepted now.}
+
+\response{We express our sincere gratitude to Reviewer 2 for their thorough review, positive evaluation of our revised manuscript, and explicit recommendation for acceptance. We are deeply grateful for their support throughout the review process.}
 
 \end{document}
