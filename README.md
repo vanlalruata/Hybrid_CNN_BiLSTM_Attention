@@ -43,7 +43,7 @@ If you find this code and paper useful, kindly consider to cite from your valuab
 python main.py
 ```
 
-Follow options 1–9.
+Follow options 1–11.
 
 ```
 ==================== IDS EXPERIMENT CLI ====================
@@ -53,9 +53,11 @@ Follow options 1–9.
 (4) Train model (save ckpt + curves + history CSV)
 (5) Evaluate & plot performance (EPS + CSV/JSON)
 (6) XAI (SHAP/LIME/ANOVA)
-(7) Ablation (user-selected feature subset)
-(8) Evaluate (explicit)
-(9) Inference (load_model → predict live CSV)
+(7) Feature Ablation (user-selected feature subset)
+(8) Architectural Ablation (CNN, BiLSTM, Fusion w/o Gating, Full)
+(9) Evaluate (explicit)
+(10) Inference (load_model → predict live CSV)
+(11) Generate multi-seed learning curves (Loss / Accuracy)
 (q) Quit
 ============================================================
 ```
@@ -86,11 +88,17 @@ python main.py eval --split_key EDGE_IIoT_binary_2025-10-29_08-30-00
 python main.py xai --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 --methods shap,lime,anova
 ```
 
-* Ablation (user-selected):
+* Feature Ablation (user-selected):
 
 ```
 python main.py ablate --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 \
   --keep_feats "Duration,Rate,Srate,Drate,syn_flag_number,ack_flag_number"
+```
+
+* Architectural Ablation:
+
+```
+python main.py arch-ablate --split_key EDGE_IIoT_binary_2025-10-29_08-30-00
 ```
 
 * Inference:
@@ -98,3 +106,10 @@ python main.py ablate --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 \
 ```
 python main.py infer --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 --csv data/new/live_batch.csv
 ```
+
+* Generate multi-seed learning curves:
+
+```
+python main.py curves --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 --metric loss
+```
+
