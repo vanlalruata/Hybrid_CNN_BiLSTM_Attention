@@ -18,10 +18,11 @@ Vanlalruata Hnamte
 
 ## DOI
 
-<https://doi.org/>
+<https://doi.org/10.1016/j.meadig.2026.100060>
 
-ScienceDirect Link
-<https://www.sciencedirect.com/science/article/pii/>
+## ScienceDirect Link
+
+<https://www.sciencedirect.com/science/article/pii/S3050644126000393>
 
 ## Abstract
 
@@ -29,7 +30,7 @@ The rapid proliferation of Internet of Things (IoT) devices has heightened netwo
 
 ## How to cite
 
-Vanlalruata Hnamte, Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN-BiLSTM+Attention Framework with Explainable AI, Volume 1, Issue 1, 2026, 100248, ISSN 3051-0643, <https://doi.org/> (<https://www.sciencedirect.com/science/article/pii/>)
+Vanlalruata Hnamte, Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN-BiLSTM+Attention Framework with Explainable AI, Volume 1, Issue 1, 2026, 100248, ISSN 3051-0643, <https://doi.org/10.1016/j.meadig.2026.100060> (<https://www.sciencedirect.com/science/article/pii/S3050644126000393>)
 
 ## Note
 
@@ -112,4 +113,3 @@ python main.py infer --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 --csv data
 ```
 python main.py curves --split_key EDGE_IIoT_binary_2025-10-29_08-30-00 --metric loss
 ```
-
