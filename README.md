@@ -1,5 +1,20 @@
 # Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN-BiLSTM+Attention Framework with Explainable AI
 
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.meadig.2026.100060-101820.svg?style=flat&logo=doi&logoColor=white)](https://doi.org/10.1016/j.meadig.2026.100060)
+[![Journal](https://img.shields.io/badge/Journal-Measurement%3A%20Digitalization-FF6C00.svg?style=flat)](https://www.sciencedirect.com/science/article/pii/S3050644126000393)
+[![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg?style=flat)](https://github.com/vanlalruata/Hybrid_CNN_BiLSTM_Attention)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](LICENSE)
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B%20%7C%203.14-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.10.0-EE4C2C.svg?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.8.0-F7931E.svg?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![pandas](https://img.shields.io/badge/pandas-2.3.3-150458.svg?style=flat&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-2.3.5-013243.svg?style=flat&logo=numpy&logoColor=white)](https://numpy.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.10.8-11557c.svg?style=flat)](https://matplotlib.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-0.13.2-3776AB.svg?style=flat)](https://seaborn.pydata.org/)
+[![Joblib](https://img.shields.io/badge/Joblib-1.5.3-4B8BBE.svg?style=flat)](https://joblib.readthedocs.io/)
+
+
 ## Journal
 
 Measurement: Digitalization
@@ -31,6 +46,24 @@ The rapid proliferation of Internet of Things (IoT) devices has heightened netwo
 ## How to cite
 
 Vanlalruata Hnamte, Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN-BiLSTM+Attention Framework with Explainable AI, Volume 1, Issue 1, 2026, 100248, ISSN 3051-0643, <https://doi.org/10.1016/j.meadig.2026.100060> (<https://www.sciencedirect.com/science/article/pii/S3050644126000393>)
+
+### BibTeX
+
+```bibtex
+@article{hnamte2026cross,
+  title     = {Cross-Dataset Zero-Shot IoT Attack Detection Using a Hybrid CNN--BiLSTM+Attention Framework with Explainable AI},
+  author    = {Hnamte, Vanlalruata},
+  journal   = {Measurement: Digitalization},
+  volume    = {1},
+  number    = {1},
+  pages     = {100248},
+  year      = {2026},
+  issn      = {3051-0643},
+  publisher = {Elsevier},
+  doi       = {10.1016/j.meadig.2026.100060},
+  url       = {https://doi.org/10.1016/j.meadig.2026.100060}
+}
+```
 
 ## Note
 
